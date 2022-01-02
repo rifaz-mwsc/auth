@@ -1,0 +1,244 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">HR Desk</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+              <li class="breadcrumb-item active">Manage Attendance</li>
+              <li class="breadcrumb-item active">Custom Timing</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
+          <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn btn-primary" (click)="showViewCreateModal()">Create Custom
+                Timing</button>
+            </div>
+
+            <div class="col-auto">
+              <div class="row mt-2">
+                <div class="col">
+                  <label class="form-control-label mb-0" for="example3cols1Input">Turn Filters </label>
+                </div>
+                <div class="col-auto">
+                  <div class="form-group mb-0">
+                    <label class="custom-toggle custom-toggle-default">
+                      <input type="checkbox" checked="" [(ngModel)]="isChecked"
+                        (change)="checkValue(isChecked?'showFilters':'hideFilters')">
+                      <span class="custom-toggle-slider rounded-circle" data-label-off="Off" data-label-on="On"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div class="nav btn-group" role="tablist">
+                <!-- <button class="btn btn-muted px-3 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+                  aria-controls="tabPaneOne" aria-selected="true">
+                  <i class="fas fa-th-large"></i>
+                </button> -->
+                <button class="btn btn-primary px-3 active" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+                  aria-controls="tabPaneTwo" aria-selected="false">
+                  <i class="fas fa-list"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneThree" role="tab"
+                  aria-controls="tabPaneThree" aria-selected="false">
+                  <i class="fas fa-table"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-3">
+
+          <div class="card card-stats mb-3 shadow-lg border" style="background-color: #e9ecef;" *ngIf="showFilters">
+            <div class="card-body px-3 py-3">
+              <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-3 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example3cols1Input">Search text</label>
+                    <input type="text" class="form-control" placeholder="Search" name="filter.search" [(ngModel)]="filter.search">
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-3 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example3cols1Input">Planned Date</label>
+                    <input type="date" class="form-control" placeholder="Search" name="filter.planned_date" [(ngModel)]="filter.planned_date">
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-3 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example3cols1Input">Hide Deleted </label>
+                    <input type="text" class="form-control" placeholder="Search" name="filter.hide_deleted_items" [(ngModel)]="filter.hide_deleted_items">
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md text-right align-self-end">
+                  <div class="form-group mb-0">
+                    <button class="btn btn-primary" (click)="getRequestForPageOne(1)">Search
+                      <i class="fas fa-search" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="!generalApiError && !showLoader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No leave requests to view yet ...!</span>
+          </div>
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="!generalApiError && showLoader && request && request?.items?.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ... !</span>
+          </div>
+
+          <div class="alert alert-danger py-2 px-3" role="alert" *ngIf="generalApiError">
+            <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+            <span class="alert-text"><strong>Error !</strong> {{generalApiError}}</span>
+          </div>
+
+          <app-clib-loading-xl *ngIf="showLoader"></app-clib-loading-xl>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade" id="tabPaneOne" role="tabpanel">
+              <!-- Card-View -->
+              <app-hr-attendance-custom-timing-view (requestToRefreshApiData)="refreshApiData()"
+                [requestList]="request.items" [showLoader]="showLoader" [viewType]="viewType">
+              </app-hr-attendance-custom-timing-view>
+            </div>
+
+            <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
+              <!-- List-View -->
+              <app-hr-attendance-custom-timing-view (requestToRefreshApiData)="refreshApiData()"
+                [requestList]="request.items" [showLoader]="showLoader" [viewType]="viewType">
+              </app-hr-attendance-custom-timing-view>
+            </div>
+
+            <div class="tab-pane fade active show" id="tabPaneThree" role="tabpanel">
+              <!-- Table-View -->
+              <app-hr-attendance-custom-timing-view (requestToRefreshApiData)="refreshApiData()"
+                [requestList]="request.items" [showLoader]="showLoader" [viewType]="viewType">
+              </app-hr-attendance-custom-timing-view>
+            </div>
+
+            <!-- Component-Library - Pagination -->
+            <div class="row" *ngIf="request.pagination">
+              <div class="col my-auto">
+                <span class="h5 text-muted">Showing {{request.pagination.item_start}} to
+                  {{request.pagination.item_end}} of {{request.pagination.total_count}}
+                  entries</span>
+              </div>
+              <div class="col">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end mb-1">
+                    <li class="page-item" [ngClass]="{'disabled': request.pagination.page_number === 1}">
+                      <a class="page-link" [ngClass]="{'bg-light': request.pagination.page_number === 1}"
+                        (click)="getRequestFromPaginationFirst(1)" tabindex="-1">
+                        <i class="fa fa-fast-backward"></i> <span class="sr-only">First</span>
+                      </a>
+                    </li>
+                    <li class="page-item" [ngClass]="{'disabled': request.pagination.page_number === 1}">
+                      <a class="page-link" [ngClass]="{'bg-light': request.pagination.page_number === 1}"
+                        (click)="getRequestFromPaginationPrv(request.pagination.page_number)" tabindex="-1">
+                        <i class="fa fa-angle-left"></i> <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+
+                    <ng-container
+                      *ngFor="let data of request.pagination.page_list; index as i; first as isFirst; last as isLast">
+                      <!-- <li class="page-item disabled" *ngIf="isFirst && request.pagination.page_list[0].show_page === false">
+                                              <a class="page-link bg-light" tabindex="-1">
+                                                  <i class="fa fa-ellipsis-h"></i> <span class="sr-only">...</span>
+                                              </a>
+                                          </li> -->
+                      <li class="page-item" [ngClass]="{'active': data.page_number === request.pagination.page_number}">
+                        <a class="page-link" (click)="getRequestFromPagination(data.page_number)"
+                          *ngIf="data.show_page">{{data.page_number}}</a>
+                      </li>
+                      <!-- <li class="page-item disabled" *ngIf="isLast && (data.show_page === false && data.page_number === request.total_pages)">
+                                              <a class="page-link bg-light" tabindex="-1">
+                                                  <i class="fa fa-ellipsis-h"></i> <span class="sr-only">...</span>
+                                              </a>
+                                          </li> -->
+                    </ng-container>
+
+                    <li class="page-item"
+                      [ngClass]="{'disabled': request.pagination.page_number === request.pagination.total_pages}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': request.pagination.page_number === request.pagination.total_pages}"
+                        (click)="getRequestFromPaginationNext(request.pagination.page_number)">
+                        <i class="fa fa-angle-right"></i><span class="sr-only">Next</span>
+                      </a>
+                    </li>
+
+                    <li class="page-item"
+                      [ngClass]="{'disabled': request.pagination.page_number === request.pagination.total_pages}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': request.pagination.page_number === request.pagination.total_pages}"
+                        (click)="getRequestFromPaginationLast(request.pagination.total_pages)">
+                        <i class="fa fa-fast-forward"></i><span class="sr-only">Last</span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>
+
+
+
+<div #ViewCreateModal id="ViewCreateModal" class="modal fade" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-xl" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Create New Custom Timing</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewCreateModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request">
+        <!-- <app-leave-create-model></app-leave-create-model> -->
+        <!-- <app-hr-allowance-type-create (closeThisModel)="hideViewCreateModal()"></app-hr-allowance-type-create> -->
+        <app-hr-attendance-custom-timing-create (closeThisModel)="hideViewCreateModal()">
+        </app-hr-attendance-custom-timing-create>
+      </div>
+    </div>
+  </div>
+</div>

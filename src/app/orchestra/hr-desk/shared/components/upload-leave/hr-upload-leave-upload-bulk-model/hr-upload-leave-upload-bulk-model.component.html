@@ -1,0 +1,103 @@
+<div>
+  <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='generalApiError'>
+    <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+    <span class="alert-text"><strong>Error !</strong> {{generalApiError}} ... !</span>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card card-stats mb-3 border">
+        <div class="card-header py-2 bg-light border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h4 class="mb-0 text-primary">Leave Requests</h4>
+            </div>
+            <div class="col text-right">
+              <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <!-- Projects table -->
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Employee</th>
+                <th scope="col">Start Date</th>
+                <th scope="col">End Date</th>
+                <th scope="col">Absence Type</th>
+                <th scope="col">General Message</th>
+                <th scope="col">Error Message</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let leave of selectedLeaveList">
+              <tr>
+                <td class="py-2">
+                  <span class="h5 text-primary mb-0">{{leave?.leave_request_employee_id}}</span>
+                </td>
+                <td class="py-2">
+                  <span class="h5 text-primary mb-0">{{leave?.leave_request_taken_from | date: 'dd MMM yyyy'}}</span>
+                </td>
+                <td class="py-2">
+                  <span class="h5 text-primary mb-0">{{leave?.leave_request_taken_to | date: 'dd MMM yyyy'}}</span>
+                </td>
+                <td class="py-2">
+                  <span class="h5 text-primary mb-0">{{leave?.leave_request_absence_type_sap_id}}</span>
+                </td>
+                <td class="py-2">
+                  <div class="row align-items-center">
+                    <div class="col-12 px-0">
+                      <span class="h5 mb-0"
+                        [ngClass]="{'text-success':leave.leave_request_http_error_status === 200, 'text-danger':leave.leave_request_http_error_status !=200}">{{leave?.leave_request_http_error_message}}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-2">
+                  <div class="row align-items-center"
+                    [ngClass]="{'text-success':leave.leave_request_http_error_status === 200, 'text-danger':leave.leave_request_http_error_status !=200}">
+                    <div class="col-12 px-0">
+                      <div class="col-lg-12"
+                        *ngIf="leave && leave.leave_request_http_error_model_state.leave_request_id">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="leave && leave.leave_request_http_error_model_state.leave_request_id">
+                          <li class="mt-0"
+                            *ngFor="let error of leave.leave_request_http_error_model_state.leave_request_id">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-12"
+                        *ngIf="leave && leave.leave_request_http_error_model_state.leave_request_new_expiry_date">
+                        <ul class="pl-5 mb-2"
+                          *ngIf="leave && leave.leave_request_http_error_model_state.leave_request_new_expiry_date">
+                          <li class="mt-0"
+                            *ngFor="let error of leave.leave_request_http_error_model_state.leave_request_new_expiry_date">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12 px-2 py-2 my-0">
+      <div class="col-12 my-0">
+        <div class="form-group float-right my-0">
+          <button class="btn btn-icon btn-success mb-2" type="button" (click)="extend()">
+            <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+            <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-save"></i></span>
+            <span class="btn-inner--text" *ngIf="showModelLoader">Upload to SAP ...</span>
+            <span class="btn-inner--text" *ngIf="!showModelLoader">Upload to SAP</span>
+          </button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</div>

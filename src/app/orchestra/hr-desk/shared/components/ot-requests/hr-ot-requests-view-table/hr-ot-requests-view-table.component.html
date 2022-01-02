@@ -1,0 +1,216 @@
+<div class="card card-stats border mb-4" *ngIf="requestList && requestList.length > 0">
+    <div class="card-body px-3 py-3">
+        <div class="row">
+            <div class="col-sm-6 col-md">
+            </div>
+            <div class="col-sm-auto col-md-auto">
+                <form>
+                    <div class="form-check mt-2">
+                        <input type="checkbox" class="form-check-input" (change)="changeCheckAll($event)">
+                        <label class="form-check-label" for="exampleCheck1">Select All</label>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6 col-md-auto text-right align-self-end">
+                <button type="button" class="btn btn-info mb-0" (click)="showViewExtendBulkModal()"><i
+                        class="fas fa-expand-arrows-alt"></i> Extend</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="card shadow-none border-0" *ngIf="requestList && requestList.length > 0">
+    <div class="table-responsive">
+        <table class="table table-hover align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="px-3 py-2">Employee Details / Status</th>
+                    <th scope="col" class="px-3 py-2">Date from / to</th>
+                    <th scope="col" class="px-3 py-2">OT Type</th>
+                    <th scope="col" class="px-3 py-2">Work Details & Remarks</th>
+                    <!-- <th scope="col" class="px-3 py-2">Remarks</th> -->
+                    <th scope="col" class="px-3 py-2">Location</th>
+                    <th scope="col" class="px-3 py-2 text-right">Action</th>
+                    <th scope="col" class="px-3 py-2 text-right">Selection</th>
+                </tr>
+            </thead>
+            <tbody class="list" *ngFor="let requestObj of requestList">
+                <tr>
+                    <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <span
+                                class="h5 font-weight-bold mb-0">{{requestObj?.overtime_request_employee_details}}</span>
+                        </div>
+                        <div class="col-12 px-0" *ngIf="requestObj?.overtime_request_status_description">
+                            <app-clib-overtime-status-description [requestObj]="requestObj">
+                            </app-clib-overtime-status-description>
+                        </div>
+                    </th>
+                    <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <h5 class="mb-1">
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span class="text-primary">
+                                    {{requestObj.overtime_request_planned_from | date: 'dd MMM yyyy HH:mm'}}
+                                </span>
+                                <i class="fas fa-arrow-right mr-1"></i>
+                                <span class="text-primary">
+                                    {{requestObj.overtime_request_planned_to | date: 'HH:mm'}}</span>
+                            </h5>
+                        </div>
+                        <div class="col-12 px-0">
+                            <span class="h5 font-weight-bold mb-0">
+                                <i class="fas fa-clock mr-1"></i>
+                                <span
+                                    class="h5 text-muted">{{requestObj?.overtime_request_estimated_duration_description}}</span>
+                            </span>
+                        </div>
+                    </th>
+                    <td class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <span class="h5 font-weight-bold mb-0">
+                                <span class="h5 text-primary"
+                                    *ngIf="requestObj?.overtime_request_is_planned">Planned</span>
+                                <span class="h5 text-primary"
+                                    *ngIf="!requestObj?.overtime_request_is_planned">Emergency</span>
+                            </span>
+                        </div>
+                    </td>
+
+                    <td class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <span class="h5 font-weight-bold mb-0">
+                                <i class="fas fa-briefcase mr-1"></i>
+                                <!-- <span class="h5 text-primary">{{requestObj?.overtime_request_work_details |
+                                    slice:0:20}}</span> -->
+                                <span class="h5 text-primary" *ngIf="requestObj?.overtime_request_work_details"> {{ (requestObj?.overtime_request_work_details.length >
+                                    30)? (requestObj?.overtime_request_work_details |
+                                    slice:0:30)+'...':(requestObj?.overtime_request_work_details) }}</span>
+                            </span>
+                        </div>
+                        <div class="col-12 px-0">
+                            <span class="h5 font-weight-bold mb-0">
+                                <i class="fas fa-comment-dots mr-1"></i>
+                                <!-- <span class="h5 text-primary">{{requestObj?.overtime_request_remarks |
+                                    slice:0:20}}</span> -->
+                                <span class="h5 text-primary" *ngIf="requestObj?.overtime_request_remarks"> {{ (requestObj?.overtime_request_remarks.length >
+                                    30)? (requestObj?.overtime_request_remarks |
+                                    slice:0:30)+'...':(requestObj?.overtime_request_remarks) }}</span>
+                            </span>
+                        </div>
+                    </td>
+                    <!-- <td class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <span class="h5 font-weight-bold mb-0">
+                                <i class="fas fa-comment-dots mr-1"></i>
+                                <span class="h5 text-primary" *ngIf="requestObj?.overtime_request_remarks"> {{ (requestObj?.overtime_request_remarks.length >
+                                    30)? (requestObj?.overtime_request_remarks |
+                                    slice:0:30)+'...':(requestObj?.overtime_request_remarks) }}</span>
+                            </span>
+                        </div>
+                    </td> -->
+                    <td class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <span class="text-danger"><i class="fas fa-map-marker-alt mr-1"></i></span>
+                            <!-- <span class="h5 font-weight-bold mb-0">{{requestObj?.overtime_request_location |
+                                slice:0:10}}
+                            </span> -->
+                            <span class="h5 text-primary" *ngIf="requestObj?.overtime_request_location"> {{ (requestObj?.overtime_request_location.length >
+                                15)? (requestObj?.overtime_request_location |
+                                slice:0:15)+'...':(requestObj?.overtime_request_location) }}</span>
+                        </div>
+                    </td>
+                    <td class="px-3 py-1 text-right">
+                        <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip"
+                            data-placement="left" title="Reject request" (click)="showViewRejectModal(requestObj)">
+                            <span class="btn-inner--icon"><i class="fas fa-ban"></i></span>
+                        </button>
+
+                        <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip"
+                            data-placement="left" title="View Details" (click)="showViewRecordDetailsModal(requestObj)">
+                            <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+                        </button>
+                    </td>
+                    <td class="px-3 py-2 text-right">
+                        <form>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input my-auto"
+                                    [ngModelOptions]="{standalone: true}" (change)="changeCheckBox($event, requestObj)"
+                                    [attr.id]="requestObj?.overtime_request_can_upload_to_sap_ui"
+                                    [ngModel]="requestObj?.overtime_request_checkbox_ui">
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+<div #TableViewRecordDetailsModal id="TableViewRecordDetailsModal" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">View Details</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewRecordDetailsModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="requestDetails">
+                <!-- <app-hr-ot-requests-detail-view-model (closeThisModel)="hideViewRecordDetailsModal()"
+                    [selectedData]="selectedData" [showLoader]="showLoader">
+                </app-hr-ot-requests-detail-view-model> -->
+                <app-hr-ot-requests-detail-view-model (closeThisModel)="hideViewRecordDetailsModal()"
+                    [requestDetails]="requestDetails" [showModelLoader]="showModelLoader"
+                    [modelStateError]="modelStateError" [generalApiError]="generalApiError">
+                </app-hr-ot-requests-detail-view-model>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div #TableViewExtendBulkModal id="TableViewExtendBulkModal" class="modal fade">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Bulk extend</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewExtendBulkModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="requestDetails">
+                <app-hr-ot-requests-extend-bulk-model (closeThisModel)="hideViewExtendBulkModal()"
+                    [selectedOtList]="selectedOtList" [showModelLoader]="showModelLoader">
+                </app-hr-ot-requests-extend-bulk-model>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div #TableViewRejectModal id="TableViewRejectModal" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Reject</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewRejectModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="requestDetails">
+                <app-hr-upload-ot-reject (closeThisModel)="hideViewRejectModal()" [requestDetails]="requestDetails"
+                    [showModelLoader]="showModelLoader" [modelStateError]="modelStateError"
+                    [generalApiError]="generalApiError">
+                </app-hr-upload-ot-reject>
+            </div>
+        </div>
+    </div>
+</div>

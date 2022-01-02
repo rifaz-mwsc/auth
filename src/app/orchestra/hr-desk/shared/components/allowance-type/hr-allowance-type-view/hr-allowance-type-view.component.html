@@ -1,0 +1,111 @@
+<div class="card card-stats border mb-4" *ngIf="requestList && requestList.length > 0 && viewType === 'leave-requets'">
+  <div class="card-body px-3 py-3">
+    <div class="row">
+      <div class="col-sm-6 col-md">
+      </div>
+      <div class="col-sm-auto col-md-auto">
+        <!-- <form>
+          <div class="form-check mt-2">
+            <input type="checkbox" class="form-check-input" (change)="changeCheckAll($event)">
+            <label class="form-check-label" for="exampleCheck1">Select All</label>
+          </div>
+        </form> -->
+      </div>
+      <div class="col-sm-6 col-md-auto text-right align-self-end">
+        <!-- <button type="button" class="btn btn-info mb-0" (click)="showViewExtendBulkModal()"><i
+            class="fas fa-expand-arrows-alt"></i> Extend</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-none border-0" *ngIf="requestList && requestList.length > 0">
+  <div class="table-responsive">
+    <table class="table table-hover align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col" class="px-3 py-2">Name</th>
+          <th scope="col" class="px-3 py-2 text-right">Is Attendance Base</th>
+          <th scope="col" class="px-3 py-2 text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let requestObj of requestList">
+        <tr>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_deleted === true ? 'text-danger' : 'text-primary'">{{requestObj?.allowance_type_name}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2 text-right">
+            <div class="col-12 px-0">
+              <span class="badge badge-success" *ngIf="requestObj?.allowance_type_is_attendance_based"> Yes</span>
+              <span class="badge badge-warning" *ngIf="!requestObj?.allowance_type_is_attendance_based"> No</span>
+            </div>
+          </th>
+          <td class="px-3 py-1 text-right">
+
+            <!-- <button class="btn btn-icon btn-warning btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="Update Allowance Type" [disabled]="(!requestObj?.can_delete)" *ngIf="requestObj?.can_delete"
+              (click)="showViewAllowanceTypeUpdateModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
+            </button> -->
+
+            <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="Remove Allowance Type" [disabled]="(!requestObj?.can_delete)" *ngIf="requestObj?.can_delete"
+              (click)="showViewAllowanceTypeDeleteModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+            </button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+<div #ViewAllowanceTypeModalBackdrop class=""></div>
+
+<div #ViewAllowanceTypeUpdateModal id="ViewAllowanceTypeUpdateModal" class="modal fade hide"
+  style="display: none; padding-right: 17px;">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Update Allowance Type</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewAllowanceTypeUpdateModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedItemDetails">
+        <app-hr-allowance-type-delete (closeThisModel)="hideViewAllowanceTypeUpdateModal()"
+          [selectedData]="selectedItemDetails" [showModelLoader]="showModelLoader" [modelStateError]="modelStateError"
+          [generalApiError]="generalApiError"></app-hr-allowance-type-delete>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #ViewAllowanceTypeDeleteModal id="ViewAllowanceTypeDeleteModal" class="modal fade hide"
+  style="display: none; padding-right: 17px;">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Delete Allowance Type</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewAllowanceTypeDeleteModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedItemDetails">
+        <app-hr-allowance-type-delete (closeThisModel)="hideViewAllowanceTypeDeleteModal()"
+          [selectedData]="selectedItemDetails" [showModelLoader]="showModelLoader" [modelStateError]="modelStateError"
+          [generalApiError]="generalApiError"></app-hr-allowance-type-delete>
+      </div>
+    </div>
+  </div>
+</div>

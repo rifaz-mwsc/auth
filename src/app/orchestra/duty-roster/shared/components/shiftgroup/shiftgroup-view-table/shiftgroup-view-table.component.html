@@ -1,0 +1,46 @@
+<div class="card shadow-none border-0" *ngIf="requestList && requestList.length > 0">
+  <div class="table-responsive">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Description</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let listItem of requestList">
+        <tr [ngClass]="{'bg-light': listItem.IsDeleted}">
+          <th class="px-3 py-2">
+            <span class="h4 text-dark">{{listItem.Name}}</span>
+          </th>
+          <td class="px-3 py-2">
+            <span class="h5 text-dark">{{listItem.Description}}</span>
+          </td>
+
+          <td class="px-3 py-2 text-right" *ngIf="shiftgroupViewType === 'manage'">
+            <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip"
+              data-placement="top" title="Remove" *ngIf="!listItem.IsDeleted" (click)="remove(listItem)">
+              <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+            </button>
+            <button type="button" class="btn btn-icon btn-success btn-sm" data-toggle="tooltip"
+              data-placement="top" title="Restore" *ngIf="listItem.IsDeleted" (click)="restore(listItem)">
+              <span class="btn-inner--icon"><i class="fas fa-redo-alt"></i></span>
+            </button>
+            <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+              title="goto Shiftgroup" (click)="gotoShiftgroup(listItem)">
+              <span class="btn-inner--icon"><i class="fas fa-chevron-circle-right"></i></span>
+            </button>
+          </td>
+
+          <td class="px-3 py-2 text-right" *ngIf="shiftgroupViewType === 'select-shift-group'">
+            <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+              title="goto Shift" (click)="gotoShift(listItem)">
+              <span class="btn-inner--icon"><i class="fas fa-chevron-circle-right"></i></span>
+            </button>
+          </td>
+
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

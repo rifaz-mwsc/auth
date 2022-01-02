@@ -1,0 +1,154 @@
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-2">
+                <div class="col-lg">
+                    <h6 class="h2 text-white d-inline-block mb-0">Dutyroster</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+                            <li class="breadcrumb-item active">
+                                <a [routerLink]="['/hr-dutyroster', {outlets: {pages: ['shift-group', shiftGroupManage]}}]">Shiftgroup</a>
+                            </li>
+                            <li class="breadcrumb-item active"><span class="text-dark">Selected Shiftgroup: </span>{{selectedShiftGroup.Name}}</li>
+                            <li class="breadcrumb-item active">Manage</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-auto text-right">
+                    <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
+                    <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header p-3">
+                    <div class="row">
+                        <div class="col">
+                            <div class="nav btn-group nav-fill" role="tablist">
+                                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneOne"
+                                    role="tab" aria-controls="tabPaneOne" aria-selected="true">
+                                    <i class="fas fa-user"></i> <span
+                                        class="h4 font-weight-bold text-white mb-0">Employees</span>
+                                </button>
+                                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneTwo"
+                                    role="tab" aria-controls="tabPaneTwo" aria-selected="false">
+                                    <i class="fas fa-user-tie"></i> <span
+                                        class="h4 font-weight-bold text-white mb-0">Supervisors</span>
+                                </button>
+                                <button class="btn btn-primary px-3 active" data-toggle="tab"
+                                    data-target="#tabPaneThree" role="tab" aria-controls="tabPaneThree"
+                                    aria-selected="false">
+                                    <i class="fas fa-calendar-alt"></i> <span
+                                        class="h4 font-weight-bold text-white mb-0">WeeklyShifts</span>
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="nav btn-group" role="tablist">
+                                <button class="btn btn-primary px-3"
+                                    [ngClass]="selectedView === 'card' ? 'active' : 'inactive'"
+                                    (click)="selectViewType('card')">
+                                    <i class="fas fa-th-large"></i>
+                                </button>
+                                <button class="btn btn-primary px-3"
+                                    [ngClass]="selectedView === 'list' ? 'active' : 'inactive'"
+                                    (click)="selectViewType('list')">
+                                    <i class="fas fa-list"></i>
+                                </button>
+                                <button class="btn btn-primary px-3"
+                                    [ngClass]="selectedView === 'table' ? 'active' : 'inactive'"
+                                    (click)="selectViewType('table')">
+                                    <i class="fas fa-table"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="card-body p-3">
+                    <div class="alert alert-warning px-3 py-2 mb-3" role="alert"
+                        *ngIf="!showLoader &&requestList && requestList.length < 1">
+                        <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                        <span class="alert-text"><strong>Oh Snap!</strong> No Records Found ..!</span>
+                    </div>
+
+                    <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+                        *ngIf="showLoader && requestList && requestList.length < 1">
+                        <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                        <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ..!</span>
+                    </div>
+
+                    <app-clib-loading-xl *ngIf="showLoader"></app-clib-loading-xl>
+
+                    <!-- Tab content -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade" id="tabPaneOne" role="tabpanel">
+                            <!-- Manage-Employees -->
+                            <app-shiftgroup-manage-employees-view-card [selectedView]="selectedView"
+                                [shiftGroupEmployees]="shiftGroupEmployees" [showLoader]="showLoader"
+                                *ngIf="selectedView ==='card'">
+                            </app-shiftgroup-manage-employees-view-card>
+
+                            <app-shiftgroup-manage-employees-view-list [selectedView]="selectedView"
+                                [shiftGroupEmployees]="shiftGroupEmployees" [showLoader]="showLoader"
+                                *ngIf="selectedView ==='list'">
+                            </app-shiftgroup-manage-employees-view-list>
+
+                            <app-shiftgroup-manage-employees-view-table [selectedView]="selectedView"
+                                [shiftGroupEmployees]="shiftGroupEmployees" [showLoader]="showLoader"
+                                *ngIf="selectedView ==='table'">
+                            </app-shiftgroup-manage-employees-view-table>
+                        </div>
+
+                        <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
+                            <!-- Manage-Supervisors -->
+                            <app-shiftgroup-manage-supervisors-view-card [selectedView]="selectedView"
+                                [shiftGroupSupervisors]="shiftGroupSupervisors" [showLoader]="showLoader"
+                                *ngIf="selectedView ==='card'">
+                            </app-shiftgroup-manage-supervisors-view-card>
+
+                            <app-shiftgroup-manage-supervisors-view-list [selectedView]="selectedView"
+                                [shiftGroupSupervisors]="shiftGroupSupervisors" [showLoader]="showLoader"
+                                *ngIf="selectedView ==='list'">
+                            </app-shiftgroup-manage-supervisors-view-list>
+
+                            <app-shiftgroup-manage-supervisors-view-table [selectedView]="selectedView"
+                                [shiftGroupSupervisors]="shiftGroupSupervisors" [showLoader]="showLoader"
+                                *ngIf="selectedView ==='table'">
+                            </app-shiftgroup-manage-supervisors-view-table>
+                        </div>
+
+                        <div class="tab-pane fade active show" id="tabPaneThree" role="tabpanel">
+                            <!-- Manage-Years -->
+                            <app-shiftgroup-manage-years-view-card [selectedView]="selectedView"
+                                [selectedShiftGroupId]="selectedShiftGroupId" [shiftGroupYears]="shiftGroupYears"
+                                [showLoader]="showLoader" *ngIf="selectedView ==='card'">
+                            </app-shiftgroup-manage-years-view-card>
+
+                            <app-shiftgroup-manage-years-view-list [selectedView]="selectedView"
+                                [selectedShiftGroupId]="selectedShiftGroupId" [shiftGroupYears]="shiftGroupYears"
+                                [showLoader]="showLoader" *ngIf="selectedView ==='list'">
+                            </app-shiftgroup-manage-years-view-list>
+
+                            <app-shiftgroup-manage-years-view-table [selectedView]="selectedView"
+                                [selectedShiftGroupId]="selectedShiftGroupId" [shiftGroupYears]="shiftGroupYears"
+                                [showLoader]="showLoader" *ngIf="selectedView ==='table'">
+                            </app-shiftgroup-manage-years-view-table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer pt-0">
+        <app-layout-footer></app-layout-footer>
+    </footer>
+</div>

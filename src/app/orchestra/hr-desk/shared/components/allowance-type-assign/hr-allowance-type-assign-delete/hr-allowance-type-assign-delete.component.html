@@ -1,0 +1,21 @@
+<div *ngIf="selectedData">
+  <div>
+    <app-hr-allowance-type-assign-common-view [selectedData]="selectedData" [showModelLoader]="showModelLoader"
+      [modelStateError]="modelStateError" [generalApiError]="generalApiError"></app-hr-allowance-type-assign-common-view>
+  </div>
+  
+  <div class="row mt-3 mb-1">
+    <div class="col-lg my-0">
+    </div>
+    <div class="col-lg-auto my-0">
+      <div class="form-group float-right my-0">
+        <button class="btn btn-icon btn-danger" type="button" (click)="delete(selectedData)">
+          <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+          <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-trash-alt"></i></span>
+          <span class="btn-inner--text" *ngIf="showModelLoader">Delete ...</span>
+          <span class="btn-inner--text" *ngIf="!showModelLoader">Delete</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

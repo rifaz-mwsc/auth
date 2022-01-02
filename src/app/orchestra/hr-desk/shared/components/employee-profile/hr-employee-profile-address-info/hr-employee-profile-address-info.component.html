@@ -1,0 +1,95 @@
+<!-- <h6 class="h2 text-primary ml-2 mb-3">Address</h6> -->
+
+<a class="nav-link mb-0 px-0" href="#">
+  <h5 class="h5 font-weight-bold text-success mb-2">
+    <span><i class="fas fa-plus-circle mr-2"></i></span> Add Current Address
+  </h5>
+</a>
+
+<h6 class="h4 text-primary font-weight-bold d-inline-block ml-1 mb-3">Current Address</h6>
+<ul class="list-group list-group-flush list mt--2 mb-4" *ngIf="profileAddress">
+  <ng-container *ngFor="let currentAddressObj of profileAddress.currentAddress">
+    <li class="list-group-item px-0 py-2">
+      <div class="row align-items-center">
+        <div class="col-auto my-auto">
+          <i class="fas fa-briefcase fa-2x"></i>
+        </div>
+        <div class="col ml--2">
+          <div class="row align-items-center">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-auto">
+                  <span class="h5 font-weight-bold mb-0 mr-2">{{currentAddressObj?.name}}
+                    ({{currentAddressObj?.apartment_and_floor_no}}, {{currentAddressObj?.street}}, {{currentAddressObj?.city}})</span>
+                  <span class="badge badge-pill badge-default" *ngIf="currentAddressObj?.current_active_address">Active</span>
+                  <span class="badge badge-pill badge-warning" *ngIf="!currentAddressObj?.current_active_address">Inactive</span>
+                </div>
+                <div class="col my-auto">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-link btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(currentAddressObj)">
+            <span class="btn-inner--icon"><i class="fas fa-globe-americas"></i></span> {{currentAddressObj?.privacy}}
+          </button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(currentAddressObj)">
+            <span class="btn-inner--icon"><i class="fas fa-ellipsis-h"></i></span>
+          </button>
+        </div>
+      </div>
+    </li>
+  </ng-container>
+</ul>
+
+
+
+<a class="nav-link mb-0 px-0" href="#">
+  <h5 class="h5 font-weight-bold text-success mb-2">
+    <span><i class="fas fa-plus-circle mr-2"></i></span> Add Permanent Address
+  </h5>
+</a>
+
+<h6 class="h4 text-primary font-weight-bold d-inline-block ml-1 mb-3">Permanent Address</h6>
+<ul class="list-group list-group-flush list mt--2 mb-3" *ngIf="profileAddress">
+  <ng-container *ngFor="let permanentAddressObj of profileAddress.permanentAddress">
+    <li class="list-group-item px-0 py-2">
+      <div class="row align-items-center">
+        <div class="col-auto my-auto">
+          <i class="fas fa-briefcase fa-2x"></i>
+        </div>
+        <div class="col ml--2">
+          <div class="row align-items-center">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-auto">
+                  <span class="h5 font-weight-bold mb-0 mr-2">{{permanentAddressObj?.name}}
+                    ({{permanentAddressObj?.apartment_and_floor_no}}, {{permanentAddressObj?.street}}, {{permanentAddressObj?.city}})</span>
+                </div>
+                <div class="col my-auto">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-link btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(permanentAddressObj)">
+            <span class="btn-inner--icon"><i class="fas fa-globe-americas"></i></span> {{permanentAddressObj?.privacy}}
+          </button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(permanentAddressObj)">
+            <span class="btn-inner--icon"><i class="fas fa-ellipsis-h"></i></span>
+          </button>
+        </div>
+      </div>
+    </li>
+  </ng-container>
+</ul>

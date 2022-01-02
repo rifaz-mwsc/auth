@@ -1,0 +1,4 @@
+<div *ngIf="requestObj">
+  <span class="badge badge-muted"
+    [ngClass]="getStatusDescriptionColorCode(requestObj)">{{requestObj?.leave_request_status_description}}</span>
+</div>

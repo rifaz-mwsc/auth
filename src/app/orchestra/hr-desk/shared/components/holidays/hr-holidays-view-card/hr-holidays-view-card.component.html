@@ -1,0 +1,121 @@
+<div class="row" *ngIf="requestList && requestList.length > 0">
+  <ng-container *ngFor="let holidayRequest of requestList">
+    <div class="col-xl-4 col-md-6">
+      <div class="card card-stats shadow">
+        <div class="card-body my-auto" [ngClass]="{'bg-light': holidayRequest.holiday_is_deleted}">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col-lg-12 pr-2">
+                  <span class="h4 font-weight-bold mb-0">{{holidayRequest?.holiday_name}}</span>
+                </div>
+                <div class="col-lg-12">
+                  <h6 class="card-title text-uppercase text-muted mt-1 mb-1">{{holidayRequest?.holiday_type}}</h6>
+                </div>
+                <div class="col-lg-12 pr-2">
+                  <h5 class="mb-1">
+                    <i class="fas fa-calendar"></i>
+                    <span class="text-primary"> {{holidayRequest?.holiday_date | date: 'dd MMM yyyy'}} </span>
+                  </h5>
+                </div>
+              </div>
+            </div>
+            <div class="col-auto my-auto pl-2">
+              <button type="button" class="btn btn-pinterest btn-icon-only rounded-circle" data-toggle="tooltip"
+                data-placement="bottom" title="Remove Request" [disabled]="(!holidayRequest.holiday_can_remove)" (click)="showRemoveModal(holidayRequest)">
+                <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+              </button>
+
+              <button type="button" class="btn btn-google-plus btn-icon-only rounded-circle" data-toggle="tooltip"
+                data-placement="bottom" title="View Details" (click)="showViewRecordDetailsModal(holidayRequest)">
+                <i class="fas fa-eye"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+
+
+
+<div #CardViewRecordDetailsModal id="CardViewRecordDetailsModal" class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Holiday Details</h5>
+        <button type="button" class="close py-3" (click)="hideViewRecordDetailsModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedData">
+        <app-hr-holidays-detail-view-model [selectedData]="selectedData" [showLoader]="showLoader">
+        </app-hr-holidays-detail-view-model>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div #CardViewRemoveModal id="CardViewRemoveModal" class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Remove Holiday</h5>
+        <button type="button" class="close py-3" (click)="hideRemoveModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedData">
+        <app-hr-holidays-detail-view-model [selectedData]="selectedData" [showLoader]="showLoader">
+        </app-hr-holidays-detail-view-model>
+
+        <div class="alert alert-warning px-3 py-2 mt-3" role="alert" *ngIf='generalApiError'>
+          <span class="h4 text-white"><i class="fas fa-exclamation-circle"></i> <strong> Error !</strong>
+            {{generalApiError}}
+            ... !</span>
+          <hr class="my-2">
+          <div class="col-lg-12" *ngIf="modelStateError && modelStateError.hoilday_id">
+            <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.hoilday_id">
+              <li class="mt-0" *ngFor="let error of modelStateError.hoilday_id">
+                <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-12" *ngIf="modelStateError && modelStateError['expires on']">
+            <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['expires on']">
+              <li class="mt-0" *ngFor="let error of modelStateError['expires on']">
+                <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+              </li>
+            </ul>
+          </div>
+          <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+            <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['']">
+              <li class="mt-0" *ngFor="let error of modelStateError['']">
+                <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="row mt-4 mb-1">
+          <div class="col-lg my-0">
+          </div>
+          <div class="col-lg-auto my-0">
+            <div class="form-group float-right my-0">
+              <button class="btn btn-icon btn-danger" type="button" (click)="postRemoveHoliday(selectedData)">
+                <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-trash-alt"></i></span>
+                <span class="btn-inner--text" *ngIf="showModelLoader">Removing Holiday ...</span>
+                <span class="btn-inner--text" *ngIf="!showModelLoader">Remove Holiday</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

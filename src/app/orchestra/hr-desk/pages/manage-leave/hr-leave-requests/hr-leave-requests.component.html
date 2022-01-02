@@ -1,0 +1,303 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">HR Desk</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+              <li class="breadcrumb-item active">{{ pageInfo.page_title | titlecase }}</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col">
+            </div>
+            <div class="col-auto">
+              <div class="row mt-2">
+                <div class="col">
+                  <label class="form-control-label mb-0" for="example3cols1Input">Turn Filters </label>
+                </div>
+                <div class="col-auto">
+                  <div class="form-group mb-0">
+                    <label class="custom-toggle custom-toggle-default">
+                      <input type="checkbox" checked="" [(ngModel)]="filter.show_filters"
+                        (change)="showHideFilters(filter.show_filters ? true : false)">
+                      <span class="custom-toggle-slider rounded-circle" data-label-off="Off" data-label-on="On"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div class="nav btn-group" role="tablist">
+                <!-- <button class="btn btn-muted px-3 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+                  aria-controls="tabPaneOne" aria-selected="true">
+                  <i class="fas fa-th-large"></i>
+                </button> -->
+                <button class="btn btn-primary px-3 active" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+                  aria-controls="tabPaneTwo" aria-selected="false">
+                  <i class="fas fa-list"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneThree" role="tab"
+                  aria-controls="tabPaneThree" aria-selected="false">
+                  <i class="fas fa-table"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-3">
+
+          <div class="card card-stats mb-3 shadow-lg border" style="background-color: #e9ecef;"
+            *ngIf="filter.show_filters">
+            <div class="card-body px-3 py-3">
+              <div class="row">
+                <div class="col-sm-6 col-md-2 col-lg-auto pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label form-control-sm-label" for="example3cols3Input">Leave Type</label>
+                    <select class="form-control" [(ngModel)]="filter.leave_type">
+                      <option value="{{leavetype.Id}}" *ngFor="let leavetype of filter.leave_type_list">
+                        {{leavetype.Name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-1 col-lg-auto pl-xl-2 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example3cols1Input">Employee Id</label>
+                    <input type="text" class="form-control" placeholder="Employee ID" name="filter.employee_id"
+                      [(ngModel)]="filter.employee_id">
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-2 col-lg-2 pl-xl-2 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example4cols2Input">Division</label>
+                    <select class="form-control" [(ngModel)]="filter.division" [disabled]="filter.disable_division"
+                      (change)="divisionOnChange($event.target.value)">
+                      <option [value]="divisionItem.organization_division_id"
+                        *ngFor="let divisionItem of filter.division_list">
+                        {{divisionItem.organization_division_name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-2 col-lg-1 pl-xl-2 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example4cols3Input">Department</label>
+                    <select class="form-control" [(ngModel)]="filter.department" [disabled]="filter.disable_department"
+                      (change)="departmentOnChange($event.target.value)">
+                      <option [value]="departmentItem.organization_department_id"
+                        *ngFor="let departmentItem of filter.department_list">
+                        {{departmentItem.organization_department_name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md-2 col-lg-1 pl-xl-2 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example4cols3Input">Section</label>
+                    <select class="form-control" [(ngModel)]="filter.section" [disabled]="filter.disable_section"
+                      (change)="sectionOnChange($event.target.value)">
+                      <option [value]="sectionItem.organization_section_id"
+                        *ngFor="let sectionItem of filter.section_list">
+                        {{sectionItem.organization_section_name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md-2 col-lg-1 pl-xl-2 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example3cols3Input">SAP Upload</label>
+                    <select class="form-control" [(ngModel)]="filter.sap_pending_status">
+                      <option value="{{sapUploadStatus.Name}}"
+                        *ngFor="let sapUploadStatus of filter.sap_pending_status_list">
+                        {{sapUploadStatus.Label}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md-auto col-lg-auto pl-xl-2 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example4cols1Input">Supv Approval
+                    </label>
+                    <select class="form-control" [(ngModel)]="filter.supervisor_approval_status">
+                      <option value="{{supervisorApprovalStatus.Name}}"
+                        *ngFor="let supervisorApprovalStatus of filter.supervisor_approval_status_list">
+                        {{supervisorApprovalStatus.Label}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md-1 col-lg-1 pl-xl-2 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example3cols1Input">Year</label>
+                    <input type="text" class="form-control" placeholder="Year" name="filter.year"
+                      [(ngModel)]="filter.year">
+                  </div>
+                </div>
+                <div class="col-sm-6 col-md-1 col-lg-1 pl-xl-2 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example3cols1Input">Month</label>
+                    <input type="text" class="form-control" placeholder="Month" name="filter.month"
+                      [(ngModel)]="filter.month">
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md text-right align-self-end">
+                  <div class="form-group mb-0">
+                    <button class="btn btn-primary" (click)="getRequestForPageOneOnlyWithFilter(1)">Search
+                      <i class="fas fa-search" aria-hidden="true"></i></button>
+                  </div>
+
+                  <!-- <button type="button" class="btn btn-primary mb-2"
+                    (click)="getRequestForPageOneOnlyWithFilter(1)">Search</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <app-clib-page-alert [pageInfo]="pageInfo" [request]="request" [showLoader]="requestUi.show_loader"
+            [generalApiError]="generalApiError" [modelStateError]="modelStateError"></app-clib-page-alert>
+
+          <app-comp-lib-loading [viewType]="requestUi.loaderSize" *ngIf="requestUi.show_loader"></app-comp-lib-loading>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade" id="tabPaneOne" role="tabpanel">
+              <!-- Card-View -->
+              <app-hr-leave-requests-view-card (requestToRefreshApiData)="refreshApiData()"
+                [requestList]="request.items" [showLoader]="requestUi.show_loader" [viewType]="requestUi.viewType">
+              </app-hr-leave-requests-view-card>
+            </div>
+
+            <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
+              <!-- List-View -->
+              <app-hr-leave-requests-view-list (requestToRefreshApiData)="refreshApiData()"
+                [requestList]="request.items" [showLoader]="requestUi.show_loader" [viewType]="requestUi.viewType">
+              </app-hr-leave-requests-view-list>
+            </div>
+
+            <div class="tab-pane fade active show" id="tabPaneThree" role="tabpanel">
+              <!-- Table-View -->
+              <app-hr-leave-requests-view-table (requestToRefreshApiData)="refreshApiData()"
+                [requestList]="request.items" [showLoader]="requestUi.show_loader" [viewType]="requestUi.viewType">
+              </app-hr-leave-requests-view-table>
+            </div>
+
+            <!-- Component-Library - Pagination -->
+            <div class="row" *ngIf="request.pagination">
+              <div class="col my-auto">
+                <span class="h5 text-muted">Showing {{request.pagination.item_start}} to
+                  {{request.pagination.item_end}} of {{request.pagination.total_count}}
+                  entries</span>
+              </div>
+              <div class="col">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end mb-1">
+                    <li class="page-item" [ngClass]="{'disabled': request.pagination.page_number === 1}">
+                      <a class="page-link" [ngClass]="{'bg-light': request.pagination.page_number === 1}"
+                        (click)="getRequestFromPaginationFirst(1)" tabindex="-1">
+                        <i class="fa fa-fast-backward"></i> <span class="sr-only">First</span>
+                      </a>
+                    </li>
+                    <li class="page-item" [ngClass]="{'disabled': request.pagination.page_number === 1}">
+                      <a class="page-link" [ngClass]="{'bg-light': request.pagination.page_number === 1}"
+                        (click)="getRequestFromPaginationPrv(request.pagination.page_number)" tabindex="-1">
+                        <i class="fa fa-angle-left"></i> <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+
+                    <ng-container
+                      *ngFor="let data of request.pagination.page_list; index as i; first as isFirst; last as isLast">
+                      <!-- <li class="page-item disabled"
+                        *ngIf="isFirst && request.pagination.page_list[0].show_page === false">
+                        <a class="page-link bg-light" tabindex="-1">
+                          <i class="fa fa-ellipsis-h"></i> <span class="sr-only">...</span>
+                        </a>
+                      </li> -->
+                      <li class="page-item" [ngClass]="{'active': data.page_number === request.pagination.page_number}">
+                        <a class="page-link" (click)="getRequestFromPagination(data.page_number)"
+                          *ngIf="data.show_page">{{data.page_number}}</a>
+                      </li>
+                      <!-- <li class="page-item disabled"
+                        *ngIf="isLast && (data.show_page === false && data.page_number === request.total_pages)">
+                        <a class="page-link bg-light" tabindex="-1">
+                          <i class="fa fa-ellipsis-h"></i> <span class="sr-only">...</span>
+                        </a>
+                      </li> -->
+                    </ng-container>
+
+                    <li class="page-item"
+                      [ngClass]="{'disabled': request.pagination.page_number === request.pagination.total_pages}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': request.pagination.page_number === request.pagination.total_pages}"
+                        (click)="getRequestFromPaginationNext(request.pagination.page_number)">
+                        <i class="fa fa-angle-right"></i><span class="sr-only">Next</span>
+                      </a>
+                    </li>
+
+                    <li class="page-item"
+                      [ngClass]="{'disabled': request.pagination.page_number === request.pagination.total_pages}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': request.pagination.page_number === request.pagination.total_pages}"
+                        (click)="getRequestFromPaginationLast(request.pagination.total_pages)">
+                        <i class="fa fa-fast-forward"></i><span class="sr-only">Last</span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>
+
+
+
+<div #ViewCreateLeaveModal id="ViewCreateLeaveModal" class="modal fade" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Apply for Leave</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewCreateLeaveModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request">
+        <!-- <app-leave-create-model></app-leave-create-model> -->
+      </div>
+    </div>
+  </div>
+</div>

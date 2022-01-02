@@ -1,0 +1,211 @@
+<div class="card card-stats border mb-4" *ngIf="requestList && requestList.length > 0 && viewType==='leave-requets'">
+    <div class="card-body px-3 py-3">
+        <div class="row">
+            <div class="col-sm-6 col-md">
+            </div>
+            <div class="col-sm-auto col-md-auto">
+                <form>
+                    <div class="form-check mt-2">
+                        <input type="checkbox" class="form-check-input" (change)="changeCheckAll($event)">
+                        <label class="form-check-label" for="exampleCheck1">Select All</label>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6 col-md-auto text-right align-self-end">
+                <button type="button" class="btn btn-info mb-0" (click)="showViewExtendBulkModal()"><i
+                        class="fas fa-expand-arrows-alt"></i> Extend</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="card shadow-none border-0" *ngIf="requestList && requestList.length > 0">
+    <div class="table-responsive">
+        <table class="table table-hover align-items-center table-flush">
+            <thead class="thead-light">
+                <tr>
+                    <th scope="col" class="px-3 py-2">Employee Details / Status</th>
+                    <th scope="col" class="px-3 py-2">Date from / to</th>
+                    <th scope="col" class="px-3 py-2">Leave Type</th>
+                    <th scope="col" class="px-3 py-2">Date Created</th>
+                    <th scope="col" class="px-3 py-2 text-right">Action</th>
+                    <th scope="col" class="px-3 py-2 text-right" *ngIf="viewType==='leave-requets'">Selection</th>
+                </tr>
+            </thead>
+            <tbody class="list" *ngFor="let requestObj of requestList">
+                <tr>
+                    <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <span class="h5 font-weight-bold mb-1">{{requestObj?.leave_request_employee_details}}</span>
+                        </div>
+                        <div class="col-12 px-0" *ngIf="requestObj?.leave_request_status_description">
+                            <!-- <span class="badge badge-muted" [ngClass]="getStatusDescriptionColorCode(requestObj)">
+                                {{requestObj?.leave_request_status_description}}</span> -->
+                            <app-clib-leave-status-description [requestObj]="requestObj">
+                            </app-clib-leave-status-description>
+                        </div>
+                    </th>
+                    <th scope="row" class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <h5 class="mb-0">
+                                <i class="fas fa-calendar mr-1"></i>
+                                <span class="text-primary">
+                                    {{requestObj?.leave_request_taken_from | date: 'dd MMM yyyy'}}
+                                </span>
+                                <i class="fas fa-arrow-right mr-1"></i>
+                                <span class="text-primary">
+                                    {{requestObj?.leave_request_taken_to | date: 'dd MMM yyyy'}}</span>
+                            </h5>
+                        </div>
+                        <div class="col-12 px-0">
+                            <span class="h5 font-weight-bold mb-0">
+                                <i class="fas fa-clock mr-1"></i> <span
+                                    class="h5 text-muted">{{requestObj?.leave_request_requested_duration_date}}</span>
+                            </span>
+                        </div>
+                    </th>
+                    <td class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <span class="text-danger"><i class="fas fa-certificate"></i></span>
+                            <span class="h5 font-weight-bold mb-0">
+                                {{requestObj?.leave_request_absence_type_description}}
+                            </span>
+                        </div>
+                        <div class="col-12 px-0" *ngIf="requestObj?.leave_request_is_self_certification">
+                            <span class="text-danger"><i class="fas fa-user-plus"></i></span>
+                            <span class="h5 font-weight-bold mb-0">
+                                Self Certification
+                            </span>
+                        </div>
+                    </td>
+                    <td class="px-3 py-2">
+                        <div class="col-12 px-0">
+                            <span class="h5 font-weight-bold mb-0">{{requestObj?.leave_request_created_on | date: 'dd
+                                MMM yyyy HH:mm'}}</span>
+                        </div>
+                    </td>
+                    <td class="px-3 py-1 text-right">
+                        <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip"
+                            data-placement="left" title="Reject Leave Request" *ngIf="viewType != 'leave-shorten'"
+                            (click)="showViewRejectModal(requestObj)">
+                            <span class="btn-inner--icon"><i class="fas fa-ban"></i></span>
+                        </button>
+
+                        <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip"
+                            data-placement="left" title="Accept Shorten Leave" *ngIf="viewType === 'leave-shorten'"
+                            (click)="showViewAcceptShortenModal(requestObj)">
+                            <span class="btn-inner--icon"><i class="fas fa-hand-scissors"></i></span>
+                        </button>
+
+                        <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip"
+                            data-placement="left" title="Reject Shorten Leave" *ngIf="viewType === 'leave-shorten'"
+                            (click)="showViewRejectShortenModal(requestObj)">
+                            <span class="btn-inner--icon"><i class="fas fa-ban"></i></span>
+                        </button>
+
+                        <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip"
+                            data-placement="left" title="View Details" (click)="showViewRecordDetailsModal(requestObj)">
+                            <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+                        </button>
+                    </td>
+                    <td class="px-3 py-2 text-right" *ngIf="viewType==='leave-requets'">
+                        <form>
+                            <div class="form-check">
+                                <input type="checkbox" class="form-check-input my-auto"
+                                    [ngModelOptions]="{standalone: true}" (change)="changeCheckBox($event, requestObj)"
+                                    [attr.id]="requestObj?.leave_request_can_upload_to_sap_ui"
+                                    [ngModel]="requestObj?.leave_request_checkbox_ui">
+                            </div>
+                        </form>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
+
+
+
+
+
+
+<div #TableViewRecordDetailsModal id="TableViewRecordDetailsModal" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">View Details</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewRecordDetailsModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="requestDetails">
+                <app-hr-leave-requests-detail-view-model (closeThisModel)="hideViewRecordDetailsModal()"
+                    [requestDetails]="requestDetails" [showModelLoader]="showModelLoader">
+                </app-hr-leave-requests-detail-view-model>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div #TableViewShortenModal id="TableViewShortenModal" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Shorten Leave</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewShortenModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="requestDetails">
+                <app-hr-leave-requests-shoten-model (closeThisModel)="hideViewShortenModal()"
+                    [requestDetails]="requestDetails" [shortenRequestType]="shortenRequestType"
+                    [showModelLoader]="showModelLoader" [modelStateError]="modelStateError"
+                    [generalApiError]="generalApiError">
+                </app-hr-leave-requests-shoten-model>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div #TableViewExtendBulkModal id="TableViewExtendBulkModal" class="modal fade">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Bulk extend</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewExtendBulkModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="requestDetails">
+                <app-hr-leave-requests-extend-bulk-model (closeThisModel)="hideViewExtendBulkModal()"
+                    [selectedLeaveList]="selectedLeaveList" [showModelLoader]="showModelLoader">
+                </app-hr-leave-requests-extend-bulk-model>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div #TableViewRejectModal id="TableViewRejectModal" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Reject</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewRejectModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="requestDetails">
+                <app-hr-upload-leave-reject (closeThisModel)="hideViewRejectModal()" [requestDetails]="requestDetails"
+                    [showModelLoader]="showModelLoader" [modelStateError]="modelStateError"
+                    [generalApiError]="generalApiError">
+                </app-hr-upload-leave-reject>
+            </div>
+        </div>
+    </div>
+</div>

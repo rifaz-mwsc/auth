@@ -1,0 +1,318 @@
+<div class="header bg-primary pb-6 d-flex align-items-center">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">HR Desk</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+              <li class="breadcrumb-item active">Organization</li>
+              <li class="breadcrumb-item active">Change Structure</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-6">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="card-header bg-light py-3">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <h3 class="mb-0">Current Structure</h3>
+                </div>
+                <div class="col">
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+
+              <form>
+                <div class="form-group row row mb-2">
+                  <label for="example-text-input" class="col-md-2 col-form-label form-control-label">Division</label>
+                  <div class="col-xl-8">
+                    <select class="form-control form-control-sm" [(ngModel)]="currentDivision" name="division"
+                      id="division" [disabled]="disableCurrentDivision"
+                      (change)="divisionOnChange($event.target.value)">
+                      <option value="{{divisionItem.organization_division_id}}"
+                        *ngFor="let divisionItem of currentDivisionList">
+                        {{divisionItem.organization_division_name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row row mb-2">
+                  <label for="example-search-input"
+                    class="col-md-2 col-form-label form-control-label">Department</label>
+                  <div class="col-xl-8">
+                    <select class="form-control form-control-sm" [(ngModel)]="currentDepartment" name="department"
+                      id="department" [disabled]="disableCurrentDepartment"
+                      (change)="departmentOnChange($event.target.value)">
+                      <option value="{{departmentItem.organization_department_id}}"
+                        *ngFor="let departmentItem of currentDepartmentList">
+                        {{departmentItem.organization_department_name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row row mb-2">
+                  <label for="example-email-input" class="col-md-2 col-form-label form-control-label">Section</label>
+                  <div class="col-xl-8">
+                    <select class="form-control form-control-sm" [(ngModel)]="currentSection" name="section"
+                      id="section" [disabled]="disableCurrentSection" (change)="sectionOnChange($event.target.value)">
+                      <option value="{{sectionItem.organization_section_id}}"
+                        *ngFor="let sectionItem of currentSectionList">
+                        {{sectionItem.organization_section_name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+
+              <div class="row">
+                <div class="col-lg-12 px-2 py-2 my-0">
+                  <div class="col-10 my-0">
+                    <div class="form-group float-right my-0">
+                      <div class="form-group float-right my-0">
+                        <button class="btn btn-icon btn-primary mb-2" type="button" (click)="getCurrentEmployeeList()"
+                          [disabled]="disableCurrentEmployeeSearchButton || showCurrentEmployeeSearchLoader">
+                          <span class="btn-inner--icon" *ngIf="showCurrentEmployeeSearchLoader"><i
+                              class="fas fa-spinner fa-spin"></i></span>
+                          <span class="btn-inner--icon" *ngIf="!showCurrentEmployeeSearchLoader"><i
+                              class="fas fa-sync-alt"></i></span>
+                          <span class="btn-inner--text" *ngIf="showCurrentEmployeeSearchLoader">Getting Employee List
+                            ...</span>
+                          <span class="btn-inner--text" *ngIf="!showCurrentEmployeeSearchLoader">Get Employee
+                            List</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-auto my-0">
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-12">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0 py-3">
+              <h4 class="mb-0">Existing Employee List</h4>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="">Employee</th>
+                    <th scope="col" class="text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="list" *ngFor="let currentEmployee of currentEmployeeList">
+                  <tr>
+                    <th class="px-3 py-2">
+                      <div class="row align-items-center">
+                        <div class="col-auto my-auto">
+                          <button type="button" class="btn btn-facebook btn-icon-only rounded-circle"
+                            *ngIf="!currentEmployee?.employee_picture_path">
+                            <span class="btn-inner--icon">{{currentEmployee?.employee_name_with_id | slice:0:1}}</span>
+                          </button>
+                          <span class="avatar rounded-circle" *ngIf="currentEmployee?.employee_picture_path">
+                            <img src={{currentEmployee?.employee_picture_path}} alt="..."
+                              style="width: 48px; height: 48px; object-fit: cover;" />
+                          </span>
+                        </div>
+                        <div class="col">
+                          <div class="row">
+                            <div class="col-auto">
+                              <span class="h4 text-primary font-weight-bold mb-0">
+                                {{currentEmployee?.employee_name_with_id}}
+                              </span>
+                            </div>
+                            <div class="col">
+                              <span class="h5 text-muted font-weight-bold mb-0">
+                                {{currentEmployee?.employee_designation}}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <td class="text-right px-4 py-2">
+                      <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip"
+                        data-placement="left" title="View Details"
+                        (click)="moveToNewOrganizationStructure(currentEmployee)">
+                        <span class="btn-inner--icon"><i class="fas fa-arrow-circle-right"></i></span>
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-6">
+      <div class="row">
+        <div class="col-xl-12">
+          <div class="card">
+            <div class="card-header bg-light py-3">
+              <div class="row align-items-center">
+                <div class="col-auto">
+                  <h3 class="mb-0">New Structure </h3>
+                </div>
+                <div class="col">
+                </div>
+              </div>
+            </div>
+            <div class="card-body">
+              <form>
+                <div class="form-group row mb-2">
+                  <label for="example-text-input" class="col-md-2 col-form-label form-control-label">Division</label>
+                  <div class="col-xl-8">
+                    <select class="form-control form-control-sm" [(ngModel)]="newDivision" name="division" id="division"
+                      [disabled]="disableNewDivision" (change)="newDivisionOnChange($event.target.value)">
+                      <option value="{{divisionItem.organization_division_id}}"
+                        *ngFor="let divisionItem of newDivisionList">
+                        {{divisionItem.organization_division_name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row mb-2">
+                  <label for="example-search-input"
+                    class="col-md-2 col-form-label form-control-label">Department</label>
+                  <div class="col-xl-8">
+                    <select class="form-control form-control-sm" [(ngModel)]="newDepartment" name="department"
+                      id="department" [disabled]="disableNewDepartment"
+                      (change)="newDepartmentOnChange($event.target.value)">
+                      <option value="{{departmentItem.organization_department_id}}"
+                        *ngFor="let departmentItem of newDepartmentList">
+                        {{departmentItem.organization_department_name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+                <div class="form-group row row mb-2">
+                  <label for="example-email-input" class="col-md-2 col-form-label form-control-label">Section</label>
+                  <div class="col-xl-8">
+                    <select class="form-control form-control-sm" [(ngModel)]="newSection" name="section" id="section"
+                      [disabled]="disableNewSection" (change)="newSectionOnChange($event.target.value)">
+                      <option value="{{sectionItem.organization_section_id}}"
+                        *ngFor="let sectionItem of newSectionList">
+                        {{sectionItem.organization_section_name}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </form>
+
+              <div class="row">
+                <div class="col-lg-12 px-2 py-2 my-0">
+                  <div class="col-10 my-0">
+                    <div class="form-group float-right my-0">
+                      <div class="form-group float-right my-0">
+                        <button class="btn btn-icon btn-primary mb-2" type="button" (click)="getNewEmployeeList()"
+                          [disabled]="disableNewEmployeeSearchButton || showNewEmployeeSearchLoader">
+                          <span class="btn-inner--icon" *ngIf="showNewEmployeeSearchLoader"><i
+                              class="fas fa-spinner fa-spin"></i></span>
+                          <span class="btn-inner--icon" *ngIf="!showNewEmployeeSearchLoader"><i
+                              class="fas fa-sync-alt"></i></span>
+                          <span class="btn-inner--text" *ngIf="showNewEmployeeSearchLoader">Getting Employee List
+                            ...</span>
+                          <span class="btn-inner--text" *ngIf="!showNewEmployeeSearchLoader">Get Employee List</span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="col-auto my-0">
+                  </div>
+                </div>
+              </div>
+
+            </div>
+          </div>
+        </div>
+        <div class="col-xl-12">
+          <div class="card">
+            <!-- Card header -->
+            <div class="card-header border-0 py-3">
+              <h4 class="mb-0">Employee List</h4>
+            </div>
+            <div class="table-responsive">
+              <table class="table align-items-center table-flush">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col" class="">Employee</th>
+                    <th scope="col" class="text-right">Action</th>
+                  </tr>
+                </thead>
+                <tbody class="list" *ngFor="let newEmployee of newEmployeeList">
+                  <tr>
+                    <th class="px-3 py-2">
+                      <div class="row align-items-center">
+                        <div class="col-auto my-auto">
+                          <button type="button" class="btn btn-facebook btn-icon-only rounded-circle"
+                            *ngIf="!newEmployee?.employee_picture_path">
+                            <span class="btn-inner--icon">{{newEmployee?.employee_name_with_id | slice:0:1}}</span>
+                          </button>
+                          <span class="avatar rounded-circle" *ngIf="newEmployee?.employee_picture_path">
+                            <img src={{newEmployee?.employee_picture_path}} alt="..."
+                              style="width: 48px; height: 48px; object-fit: cover;" />
+                          </span>
+                        </div>
+                        <div class="col">
+                          <div class="row">
+                            <div class="col-auto">
+                              <span class="h4 text-primary font-weight-bold mb-0">
+                                {{newEmployee?.employee_name_with_id}}
+                              </span>
+                            </div>
+                            <div class="col">
+                              <span class="h5 text-muted font-weight-bold mb-0">
+                                {{newEmployee?.employee_designation}}
+                              </span>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </th>
+                    <td class="text-right px-4 py-2">
+                      <!-- <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip"
+                        data-placement="left" title="View Details" (click)="showViewRecordDetailsModal(newEmployee)">
+                        <span class="btn-inner--icon"><i class="fas fa-arrow-circle-right"></i></span>
+                      </button> -->
+                      <div class="col-12 px-0">
+                        <span class="badge badge-success">Moved</span>
+                      </div>
+                      <div class="col-12 px-0">
+                        <span class="badge badge-danger">Error Moving Employee</span>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>

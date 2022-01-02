@@ -1,0 +1,26 @@
+<ul class="list-group list-group-flush list mt--2 mb-3" *ngIf="shiftGroupYears && shiftGroupYears.length > 0">
+  <ng-container *ngFor="let listItem of shiftGroupYears">
+    <li class="list-group-item px-0 py-2" [ngClass]="{'bg-light': listItem.IsDeleted}">
+      <div class="row align-items-center">
+        <div class="col ml-3">
+          <div class="row align-items-center">
+            <div class="col-auto my-auto">
+              <i class="fas fa-calendar-alt fa-3x"></i>
+            </div>
+            <div class="col">
+              <span class="display-3 font-weight-bold text-dark">{{listItem}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-auto mr-3">
+          <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="goto WeeklyShift" (click)="gotoWeeklyShift(listItem)">
+            <span class="btn-inner--icon"><i class="fas fa-chevron-circle-right"></i></span>
+          </button>
+        </div>
+
+      </div>
+    </li>
+  </ng-container>
+</ul>

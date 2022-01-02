@@ -1,0 +1,120 @@
+<div class="card card-stats border mb-4" *ngIf="requestList && requestList.length > 0 && viewType==='leave-requets'">
+  <div class="card-body px-3 py-3">
+    <div class="row">
+      <div class="col-sm-6 col-md">
+      </div>
+      <div class="col-sm-auto col-md-auto">
+        <!-- <form>
+          <div class="form-check mt-2">
+            <input type="checkbox" class="form-check-input" (change)="changeCheckAll($event)">
+            <label class="form-check-label" for="exampleCheck1">Select All</label>
+          </div>
+        </form> -->
+      </div>
+      <div class="col-sm-6 col-md-auto text-right align-self-end">
+        <!-- <button type="button" class="btn btn-info mb-0" (click)="showViewExtendBulkModal()"><i
+            class="fas fa-expand-arrows-alt"></i> Extend</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-none border-0" *ngIf="requestList && requestList.length > 0">
+  <div class="table-responsive">
+    <table class="table table-hover align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col" class="px-3 py-2"></th>
+          <th scope="col" class="px-3 py-2">Employee Id</th>
+          <th scope="col" class="px-3 py-2">Allowance Name</th>
+          <th scope="col" class="px-3 py-2">Valid From</th>
+          <th scope="col" class="px-3 py-2">Valid To</th>
+          <th scope="col" class="px-3 py-2">Created On</th>
+          <th scope="col" class="px-3 py-2 text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let requestObj of requestList">
+        <tr>
+          <th class="px-3 py-1 text-center justify-content-center">
+            <div class="col-12 px-0 mx-0">
+              <span class="avatar avatar-sm rounded-circle"
+                *ngIf="requestObj?.allowance_assigned_employee_profile_picture_path">
+                <img [src]="requestObj?.allowance_assigned_employee_profile_picture_path" alt="..."
+                  style="width: 36px; height: 36px; object-fit: cover;" />
+              </span>
+              <span class="avatar avatar-sm rounded-circle"
+                *ngIf="!requestObj?.allowance_assigned_employee_profile_picture_path">
+                <img src="../../assets/img/theme/team-00.jpg" alt="..."
+                  style="width: 36px; height: 36px; object-fit: cover;">
+              </span>
+            </div>
+          </th>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_deleted === true ? 'text-danger' : 'text-primary'">{{requestObj?.allowance_assigned_employee_id}}</span>
+            </div>
+          </th>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_deleted === true ? 'text-danger' : 'text-primary'">{{requestObj?.allowance_assigned_allowance_type_name}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_deleted === true ? 'text-danger' : 'text-primary'">{{requestObj?.allowance_assigned_valid_from_friendly}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_deleted === true ? 'text-danger' : 'text-primary'">{{requestObj?.allowance_assigned_valid_to_friendly}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_deleted === true ? 'text-danger' : 'text-primary'">{{requestObj?.allowance_assigned_created_on_friendly}}</span>
+            </div>
+          </th>
+          <td class="px-3 py-1 text-right">
+
+            <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="Remove Allowance Type Assign" [disabled]="(!requestObj?.can_delete)" *ngIf="requestObj?.can_delete"
+              (click)="showViewAllowanceTypeAssignDeleteModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+            </button>
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+<div #ViewAllowanceTypeAssignDeleteModalBackdrop class=""></div>
+
+<div #ViewAllowanceTypeAssignDeleteModal id="ViewAllowanceTypeAssignDeleteModal" class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Delete Allowance Type Assign</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewAllowanceTypeAssignDeleteModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedItemDetails">
+        <app-hr-allowance-type-assign-delete (closeThisModel)="hideViewAllowanceTypeAssignDeleteModal()"
+          [selectedData]="selectedItemDetails" [showModelLoader]="showModelLoader" [modelStateError]="modelStateError"
+          [generalApiError]="generalApiError"></app-hr-allowance-type-assign-delete>
+      </div>
+    </div>
+  </div>
+</div>

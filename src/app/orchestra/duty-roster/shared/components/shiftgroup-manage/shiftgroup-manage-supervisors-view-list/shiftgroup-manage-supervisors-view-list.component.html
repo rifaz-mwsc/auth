@@ -1,0 +1,30 @@
+<ul class="list-group list-group-flush list mt--2 mb-3" *ngIf="shiftGroupSupervisors && shiftGroupSupervisors.length > 0">
+  <ng-container *ngFor="let listItem of shiftGroupSupervisors">
+    <li class="list-group-item px-0 py-2" [ngClass]="{'bg-light': listItem.IsRemoved}">
+      <div class="row align-items-center">
+        <div class="col my-auto ml-3">
+          <div class="row align-items-center">
+            <div class="col-lg-12 my-auto">
+              <span class="badge badge-primary"
+                [ngClass]="listItem.IsRemoved ? 'badge-danger' : 'badge-primary'">{{listItem.EmployeeId}}</span>
+              <span class="h4 font-weight-bold mb-0" [ngClass]="listItem.IsRemoved ? 'text-danger' : 'text-primary'">
+                {{listItem.Name}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-auto mr-3">
+          <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Remove"
+            *ngIf="!listItem.IsRemoved" (click)="remove(listItem)">
+            <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+          </button>
+          <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="Restore" *ngIf="listItem.IsRemoved" (click)="restore(listItem)">
+            <span class="btn-inner--icon"><i class="fas fa-redo-alt"></i></span>
+          </button>
+        </div>
+
+      </div>
+    </li>
+  </ng-container>
+</ul>

@@ -1,0 +1,32 @@
+<div class="card shadow-none border-0" *ngIf="shiftGroupYears && shiftGroupYears.length > 0">
+  <div class="table-responsive">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let listItem of shiftGroupYears">
+        <tr [ngClass]="{'bg-light': listItem.IsDeleted}">
+          <th class="px-3 py-2">
+            <div class="row">
+              <div class="col-auto my-auto">
+                <i class="fas fa-calendar-alt fa-2x"></i>
+              </div>
+              <div class="col">
+                <span class="display-3 font-weight-bold text-dark">{{listItem}}</span>
+              </div>
+            </div>
+          </th>
+          <td class="px-3 py-2 text-right">
+            <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+              title="goto WeeklyShift" (click)="gotoWeeklyShift(listItem)">
+              <span class="btn-inner--icon"><i class="fas fa-chevron-circle-right"></i></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

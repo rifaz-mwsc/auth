@@ -1,0 +1,211 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Duty Roster</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+              <li class="breadcrumb-item active"><a>Shift Group</a></li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <a class="btn btn-sm btn-neutral" title="Add New" (click)="showAddShiftGroupModal()">New</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col">
+              <div class="alert alert-warning py-2 px-3 mb-0" role="alert"
+                *ngIf="requestList && requestList.length < 1">
+                <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                <span class="alert-text"><strong>Oh Snap!</strong> No Shiftgroup Found!</span>
+              </div>
+              <div class="alert alert-success py-2 px-3 mb-0 fade show" role="alert"
+                *ngIf="requestList && requestList.length >= 1">
+                <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                <span class="alert-text"><strong>Info!</strong> {{requestList.length}} Shiftgroup Found. Please find
+                  Shiftgroups below ...!</span>
+              </div>
+            </div>
+
+            <div class="col-auto pr-2 my-auto">
+              <span class="h5 text-muted mb-2">Show Deleted {{showDeletedShiftGroups}}</span>
+            </div>
+            <div class="col-auto pl-1 my-auto">
+              <label class="custom-toggle mb-0">
+                <input type="checkbox" [(ngModel)]="showDeletedShiftGroups" checked>
+                <span class="custom-toggle-slider rounded-circle"></span>
+              </label>
+            </div>
+
+            <div class="col-auto">
+              <div class="nav btn-group" role="tablist">
+                <button class="btn btn-primary px-3 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+                  aria-controls="tabPaneOne" aria-selected="true">
+                  <i class="fas fa-th-large"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+                  aria-controls="tabPaneTwo" aria-selected="false">
+                  <i class="fas fa-table"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-3">
+          <app-clib-loading-xl *ngIf="showLoader"></app-clib-loading-xl>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade active show" id="tabPaneOne" role="tabpanel">
+              <!-- Card-View -->
+              <div class="row" *ngIf="requestList && requestList.length > 0">
+                <ng-container *ngFor="let listItem of requestList">
+                  <div class="col-xl-4 col-md-6"
+                    *ngIf="!showDeletedShiftGroups && !listItem.IsDeleted || showDeletedShiftGroups">
+                    <div class="card card-stats shadow border-secondary mb-3"
+                      [ngClass]="{'bg-lighter': listItem.IsDeleted}">
+                      <div class="card-body py-2 px-3 my-auto">
+                        <div class="row">
+                          <div class="col">
+                            <div class="row">
+                              <div class="col-lg-12">
+                                <span class="h4 font-weight-bold mb-0"
+                                  [ngClass]="{'text-muted': listItem.IsDeleted , 'text-primary': !listItem.IsDeleted}">{{listItem.Name}}</span>
+                              </div>
+                              <div class="col-lg-12">
+                                <span class="h5 card-title text-muted my-0">{{listItem.Description}}</span>
+                              </div>
+                            </div>
+                          </div>
+                          <div class="col-auto my-auto pl-2" *ngIf="userRole === 'module-admin'">
+                            <button type="button" class="btn btn-link px-1" *ngIf="!listItem.IsDeleted" title="Delete"
+                              (click)="deleteShiftGroup(listItem)">
+                              <span class="text-danger"><i class="fas fa-trash-alt fa-lg"></i></span>
+                            </button>
+                            <button type="button" class="btn btn-link px-1" *ngIf="listItem.IsDeleted" title="Restore"
+                              (click)="deleteShiftGroup(listItem)">
+                              <span class="text-success"><i class="fas fa-trash-restore fa-lg"></i></span>
+                            </button>
+                            <button type="button" class="btn btn-link px-1" *ngIf="!listItem.IsDeleted" title="Select"
+                              (click)="selectShiftGroup(listItem)">
+                              <span class="text-success"><i class="fas fa-arrow-circle-right fa-lg"></i></span>
+                            </button>
+                            <button type="button" class="btn btn-link px-1" *ngIf="listItem.IsDeleted" title="Disable"
+                              [disabled] (click)="selectShiftGroup(listItem)">
+                              <span class="text-muted"><i class="fas fa-arrow-circle-right fa-lg"></i></span>
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </ng-container>
+              </div>
+            </div>
+
+            <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
+              <!-- Table-View -->
+              <div class="card shadow-none border-0 mb-0" *ngIf="requestList && requestList.length > 0">
+                <div class="table-responsive">
+                  <table class="table align-items-center table-flush">
+                    <thead class="thead-light">
+                      <tr>
+                        <th scope="col" class="px-3 py-2">Name</th>
+                        <th scope="col" class="px-3 py-2">Description</th>
+                        <th scope="col" class="px-3 py-2 text-right">Action</th>
+                      </tr>
+                    </thead>
+                    <tbody class="list" *ngFor="let listItem of requestList">
+                      <tr *ngIf="!showDeletedShiftGroups && !listItem.IsDeleted || showDeletedShiftGroups" [ngClass]="{'bg-light': listItem.IsDeleted}">
+                        <th class="px-3 py-2">
+                          <span class="text-primary" [ngClass]="{'text-secondary': listItem.IsDeleted}">{{listItem.Name}}</span>
+                        </th>
+                        <th class="px-3 py-2">
+                          <span class="text-primary" [ngClass]="{'text-secondary': listItem.IsDeleted}">{{listItem.Description}}</span>
+                        </th>
+                        <td class="px-3 py-1 text-right">
+                          <button type="button" class="btn btn-link px-1 py-1" *ngIf="!listItem.IsDeleted"
+                            title="Delete" (click)="deleteShiftGroup(listItem)">
+                            <span class="text-danger"><i class="fas fa-trash-alt fa-lg"></i></span>
+                          </button>
+                          <button type="button" class="btn btn-link px-1 py-1" *ngIf="listItem.IsDeleted"
+                            title="Restore" (click)="deleteShiftGroup(listItem)">
+                            <span class="text-success"><i class="fas fa-trash-restore fa-lg"></i></span>
+                          </button>
+                          <button type="button" class="btn btn-link px-1 py-1" *ngIf="!listItem.IsDeleted"
+                            title="Select" (click)="selectShiftGroup(listItem)">
+                            <span class="text-success"><i class="fas fa-arrow-circle-right fa-lg"></i></span>
+                          </button>
+                          <button type="button" class="btn btn-link px-1 py-1" *ngIf="listItem.IsDeleted"
+                            title="Disable" [disabled] (click)="selectShiftGroup(listItem)">
+                            <span class="text-muted"><i class="fas fa-arrow-circle-right fa-lg"></i></span>
+                          </button>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+            </div>
+
+            <!-- Component-Library - Pagination -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>
+
+
+
+
+
+<div #AddShiftGroupModal id="AddShiftGroupModal" class="modal fade" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Add Shiftgroup</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideAddShiftGroupModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form>
+          <div class="form-group row">
+            <label for="inputName" class="col-sm-3 form-control-label">Name</label>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" [(ngModel)]="newShiftGroup.Name" name="newShiftGroupName"
+                id="newShiftGroupName" />
+            </div>
+          </div>
+          <div class="form-group row">
+            <label for="inputName" class="col-sm-3 form-control-label">Description</label>
+            <div class="col-sm-7">
+              <input type="text" class="form-control" [(ngModel)]="newShiftGroup.Description"
+                name="newShiftGroupDescription" id="newShiftGroupDescription"
+                (keydown)="onKeydownAddShiftGroup($event)" />
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

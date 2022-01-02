@@ -1,0 +1,32 @@
+<ul class="list-group list-group-flush list mt--2 mb-3" *ngIf="requestList && requestList.length > 0">
+  <ng-container *ngFor="let listItem of requestList">
+    <li class="list-group-item px-0 py-2">
+      <div class="row align-items-center">
+        <div class="col ml-3">
+          <div class="row align-items-center">
+            <div class="col-lg-12">
+              <h4 class="font-weight-bold mb-0">{{listItem.Name}}</h4>
+            </div>
+            <div class="col">
+              <span class="h5 text-muted mb">{{listItem.Description}}</span>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto">
+          <!-- <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+            title="View Details" (click)="showViewRecordDetailsModal(listItem)">
+            <span class="btn-inner--icon"><i class="fas fa-history"></i></span>
+            <span class="btn-inner--text">Enable</span>
+          </button> -->
+        </div>
+        <div class="col-auto">
+          <!-- <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+            title="View Details" (click)="showViewRecordDetailsModal(listItem)">
+            <span class="btn-inner--text">Goto</span>
+            <span class="btn-inner--icon"><i class="fas fa-arrow-alt-circle-right"></i></span>
+          </button> -->
+        </div>
+      </div>
+    </li>
+  </ng-container>
+</ul>

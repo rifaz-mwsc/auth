@@ -1,0 +1,83 @@
+<div class="card shadow-none border-0" *ngIf="shiftGroupWeeklyShifts && shiftGroupWeeklyShifts.length > 0">
+  <div class="table-responsive">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Week No</th>
+          <th scope="col">Starts On / Ends On</th>
+          <th scope="col">View Roster</th>
+          <th scope="col">Editing</th>
+          <th scope="col">Published</th>
+          <th scope="col">Shift Template</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let listItem of shiftGroupWeeklyShifts">
+
+        <!-- [ngClass]="listItem.IsRemoved ? 'text-danger' : 'text-primary'" -->
+
+        <tr [ngClass]="{'bg-light': listItem.IsRemoved}">
+          <th class="px-3 py-2 my-auto">
+            <span class="badge badge-primary">{{listItem.Year}}</span>
+            <span class="h4 font-weight-bold mb-0"> {{listItem.WeekNumber}}</span>
+          </th>
+
+          <th class="px-3 py-2 my-auto">
+            <span class="h5 font-weight-bold mb-0">{{listItem.StartsOn | date: 'dd MMM yyyy'}} </span>
+            <i class="fa fa-arrow-right fa-lg" aria-hidden="true"></i>
+            <span class="h5 font-weight-bold mb-0"> {{listItem.EndsOn | date: 'dd MMM yyyy'}}</span>
+          </th>
+
+          <th class="px-3 py-2 my-auto">
+            <button type="button" class="btn btn-link btn-sm">
+              <i class="fa fa-calendar text-warning" aria-hidden="true"></i>
+            </button>
+          </th>
+
+
+          <th class="px-3 py-2 my-auto">
+            <span class="text-success" *ngIf="listItem.IsEditingPossible">
+              <i class="fa fa-unlock-alt fa-lg" aria-hidden="true"></i>
+            </span>
+            <span class="text-danger" *ngIf="!listItem.IsEditingPossible">
+              <i class="fa fa-lock fa-lg" aria-hidden="true"></i>
+            </span> {{listItem.EditingPossibleUpto | date: 'dd MMM yyyy'}}
+            <button type="button" class="btn btn-link btn-sm">
+              <i class="fa fa-pencil-square-o text-warning" aria-hidden="true"></i>
+            </button>
+          </th>
+
+          <th class="px-3 py-2 my-auto">
+            <span class="text-success" *ngIf="listItem.ReleasedOn">
+              <i class="fa fa-check-circle fa-lg" aria-hidden="true"></i>
+            </span>
+            <span class="text-danger" *ngIf="!listItem.ReleasedOn">
+              <i class="fa fa-times-circle fa-lg" aria-hidden="true"></i>
+            </span> {{listItem.ReleasedOn | date: 'dd MMM yyyy'}}
+          </th>
+
+
+          <th class="px-3 py-2 my-auto">
+            <span class="h5 font-weight-bold mb-0"> {{listItem.ShiftTemplate.Name}}</span>
+            <button type="button" class="btn btn-link btn-sm">
+              <i class="fa fa-pencil-square-o text-warning" aria-hidden="true"></i>
+            </button>
+
+          </th>
+
+
+          <td class="px-3 py-2 text-right">
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top"
+              title="Remove" *ngIf="!listItem.IsRemoved">
+              <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+            </button>
+            <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+              title="Restore" *ngIf="listItem.IsRemoved">
+              <span class="btn-inner--icon"><i class="fas fa-redo-alt"></i></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

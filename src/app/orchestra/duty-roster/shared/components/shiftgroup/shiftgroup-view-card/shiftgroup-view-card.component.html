@@ -1,0 +1,65 @@
+<div class="row" *ngIf="requestList && requestList.length > 0">
+  <ng-container *ngFor="let listItem of requestList">
+    <div class="col-xl-4 col-md-6">
+      <div class="card card-stats shadow">
+        <!-- Card body -->
+        <div class="card-body my-auto" [ngClass]="{'bg-light': listItem.IsDeleted}">
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col-lg-12">
+                  <span class="h4 font-weight-bold text-dark mb-0">{{listItem.Name}}</span>
+                </div>
+                <div class="col-lg-12">
+                  <span class="h5 card-title text-muted mt-1 mb-0">{{listItem.Description}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-auto my-auto pl-2" *ngIf="shiftgroupViewType === 'manage'">
+              <button type="button" class="btn btn-pinterest btn-icon-only rounded-circle" data-toggle="tooltip"
+                data-placement="top" title="Remove" *ngIf="!listItem.IsDeleted" (click)="remove(listItem)">
+                <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+              </button>
+              <button type="button" class="btn btn-slack btn-icon-only rounded-circle" data-toggle="tooltip"
+                data-placement="top" title="Restore" *ngIf="listItem.IsDeleted" (click)="restore(listItem)">
+                <span class="btn-inner--icon"><i class="fas fa-redo-alt"></i></span>
+              </button>
+              <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" data-toggle="tooltip"
+                data-placement="top" title="goto Shiftgroup" (click)="gotoShiftgroup(listItem)">
+                <span class="btn-inner--icon"><i class="fas fa-chevron-circle-right"></i></span>
+              </button>
+            </div>
+
+            <div class="col-auto my-auto pl-2" *ngIf="shiftgroupViewType === 'select-shift-group'">
+              <button type="button" class="btn btn-facebook btn-icon-only rounded-circle" data-toggle="tooltip"
+                data-placement="top" title="goto Shift" (click)="gotoShift(listItem)">
+                <span class="btn-inner--icon"><i class="fas fa-chevron-circle-right"></i></span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>
+
+
+<!-- <div class="col-xl-3 col-md-6">
+  <div class="card card-stats card-lift--hover shadow">
+    <div class="card-body">
+      <div class="row">
+        <div class="col pr-2">
+          <span class="h4 font-weight-bold mb-0">Waste Water & Networks Division</span>
+          <h6 class="card-title text-uppercase text-muted mb-0">Connection Department</h6>
+        </div>
+        <div class="col-auto pl-2">
+          <div class="btn btn-link icon icon-shape bg-danger text-white rounded-circle shadow">
+            <i class="fas fa-trash"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div> -->

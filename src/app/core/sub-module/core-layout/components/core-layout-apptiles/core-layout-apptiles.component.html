@@ -1,0 +1,76 @@
+<div class="row shortcuts px-4">
+  <!-- <a class="col-4 shortcut-item px-2" [routerLink]="['/root']">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-red">
+      <i class="ni ni-calendar-grid-58"></i>
+    </span>
+    <small>Root</small>
+  </a> -->
+  <a class="col-4 shortcut-item px-2" [routerLink]="['/e-service']"  *ngIf="appConfig.appTiles.attendence">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
+      <i class="ni ni-email-83"></i>
+    </span>
+    <small>E-Service</small>
+  </a>
+  <a class="col-4 shortcut-item px-2" [routerLink]="['/finance']" *ngIf="appConfig.appTiles.dutyroster">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-info">
+      <i class="ni ni-credit-card"></i>
+    </span>
+    <small>Finance</small>
+  </a>
+  <a class="col-4 shortcut-item px-2" [routerLink]="['/hr']" *ngIf="appConfig.appTiles.hrDesk">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-green">
+      <i class="ni ni-books"></i>
+    </span>
+    <small>HR</small>
+  </a>
+  <a class="col-4 shortcut-item px-2" [routerLink]="['/nfc-guard-patrol']" *ngIf="appConfig.appTiles.recruitment">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
+      <i class="ni ni-pin-3"></i>
+    </span>
+    <small>Guard Petrol</small>
+  </a>
+  <a class="col-4 shortcut-item px-2" [routerLink]="['/staff-portal']" *ngIf="appConfig.appTiles.rollCall">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
+      <i class="ni ni-basket"></i>
+    </span>
+    <small>Staff Portal</small>
+    
+  </a>
+
+  <!-- <a href="#!" class="col-4 shortcut-item">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-red">
+      <i class="ni ni-calendar-grid-58"></i>
+    </span>
+    <small>Calendar</small>
+  </a>
+  <a href="#!" class="col-4 shortcut-item">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-orange">
+      <i class="ni ni-email-83"></i>
+    </span>
+    <small>Email</small>
+  </a>
+  <a href="#!" class="col-4 shortcut-item">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-info">
+      <i class="ni ni-credit-card"></i>
+    </span>
+    <small>Payments</small>
+  </a>
+  <a href="#!" class="col-4 shortcut-item">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-green">
+      <i class="ni ni-books"></i>
+    </span>
+    <small>Reports</small>
+  </a>
+  <a href="#!" class="col-4 shortcut-item">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-purple">
+      <i class="ni ni-pin-3"></i>
+    </span>
+    <small>Maps</small>
+  </a>
+  <a href="#!" class="col-4 shortcut-item">
+    <span class="shortcut-media avatar rounded-circle bg-gradient-yellow">
+      <i class="ni ni-basket"></i>
+    </span>
+    <small>Shop</small>
+  </a> -->
+</div>

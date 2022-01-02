@@ -1,0 +1,322 @@
+<div>
+  <div class="alert alert-info py-1 px-3" role="alert" id="createModel-info-alert">
+    <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+    <span class="alert-text"><strong>Information !</strong> Select Leave Type to Continue... !</span>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='generalApiError'>
+                <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                <span class="alert-text"><strong>Error !</strong> {{generalApiError}} ... !</span>
+              </div>
+            </div>
+
+
+            <div class="col-lg-12 px-4">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="fromDate" class="h5 text-muted ml-2 mb-1">Punch-In Hour</label>
+                        <input type="number" class="form-control col-12" placeholder="Punch-In Hour"
+                          name="newCustomTiming.punchInHours" [(ngModel)]="newCustomTiming.punchInHours"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.punch_in_hour">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.punch_in_hour">
+                        <li class="mt-0" *ngFor="let error of modelStateError.punch_in_hour">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="toDate" class="h5 text-muted ml-2 mb-1">Punch-In Minutes</label>
+                        <input type="number" class="form-control col-12" placeholder="Punch-In Minutes"
+                          name="newCustomTiming.punchInMinutes" [(ngModel)]="newCustomTiming.punchInMinutes"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.punch_in_minute">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.punch_in_minute">
+                        <li class="mt-0" *ngFor="let error of modelStateError.punch_in_minute">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+
+              </div>
+
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="fromDate" class="h5 text-muted ml-2 mb-1">Punch-In Possible From Minute</label>
+                        <input type="number" class="form-control col-12" placeholder="Punch-In Possible From Minute"
+                          name="newCustomTiming.punchInPossibleFromMinutes" [(ngModel)]="newCustomTiming.punchInPossibleFromMinutes"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.punch_in_hour">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.punch_in_hour">
+                        <li class="mt-0" *ngFor="let error of modelStateError.punch_in_hour">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="toDate" class="h5 text-muted ml-2 mb-1">Punch-In Possible To Minute</label>
+                        <input type="number" class="form-control col-12" placeholder="Punch-In Possible To Minute"
+                          name="newCustomTiming.punchInPossibleToMinutes" [(ngModel)]="newCustomTiming.punchInPossibleToMinutes"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.punch_in_possible_from_by_minutes">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.punch_in_possible_from_by_minutes">
+                        <li class="mt-0" *ngFor="let error of modelStateError.punch_in_possible_from_by_minutes">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="toDate" class="h5 text-muted ml-2 mb-1">Punch-In On Time By Minutes</label>
+                        <input type="number" class="form-control col-12" placeholder="Punch-In On Time By Minutes"
+                          name="newCustomTiming.punchInOnTimeMinutes" [(ngModel)]="newCustomTiming.punchInOnTimeMinutes"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.punch_in_on_time_by_minutes">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.punch_in_on_time_by_minutes">
+                        <li class="mt-0" *ngFor="let error of modelStateError.punch_in_on_time_by_minutes">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="my-3">
+
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="fromDate" class="h5 text-muted ml-2 mb-1">Punch-Out Hour</label>
+                        <input type="number" class="form-control col-12" placeholder="Punch-Out Hour"
+                          name="newCustomTiming.punchOutHours" [(ngModel)]="newCustomTiming.punchOutHours"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.punch_out_hour">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.punch_out_hour">
+                        <li class="mt-0" *ngFor="let error of modelStateError.punch_out_hour">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="number" class="h5 text-muted ml-2 mb-1">Punch-Out Minutes</label>
+                        <input type="text" class="form-control col-12" placeholder="Punch-Out Minutes"
+                          name="newCustomTiming.punchOutMinutes" [(ngModel)]="newCustomTiming.punchOutMinutes"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.punch_out_minute">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.punch_out_minute">
+                        <li class="mt-0" *ngFor="let error of modelStateError.punch_out_minute">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+
+
+              </div>
+
+              
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="fromDate" class="h5 text-muted ml-2 mb-1">Punch-Out Possible From Minute</label>
+                        <input type="number" class="form-control col-12" placeholder="Punch-Out Possible From Minute"
+                          name="newCustomTiming.punchOutPossibleFromMinutes" [(ngModel)]="newCustomTiming.punchOutPossibleFromMinutes"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.punch_in_hour">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.punch_in_hour">
+                        <li class="mt-0" *ngFor="let error of modelStateError.punch_in_hour">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="toDate" class="h5 text-muted ml-2 mb-1">Punch-Out Possible To Minute</label>
+                        <input type="number" class="form-control col-12" placeholder="Punch-Out Possible To Minute"
+                          name="newCustomTiming.punchOutPossibleToMinutes" [(ngModel)]="newCustomTiming.punchOutPossibleToMinutes"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.punch_in_possible_from_by_minutes">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.punch_in_possible_from_by_minutes">
+                        <li class="mt-0" *ngFor="let error of modelStateError.punch_in_possible_from_by_minutes">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <hr class="my-3">
+              <div class="row">
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="fromDate" class="h5 text-muted ml-2 mb-1">Valid From</label>
+                        <input type="date" class="form-control col-12" placeholder="Valid From"
+                          name="newCustomTiming.validFrom" [(ngModel)]="newCustomTiming.validFrom"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.valid_from">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.valid_from">
+                        <li class="mt-0" *ngFor="let error of modelStateError.valid_from">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="toDate" class="h5 text-muted ml-2 mb-1">Valid To</label>
+                        <input type="date" class="form-control col-12" placeholder="Valid To"
+                          name="newCustomTiming.validTo" [(ngModel)]="newCustomTiming.validTo"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.valid_to">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.valid_to">
+                        <li class="mt-0" *ngFor="let error of modelStateError.valid_to">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-4">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="number" class="h5 text-muted ml-2 mb-1">Employee Id</label>
+                        <input type="text" class="form-control col-12" placeholder="Employee Id"
+                          name="newCustomTiming.employeeId" [(ngModel)]="newCustomTiming.employeeId"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.custom_punch_in_out_employee_id">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.custom_punch_in_out_employee_id">
+                        <li class="mt-0" *ngFor="let error of modelStateError.custom_punch_in_out_employee_id">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+                  <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError['']">
+                    <li class="mt-0" *ngFor="let error of modelStateError['']">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12" *ngIf="modelStateError && modelStateError.leave_request_employee_id">
+                  <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.leave_request_employee_id">
+                    <li class="mt-0" *ngFor="let error of modelStateError.leave_request_employee_id">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12" *ngIf="modelStateError && modelStateError.employee_id">
+                  <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.employee_id">
+                    <li class="mt-0" *ngFor="let error of modelStateError.employee_id">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+
+       
+            </div>
+
+            <div class="col-lg-12 px-2 py-2 my-0">
+              <div class="col-12 my-0">
+                <div class="form-group float-right my-0">
+                  <button class="btn btn-icon btn-primary mb-2" type="button" (click)="create()"
+                    [disabled]="disableSaveButton || showModelLoader">
+                    <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                    <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-save"></i></span>
+                    <span class="btn-inner--text" *ngIf="showModelLoader">Saving ...</span>
+                    <span class="btn-inner--text" *ngIf="!showModelLoader">Save</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

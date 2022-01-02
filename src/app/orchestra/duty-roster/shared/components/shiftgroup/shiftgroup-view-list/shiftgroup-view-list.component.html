@@ -1,0 +1,41 @@
+<ul class="list-group list-group-flush list mt--2 mb-3" *ngIf="requestList && requestList.length > 0">
+  <ng-container *ngFor="let listItem of requestList">
+    <li class="list-group-item px-0 py-2" [ngClass]="{'bg-light': listItem.IsDeleted}">
+      <div class="row align-items-center">
+        <div class="col ml-3">
+          <div class="row align-items-center">
+            <div class="col-lg-12">
+              <h4 class="font-weight-bold mb-0">{{listItem.Name}}</h4>
+            </div>
+            <div class="col">
+              <span class="h5 text-muted mb">{{listItem.Description}}</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="col-auto mr-3" *ngIf="shiftgroupViewType === 'manage'">
+          <button type="button" class="btn btn-icon btn-danger btn-sm" data-toggle="tooltip"
+            data-placement="top" title="Remove" *ngIf="!listItem.IsDeleted" (click)="remove(listItem)">
+            <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+          </button>
+          <button type="button" class="btn btn-icon btn-success btn-sm" data-toggle="tooltip"
+            data-placement="top" title="Restore" *ngIf="listItem.IsDeleted" (click)="restore(listItem)">
+            <span class="btn-inner--icon"><i class="fas fa-redo-alt"></i></span>
+          </button>
+          <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="goto Shiftgroup" (click)="gotoShiftgroup(listItem)">
+            <span class="btn-inner--icon"><i class="fas fa-chevron-circle-right"></i></span>
+          </button>
+        </div>
+
+        <div class="col-auto mr-3" *ngIf="shiftgroupViewType === 'select-shift-group'">
+          <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="goto Shift" (click)="gotoShift(listItem)">
+            <span class="btn-inner--icon"><i class="fas fa-chevron-circle-right"></i></span>
+          </button>
+        </div>
+
+      </div>
+    </li>
+  </ng-container>
+</ul>

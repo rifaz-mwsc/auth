@@ -1,0 +1,184 @@
+<!-- <div class="card card-stats border mb-4" *ngIf="requestList && requestList.length > 0 && viewType==='leave-requets'">
+  <div class="card-body px-3 py-3">
+    <div class="row">
+      <div class="col-sm-6 col-md">
+      </div>
+      <div class="col-sm-auto col-md-auto">
+      </div>
+      <div class="col-sm-6 col-md-auto text-right align-self-end">
+      </div>
+    </div>
+  </div>
+</div> -->
+
+<div class="card shadow-none border-0" *ngIf="requestList && requestList.length > 0">
+  <div class="table-responsive">
+    <table class="table table-hover align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col" class="px-3 py-2"></th>
+          <th scope="col" class="px-3 py-2">Employee</th>
+          <th scope="col" class="px-3 py-2 text-center">Dashboard</th>
+          <th scope="col" class="px-3 py-2 text-center">Organisation Level</th>
+          <th scope="col" class="px-3 py-2 text-center">Organisation Name</th>
+          <th scope="col" class="px-3 py-2 text-center">Default</th>
+          <th scope="col" class="px-3 py-2 text-center">Valid From</th>
+          <th scope="col" class="px-3 py-2 text-center">Valid To</th>
+          <th scope="col" class="px-3 py-2 text-center">Created By</th>
+          <th scope="col" class="px-3 py-2 text-center">Created On</th>
+          <th scope="col" class="px-3 py-2 text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let requestObj of requestList">
+        <tr [ngClass]="requestObj?.is_deleted ? 'bg-light' : ''">
+          <th class="px-3 py-1 text-center justify-content-center">
+            <div class="col-12 px-0 mx-0 my-auto">
+              <span class="avatar avatar-sm rounded-circle"
+                *ngIf="requestObj?.dashboard_assigned_to_employee_picture_path">
+                <img [src]="requestObj?.dashboard_assigned_to_employee_picture_path" alt="..."
+                  style="width: 36px; height: 36px; object-fit: cover;" />
+              </span>
+              <span class="avatar avatar-sm rounded-circle"
+                *ngIf="!requestObj?.dashboard_assigned_to_employee_picture_path">
+                <img src="../../assets/img/theme/team-00.jpg" alt="..."
+                  style="width: 36px; height: 36px; object-fit: cover;">
+              </span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_valid ? '' : 'text-danger'">{{requestObj?.dashboard_assigned_to_employee_name}}
+                -
+                ({{requestObj?.dashboard_assigned_to_employee_id}})</span>
+            </div>
+          </th>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0 text-center">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_valid ? '' : 'text-danger'">{{requestObj?.organization_dashboard_type}}</span>
+            </div>
+          </th>
+
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0 text-center">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_valid ? '' : 'text-danger'">{{requestObj?.organization_structure_level}} </span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0 text-center">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_valid ? '' : 'text-danger'">{{requestObj?.organization_structure_name}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2 text-center">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1" *ngIf="requestObj?.dashboard_is_default">
+                <i class="fas fa-certificate"></i>
+              </span>
+            </div>
+          </th>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0 text-center ">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_valid ? '' : 'text-danger'">{{requestObj?.dashboard_valid_from_on_friendly}}</span>
+            </div>
+          </th>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0 text-center">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_valid ? '' : 'text-danger'">{{requestObj?.dashboard_valid_to_on_friendly}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0 text-center">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_valid ? '' : 'text-danger'">{{requestObj?.dashboard_created_by_employee_name}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0 text-center">
+              <span class="h5 font-weight-bold mb-1"
+                [ngClass]="requestObj?.is_valid ? '' : 'text-danger'">{{requestObj?.dashboard_created_on_friendly}}</span>
+            </div>
+          </th>
+          <td class="px-3 py-1 text-right">
+            <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="Set Authorization Expiry" (click)="showSetExpiryModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-calendar-alt"></i></span>
+            </button>
+
+            <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="Remove Authorization" (click)="showRemoveModal(requestObj)" *ngIf="requestObj?.can_delete"
+              [disabled]="!requestObj?.can_delete">
+              <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+<div #RemoveModal id="RemoveModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Remove Authorization</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close" (click)="hideRemoveModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="requestDetails && selecteditem">
+        <app-hr-auth-dashboard-remove [requestDetails]="requestDetails" [selecteditem]="selecteditem"
+          [showModelLoader]="showModelLoader" [modelStateError]="modelStateError" [generalApiError]="generalApiError">
+        </app-hr-auth-dashboard-remove>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div #SetAsDefaultModal id="SetAsDefaultModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Authorization - Set As Default</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideSetAsDefaultModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="requestDetails && selecteditem">
+
+        <app-hr-auth-dashboard-set-as-default [requestDetails]="requestDetails" [selecteditem]="selecteditem"
+          [showModelLoader]="showModelLoader" [modelStateError]="modelStateError" [generalApiError]="generalApiError">
+        </app-hr-auth-dashboard-set-as-default>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div #SetExpiryModal id="SetExpiryModal" class="modal fade" data-backdrop="static" data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Authorization - Set Expiry</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close" (click)="hideSetExpiryModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="requestDetails && selecteditem">
+        <app-hr-auth-dashboard-set-expiry [requestDetails]="requestDetails" [selecteditem]="selecteditem" 
+        [validFromDate]="validFromDate" [validToDate]="validToDate"
+          [showModelLoader]="showModelLoader" [modelStateError]="modelStateError" [generalApiError]="generalApiError">
+        </app-hr-auth-dashboard-set-expiry>
+      </div>
+    </div>
+  </div>
+</div>

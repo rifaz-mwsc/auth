@@ -1,0 +1,67 @@
+<div class="card border mb-2" *ngIf="requestList && requestList.length > 0">
+  <!-- Card header -->
+  <!-- <div class="card-header py-2">
+    <div class="row align-items-center">
+      <div class="col-auto">
+        <div class="row">
+          <div class="col-auto pr-0">
+            <button class="btn btn-icon btn-sm btn-success" type="button">
+              <span class="btn-inner--text">{{transactions.length}}</span>
+            </button>
+          </div>
+          <div class="col-auto pl-2">
+            <small>Total Transactions</small>
+          </div>
+        </div>
+      </div>
+      <div class="col text-right">
+        <button class="btn btn-icon btn-sm btn-primary" type="button" (click)="downloadCSV()">
+          <span class="btn-inner--icon"><i class="ni ni-bag-17"></i></span>
+          <span class="btn-inner--text">Download CSV</span>
+        </button>
+      </div>
+    </div>
+  </div> -->
+  <div class="table-responsive py-0">
+    <table class="table table-flush" id="datatable-basic">
+      <thead class="thead-light">
+        <tr>
+          <th class="pl-4 pr-2">Create On</th>
+          <th class="px-2">Create By</th>
+          <th class="px-2 ">Details</th>
+          <th class="px-2 text-center">Status</th>
+          <th class="pl-2 pr-4 text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let report of requestList">
+          <td class="pl-4 pr-2 py-auto">
+            <div class="col-lg-12 px-0 text-primary">
+              {{report.CreatedOn | date: 'dd MMM yyyy HH:mm'}}
+            </div>
+          </td>
+          <td class="px-2 py-auto">
+            <div class="col-lg-12 px-0">
+              {{report.CreatedBy}}
+            </div>
+          </td>
+          <td class="px-2 py-auto" style="max-width: 150px;">
+            <div class="col-lg-12 px-0 text-primary">
+              {{report.Details}}
+            </div>
+          </td>
+          <td class="px-2 py-auto text-center" style="max-width: 450px;">
+            <div class="col-lg-12 px-0 text-primary">
+              {{report.Status}}
+            </div>
+          </td>
+          <td class="pl-2 pr-4 py-2 text-right">
+            <button class="btn btn-icon btn-sm btn-primary mb-0" type="button" (click)="viewDetailAttendenceReport(report)">
+              <span class="btn-inner--text">View Details</span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

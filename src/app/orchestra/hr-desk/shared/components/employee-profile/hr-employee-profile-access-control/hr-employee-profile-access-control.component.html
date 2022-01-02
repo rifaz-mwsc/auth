@@ -1,0 +1,39 @@
+<h6 class="h2 text-primary ml-2 mb-3">Access Control</h6>
+
+<ul class="list-group list-group-flush list mt--2 mb-4" *ngIf="profileAccessControl">
+  <ng-container *ngFor="let accessControlObj of profileAccessControl.doorAccess">
+    <li class="list-group-item px-0 py-2">
+      <div class="row align-items-center">
+        <div class="col-auto my-auto">
+          <i class="fas fa-briefcase fa-2x"></i>
+        </div>
+        <div class="col ml--2">
+          <div class="row align-items-center">
+            <div class="col-lg-12">
+              <div class="row">
+
+                <div class="col">
+                  <div class="row">
+                    <div class="col-lg-12 my-1">
+                      <span class="h5 font-weight-bold mb-0 mr-2">{{accessControlObj.title}}</span>
+                      <span class="badge badge-pill badge-primary">{{accessControlObj.building_name}} -
+                        {{accessControlObj.floor_no}} - {{accessControlObj.city}}</span>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-lg-auto my-auto">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto">
+          <label class="custom-toggle">
+            <input type="checkbox" checked>
+            <span class="custom-toggle-slider rounded-circle" data-label-off="No" data-label-on="Yes"></span>
+          </label>
+        </div>
+      </div>
+    </li>
+  </ng-container>
+</ul>

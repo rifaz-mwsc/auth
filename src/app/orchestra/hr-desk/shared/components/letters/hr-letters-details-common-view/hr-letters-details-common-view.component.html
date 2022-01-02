@@ -1,0 +1,21 @@
+<div class="card card-stats shadow">
+  <div class="card-body my-auto">
+    <div class="row">
+      <div class="col">
+        <div class="row">
+          <div class="col-lg-12 pr-2">
+            <span class="h4 font-weight-bold mb-0">{{selecteditem?.leave_request_employee_details}}</span>
+          </div>
+          <div class="col-lg-12">
+            <h6 class="card-title text-uppercase text-muted mt-1 mb-1">{{selecteditem?.documnet_title}}</h6>
+          </div>
+          <div class="col-lg-12 pr-2">
+            <h5 class="mb-1">
+              <i class="fas fa-calendar"></i>
+              <span class="text-primary"> {{selecteditem?.documnet_uploaded_on | date: 'dd MMM yyyy'}} </span>
+            </h5>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>

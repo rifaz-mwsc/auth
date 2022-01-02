@@ -1,0 +1,282 @@
+<div *ngIf="requestDetails">
+  <!-- <div class="alert alert-warning py-1 px-3" role="alert" *ngIf="!requestDetails?.leave_request_is_approved">
+    <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+    <span class="alert-text"><strong>Warning!</strong> Leave Request is
+      {{requestDetails?.leave_request_status_description}} !</span>
+  </div> -->
+
+  <div class="row mb-3">
+    <div class="col-lg-4 pr-1">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-lg-12">
+              <h6 class="card-title text-uppercase text-muted mb-0">Leave Request ID & Type</h6>
+            </div>
+            <div class="col-lg-12">
+              <span class="h6 text-muted mb-0">
+                #{{requestDetails?.leave_request_absence_type_description}}
+              </span>
+            </div>
+            <div class="col-lg-12">
+              <span class="h5 font-weight-bold mb-0">{{requestDetails?.leave_request_absence_type_description}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 pr-1">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-lg-12">
+              <h6 class="card-title text-uppercase text-muted mb-0">Leave Duration</h6>
+            </div>
+            <div class="col-lg-12">
+              <span class="h5 font-weight-bold mb-0">
+                <i class="fas fa-calendar-alt"></i>
+                {{requestDetails?.leave_request_taken_from | date: 'dd MMM yyyy'}} <i class="fas fa-arrow-right"></i>
+                {{requestDetails?.leave_request_taken_to | date: 'dd MMM yyyy'}}
+              </span>
+            </div>
+            <div class="col-lg-12">
+              <span class="h5 font-weight-bold mb-0">
+                <i class="fas fa-clock"></i> {{requestDetails?.leave_request_requested_duration_date}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-lg-12">
+              <h6 class="card-title text-uppercase text-muted mb-0">Created By</h6>
+            </div>
+            <div class="col-lg-12">
+              <span class="h5 font-weight-bold mb-0">
+                {{requestDetails?.leave_request_created_by}}
+              </span>
+            </div>
+            <div class="col-lg-12">
+              <span class="h5 font-weight-bold mb-0">
+                {{requestDetails?.leave_request_created_on | date: 'dd MMM yyyy HH:mm'}}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mb-3" *ngIf="requestDetails?.leave_request_history_id">
+    <div class="col-lg-12">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-lg-12">
+              <h6 class="card-title text-uppercase text-muted mb-0">Leave Shorten Request</h6>
+            </div>
+            
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-3">
+                  <span class="h5 font-weight-bold text-muted mb-0">Created On : </span>
+                </div>
+                <div class="col-lg">
+                  <span
+                    class="h5 font-weight-bold mb-0">{{requestDetails?.leave_request_history_created_on | date: 'dd MMM yyyy HH:mm'}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-3">
+                  <span class="h5 font-weight-bold text-muted mb-0">Description : </span>
+                </div>
+                <div class="col-lg">
+                  <span
+                    class="h5 font-weight-bold mb-0">{{requestDetails?.leave_request_history_description}}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-3">
+                  <span class="h5 font-weight-bold text-muted mb-0">Shorten Leave Status : </span>
+                </div>
+                <div class="col-lg">
+                  <span
+                    class="h5 font-weight-bold mb-0">{{requestDetails?.leave_request_history_type}}</span>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg my-auto">
+                  <h6 class="card-title text-uppercase text-muted mb-0">
+                    {{requestDetails?.leave_request_absence_type_description}}
+                    Additional Details</h6>
+                </div>
+                <div class="col-lg-auto" *ngIf="requestDetails?.leave_request_status_description">
+                  <!-- <span class="badge badge-muted" [ngClass]="getStatusDescriptionColorCode(requestDetails)">
+                    {{requestDetails?.leave_request_status_description}}</span> -->
+                    <app-clib-leave-status-description [requestObj]="requestDetails">
+                    </app-clib-leave-status-description>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-3">
+                  <span class="h5 font-weight-bold text-muted mb-0">Additional Details : </span>
+                </div>
+                <div class="col-lg">
+                  <span
+                    class="h5 font-weight-bold mb-0">{{requestDetails?.leave_request_additional_details}}</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-3">
+                  <span class="h5 font-weight-bold text-muted mb-0">Nature of Sickness : </span>
+                </div>
+                <div class="col-lg">
+                  <span
+                    class="h5 font-weight-bold mb-0">{{requestDetails?.leave_request_nature_of_sickness}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row" *ngIf="requestDetails?.leave_request_absence_type_description === 'Medical leave'">
+            <div class="col-lg-12" *ngIf="requestDetails?.leave_request_is_self_certification">
+              <div class="row">
+                <div class="col-lg-3">
+                  <span class="h5 font-weight-bold text-muted mb-0"> Leave Type: </span>
+                </div>
+                <div class="col-lg">
+                  <span class="h5 font-weight-bold mb-0">Self Certification</span>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-12" *ngIf="!requestDetails?.leave_request_is_self_certification">
+              <div class="row">
+                <div class="col-lg-3">
+                  <span class="h5 font-weight-bold text-muted mb-0"> Leave Type: </span>
+                </div>
+                <div class="col-lg">
+                  <span class="h5 font-weight-bold mb-0">Medical Certificate</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row mt-3" *ngIf="requestDetails?.leave_request_medical_certificate_file_path">
+    <div class="col-lg-12">
+      <div class="card card-stats border mb-0">
+        <div class="card-header bg-info py-2">
+          <h5 class="h4 mb-0">Medical Certificate</h5>
+        </div>
+        <div class="card-body p-3">
+          <div class="alert alert-light py-1 px-3" role="alert" *ngIf="requestDetails?.leave_request_medical_certificate_file_path">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Medical Certificate !</strong> <a class="text-white" (click)="openMedicalCertificate(requestDetails?.leave_request_medical_certificate_file_path)"> Click here to View Medical Certificate </a> </span>
+          </div>
+
+          <img alt="..." [src]="requestDetails?.leave_request_medical_certificate_file_path"
+            class="img-fluid rounded">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- <div class="row mb-2">
+    <div class="col-lg">
+    </div>
+    <div class="col-lg-auto">
+      <button type="button" class="btn btn-warning btn-sm"
+        [disabled]="!requestDetails?.leave_request_can_cancel" (click)="sendForCancellation(requestDetails)">Cancel</button>
+
+        <button type="button" class="btn btn-success btn-sm"
+        [disabled]="requestDetails?.leave_request_can_send_for_approval" (click)="sendForApproval(requestDetails)">Send for Approval</button>
+
+      <button type="button" class="btn btn-secondary btn-sm"
+        [disabled]="requestDetails?.leave_request_is_approved" (click)="shortenLeave(requestDetails)">Shorten Leave</button>
+
+      <button type="button" class="btn btn-primary btn-sm"
+        [disabled]="requestDetails?.leave_request_is_approved" (click)="extendLeave(requestDetails)">Extend</button>
+
+      <button type="button" class="btn btn-info btn-sm"
+        [disabled]="requestDetails?.leave_request_is_approved" (click)="recallLeave(requestDetails)">Recall</button>
+    </div>
+  </div> -->
+
+  <div class="alert alert-warning px-3 py-2 mt-3" role="alert" *ngIf='generalApiError'>
+    <span class="h4 text-white"><i class="fas fa-exclamation-circle"></i> <strong> Error !</strong> {{generalApiError}}
+      ... !</span>
+    <hr class="my-2">
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.leave_request_id">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.leave_request_id">
+        <li class="mt-0" *ngFor="let error of modelStateError.leave_request_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError['expires on']">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['expires on']">
+        <li class="mt-0" *ngFor="let error of modelStateError['expires on']">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['']">
+        <li class="mt-0" *ngFor="let error of modelStateError['']">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.responsibilities">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.responsibilities">
+        <li class="mt-0" *ngFor="let error of modelStateError.responsibilities">
+          <span class="h5 text-white mb-1 mt-0 d-block">Responsibilities : {{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.work_handover_employee_id">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.work_handover_employee_id">
+        <li class="mt-0" *ngFor="let error of modelStateError.work_handover_employee_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">Work handover Employee : {{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.expires_on">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.expires_on">
+        <li class="mt-0" *ngFor="let error of modelStateError.expires_on">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,140 @@
+<div>
+  <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='generalApiError'>
+    <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+    <span class="alert-text"><strong>Error !</strong> {{generalApiError}} ... !</span>
+  </div>
+
+  <div class="row">
+    <div class="col-xl-12">
+      <div class="card card-stats mb-3 border">
+        <div class="card-header py-2 bg-light border-0">
+          <div class="row align-items-center">
+            <div class="col">
+              <h4 class="mb-0 text-primary">Overtime Requests</h4>
+            </div>
+            <div class="col text-right">
+              <!-- <a href="#!" class="btn btn-sm btn-primary">See all</a> -->
+            </div>
+          </div>
+        </div>
+        <div class="table-responsive">
+          <!-- Projects table -->
+          <table class="table align-items-center table-flush">
+            <thead class="thead-light">
+              <tr>
+                <th scope="col">Staff</th>
+                <th scope="col">Duration</th>
+                <th scope="col">General Message</th>
+                <th scope="col">Error Message</th>
+              </tr>
+            </thead>
+            <tbody *ngFor="let otRequest of selectedOtList">
+              <tr>
+                <td class="py-1">
+                  <div class="row align-items-center">
+                    <div class="col-12 pr-0 pl-2">
+                      <span class="h5 text-primary mb-0">{{otRequest?.overtime_request_employee_details}}</span>
+                    </div>
+                    <div class="col-12 pr-0 pl-2">
+                      <span class="h6 text-muted mb-0">{{otRequest?.overtime_request_status_description}}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-1">
+                  <div class="row align-items-center">
+                    <div class="col-12 px-0">
+                      <h5 class="mb-1">
+                        <i class="fas fa-calendar"></i>
+                        <span class="h5 text-primary">
+                          {{otRequest.overtime_request_planned_from | date: 'dd MMM yyyy HH:mm a'}}
+                        </span>
+                        <i class="fas fa-arrow-right"></i>
+                        <span class="h5 text-primary">
+                          {{otRequest.overtime_request_planned_to | date: 'dd MMM yyyy HH:mm a'}}</span>
+                      </h5>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-2">
+                  <div class="row align-items-center">
+                    <div class="col-12 px-0">
+                      <span class="h5 mb-0"
+                        [ngClass]="{'text-success':otRequest.overtime_request_http_error_status === 200, 'text-danger':otRequest.overtime_request_http_error_status !=200}">{{otRequest?.overtime_request_http_error_message}}</span>
+                    </div>
+                  </div>
+                </td>
+                <td class="py-2">
+                  <div class="row align-items-center" [ngClass]="{'text-success':otRequest.overtime_request_http_error_status === 200, 'text-danger':otRequest.overtime_request_http_error_status !=200}">
+                    <div class="col-12 px-0">
+                      <div class="col-lg-12" *ngIf="otRequest && otRequest.overtime_request_http_error_model_state.overtime_request_id">
+                        <ul class="pl-5 mb-2" *ngIf="otRequest && otRequest.overtime_request_http_error_model_state.overtime_request_id">
+                          <li class="mt-0" *ngFor="let error of otRequest.overtime_request_http_error_model_state.overtime_request_id">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                      <div class="col-lg-12" *ngIf="otRequest && otRequest.overtime_request_http_error_model_state.overtime_request_new_expiry_date">
+                        <ul class="pl-5 mb-2" *ngIf="otRequest && otRequest.overtime_request_http_error_model_state.overtime_request_new_expiry_date">
+                          <li class="mt-0" *ngFor="let error of otRequest.overtime_request_http_error_model_state.overtime_request_new_expiry_date">
+                            <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                          </li>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-12">
+      <div class="card card-stats border mb-2">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-lg px-4">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group mb-2">
+                    <label for="toDate" class="h5 text-muted ml-2 mb-1">New Expiry Date</label>
+                    <input type="date" class="form-control col-12" placeholder="Enter new Expiry Date"
+                      name="newExpiryDate" id="newExpiryDate" [(ngModel)]="newExpiryDate">
+                  </div>
+                </div>
+                <div class="col-lg-12" *ngIf="modelStateError && modelStateError.overtime_request_id">
+                  <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.overtime_request_id">
+                    <li class="mt-0" *ngFor="let error of modelStateError.overtime_request_id">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12" *ngIf="modelStateError && modelStateError.overtime_request_new_expiry_date">
+                  <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.overtime_request_new_expiry_date">
+                    <li class="mt-0" *ngFor="let error of modelStateError.overtime_request_new_expiry_date">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-auto px-2 py-2 my-0">
+              <div class="col-12 my-0">
+                <div class="form-group float-right my-0">
+                  <button class="btn btn-icon btn-info mt-3" type="button" (click)="extend()">
+                    <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                    <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-expand-arrows-alt"></i></span>
+                    <span class="btn-inner--text" *ngIf="showModelLoader">Extending Overtime ...</span>
+                    <span class="btn-inner--text" *ngIf="!showModelLoader">Extend Overtime</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,36 @@
+<!-- Card stats -->
+<div class="row">
+  <ng-container *ngFor="let attendance of attendanceDetail">
+    <div class="col-xl-2 col-md-6">
+      <div class="card card-stats">
+        <div class="card-body">
+          <div class="row">
+            <div class="col">
+              <h5 class="card-title text-uppercase text-muted mb-0">{{attendance.attendanceType}}</h5>
+              <span class="h2 font-weight-bold mb-0">{{attendance.TotalRecords}}</span>
+            </div>
+            <div class="col-auto">
+              <button type="button" class="btn btn-google-plus btn-icon-only rounded-circle">
+                <span class="btn-inner--icon">{{attendance.attendanceCode}}</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="row">
+            <div class="col">
+              <p class="mt-3 mb-0 text-sm">
+                <span class="text-success mr-2"> {{attendance.TotalPercentage}} %</span>
+                <!-- <span class="text-nowrap">Since last month</span> -->
+              </p>
+            </div>
+            <div class="col-auto mt-auto mr-2">
+              <span class="text-success">
+                <i class="fa fa-arrow-alt-circle-right"></i>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </ng-container>
+</div>

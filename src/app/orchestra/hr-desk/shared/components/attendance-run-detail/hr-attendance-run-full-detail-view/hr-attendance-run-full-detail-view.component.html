@@ -1,0 +1,498 @@
+<div class="card card-stats border mb-4" *ngIf="requestList && requestList.length > 0 && viewType === 'leave-requets'">
+  <div class="card-body px-3 py-3">
+    <div class="row">
+      <div class="col-sm-6 col-md">
+      </div>
+      <div class="col-sm-auto col-md-auto">
+        <!-- <form>
+          <div class="form-check mt-2">
+            <input type="checkbox" class="form-check-input" (change)="changeCheckAll($event)">
+            <label class="form-check-label" for="exampleCheck1">Select All</label>
+          </div>
+        </form> -->
+      </div>
+      <div class="col-sm-6 col-md-auto text-right align-self-end">
+        <!-- <button type="button" class="btn btn-info mb-0" (click)="showViewExtendBulkModal()"><i
+            class="fas fa-expand-arrows-alt"></i> Extend</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card card-stats border mb-4" *ngIf="requestList && requestList?.attendance_run_id">
+  <div class="card-body px-3 py-3">
+    <div class="row">
+      <div class="col-lg-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h6 class="card-title text-uppercase text-muted mb-0">Attendance Run </h6>
+          </div>
+          <div class="col-lg-12">
+            <span
+              class="h5 font-weight-bold mb-0">{{requestList?.attendance_run_id}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h6 class="card-title text-uppercase text-muted mb-0">Attendance Run Date</h6>
+          </div>
+          <div class="col-lg-12">
+            <span class="h5 font-weight-bold mb-0">{{requestList?.attendance_run_date_friendly}}</span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h6 class="card-title text-uppercase text-muted mb-0">Non Shift date</h6>
+          </div>
+          <div class="col-lg-12">
+            <span class="h5 font-weight-bold mb-0">
+              {{requestList?.attendance_run_non_shift_run_date_friendly}}
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="col-lg-3">
+        <div class="row">
+          <div class="col-lg-12">
+            <h6 class="card-title text-uppercase text-muted mb-0">Shift Date</h6>
+          </div>
+          <div class="col-lg-12">
+            <span class="h5 font-weight-bold mb-0">
+              {{requestList?.attendance_run_shift_run_date_friendly}}
+            </span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div *ngIf="requestList && requestList?.attendance_run_records?.length > 0">
+  <div class="card shadow-none border mb-3" *ngFor="let requestObj of requestList.attendance_run_records">
+    <div class="table-responsive">
+      <table class="table align-items-center table-flush">
+        <thead class="thead-light">
+          <tr>
+            <th scope="col" class="px-3 py-2">Employee Id</th>
+            <th scope="col" class="px-3 py-2">Attendance Run Id</th>
+            <th scope="col" class="px-3 py-2">Planned Punch-In / Out</th>
+            <th scope="col" class="px-3 py-2">Valid Punch-In / Out</th>
+            <th scope="col" class="px-3 py-2">Attendance Run Remarks</th>
+            <th scope="col" class="px-3 py-2 text-right">Action</th>
+          </tr>
+        </thead>
+        <tbody class="list">
+          <tr>
+            <th class="px-3 py-2">
+              <div class="col-12 px-0">
+                <span class="h5 font-weight-bold mb-1"
+                  [ngClass]="requestObj?.is_incomplete === true ? 'text-primary' : 'text-success'">{{requestObj?.attendance_run_record_employee_id}}</span>
+              </div>
+            </th>
+            <th class="px-3 py-2">
+              <div class="col-12 px-0">
+                <span class="h5 font-weight-bold mb-1"
+                  [ngClass]="requestObj?.is_incomplete === true ? 'text-primary' : 'text-success'">{{requestObj?.attendance_run_record_id}}</span>
+              </div>
+            </th>
+            <th class="px-3 py-2">
+              <div class="col-12 px-0">
+                <span class="h5 font-weight-bold mb-1"
+                  [ngClass]="requestObj?.is_incomplete === true ? 'text-primary' : 'text-success'">{{requestObj?.attendance_run_record_planned_punch_in_friendly}}</span>
+              </div>
+              <div class="col-12 px-0">
+                <span class="h5 font-weight-bold mb-1"
+                  [ngClass]="requestObj?.is_incomplete === true ? 'text-primary' : 'text-success'">{{requestObj?.attendance_run_record_planned_punch_out_friendly}}</span>
+              </div>
+            </th>
+            <th class="px-3 py-2">
+              <div class="col-12 px-0">
+                <span class="h5 font-weight-bold mb-1"
+                  [ngClass]="requestObj?.is_incomplete === true ? 'text-primary' : 'text-success'">{{requestObj?.attendance_run_record_valid_punch_in_friendly}}</span>
+              </div>
+              <div class="col-12 px-0">
+                <span class="h5 font-weight-bold mb-1"
+                  [ngClass]="requestObj?.is_incomplete === true ? 'text-primary' : 'text-success'">{{requestObj?.attendance_run_record_valid_punch_out_friendly}}</span>
+              </div>
+            </th>
+            <th class="px-3 py-2">
+              <div class="col-12 px-0">
+                <span class="h5 font-weight-bold mb-1"
+                  [ngClass]="requestObj?.is_incomplete === true ? 'text-primary' : 'text-success'">{{requestObj?.attendance_run_record_remarks}}</span>
+              </div>
+            </th>
+
+            <td class="px-3 py-1 text-right">
+  
+              <!-- <button class="btn btn-icon btn-warning btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                title="Update Allowance Type" [disabled]="(!requestObj?.attendance_custom_timing_can_delete)"
+                *ngIf="requestObj?.attendance_custom_timing_can_delete"
+                (click)="showViewAllowanceTypeUpdateModal(requestObj)">
+                <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
+              </button>
+  
+              <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                title="Remove Allowance Type" [disabled]="(!requestObj?.attendance_custom_timing_can_delete)"
+                *ngIf="requestObj?.attendance_custom_timing_can_delete"
+                (click)="showViewAllowanceTypeDeleteModal(requestObj)">
+                <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+              </button>
+  
+              <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                title="Re-run Attendance" (click)="showViewReRunModal(requestObj)">
+                <span class="btn-inner--icon"><i class="fas fa-sync-alt"></i></span>
+              </button>
+  
+              <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                title="Re-run Attendance"
+                [routerLink]="['/hr-desk', {outlets: {pages: ['manage-attendance-run-details', requestObj?.attendance_run_id]}}]">
+                <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+              </button> -->
+            </td>
+          </tr>
+
+
+          <tr>
+            <td class="px-2 py-1 text-right" colspan="6">
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="text-center px-3 py-2">Custom Timing</th>
+                      <th scope="col" class="text-center px-3 py-2">Early Punch-Out</th>
+                      <th scope="col" class="text-center px-3 py-2">Late to Work</th>
+                      <th scope="col" class="text-center px-3 py-2">Shift Employee</th>
+                      <th scope="col" class="text-center px-3 py-2">Working Day</th>
+                      <th scope="col" class="text-center px-3 py-2">In Complete</th>
+                    </tr>
+                  </thead>
+                  <tbody class="list">
+                    <tr>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.is_custom_timing === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.is_custom_timing}}</span>
+                        </div>
+                      </th>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.is_early_punch_out === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.is_early_punch_out}}</span>
+                        </div>
+                      </th>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.is_late_to_work === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.is_late_to_work}}</span>
+                        </div>
+                      </th>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.is_shift_employee === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.is_shift_employee}}</span>
+                        </div>
+                      </th>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.is_working_day === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.is_working_day}}</span>
+                        </div>
+                      </th>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.is_incomplete === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.is_incomplete}}</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+  
+
+          <tr>
+            <td class="px-2 py-1 text-right" colspan="6">
+              <div class="table-responsive">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="text-center px-3 py-2">Informed Adsence</th>
+                      <th scope="col" class="text-center px-3 py-2">AWOL</th>
+                      <th scope="col" class="text-center px-3 py-2">SAP Absence Record</th>
+                      <th scope="col" class="text-center px-3 py-2">SAP Attendance Record</th>
+                      <th scope="col" class="text-center px-3 py-2">Approve Leave</th>
+                    </tr>
+                  </thead>
+                  <tbody class="list">
+                    <tr>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.has_roll_call_informed_absence === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.has_roll_call_informed_absence}}</span>
+                        </div>
+                      </th>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.has_roll_call_informed_awol === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.has_roll_call_informed_awol}}</span>
+                        </div>
+                      </th>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.has_sap_absence_record === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.has_sap_absence_record}}</span>
+                        </div>
+                      </th>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.has_sap_attendance_record === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.has_sap_attendance_record}}</span>
+                        </div>
+                      </th>
+                      <th class="text-center px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span [ngClass]="requestObj?.has_supervisor_approved_leave_request === true ? 'text-success' : 'text-danger'"><i class="fas fa-circle"></i> {{requestObj?.has_supervisor_approved_leave_request}}</span>
+                        </div>
+                      </th>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </td>
+          </tr>
+
+
+          <tr *ngIf="requestObj?.sap_upload_records">
+            <th class="px-3 py-2">
+              <span class="h4 font-weight-bold mb-0">SAP Upload</span>
+            </th>
+            <th class="px-3 py-1" colspan="4">
+              <div class="table-responsive" *ngIf="requestObj?.sap_upload_records.length">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="px-3 py-2">SAP Uploaded Record Id</th>
+                      <th scope="col" class="px-3 py-2">SAP Record Id</th>
+                      <th scope="col" class="px-3 py-2">SAP Record Description</th>
+                      <th scope="col" class="px-3 py-2">Start Date</th>
+                      <th scope="col" class="px-3 py-2">Start Time</th>
+                      <th scope="col" class="px-3 py-2">End Date</th>
+                      <th scope="col" class="px-3 py-2">End Time</th>
+                      <th scope="col" class="px-3 py-2">Uploded Status</th>
+                      <th scope="col" class="px-3 py-2 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody class="list" *ngFor="let sapObj of requestObj.sap_upload_records">
+                    <tr>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_uploaded === true ? 'text-success' : 'text-danger'">{{sapObj?.sap_upload_record_id}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_uploaded === true ? 'text-success' : 'text-danger'">{{sapObj?.sap_record_id}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_uploaded === true ? 'text-success' : 'text-danger'">{{sapObj?.sap_record_description}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_uploaded === true ? 'text-success' : 'text-danger'">{{sapObj?.sap_upload_record_start_date_friendly}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_uploaded === true ? 'text-success' : 'text-danger'">{{sapObj?.sap_upload_record_start_time_friendly}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_uploaded === true ? 'text-success' : 'text-danger'">{{sapObj?.sap_upload_record_end_date_friendly}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_uploaded === true ? 'text-success' : 'text-danger'">{{sapObj?.sap_upload_record_end_time_friendly}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_uploaded === true ? 'text-success' : 'text-danger'">
+                            <i class="fas fa-check-circle" *ngIf="sapObj.is_uploaded"></i>
+                            <i class="fas fa-times-circle" *ngIf="!sapObj.is_uploaded"></i>
+                          </span>
+                        </div>
+                      </th>
+                      <td class="px-3 py-1 text-right">
+                        <!-- <button class="btn btn-icon btn-warning btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                          title="Update Allowance Type" [disabled]="(!requestObj?.attendance_custom_timing_can_delete)"
+                          *ngIf="requestObj?.attendance_custom_timing_can_delete"
+                          (click)="showViewAllowanceTypeUpdateModal(requestObj)">
+                          <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
+                        </button>
+            
+                        <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                          title="Remove Allowance Type" [disabled]="(!requestObj?.attendance_custom_timing_can_delete)"
+                          *ngIf="requestObj?.attendance_custom_timing_can_delete"
+                          (click)="showViewAllowanceTypeDeleteModal(requestObj)">
+                          <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+                        </button>
+            
+                        <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                          title="Re-run Attendance" (click)="showViewReRunModal(requestObj)">
+                          <span class="btn-inner--icon"><i class="fas fa-sync-alt"></i></span>
+                        </button>
+            
+                        <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                          title="Re-run Attendance"
+                          [routerLink]="['/hr-desk', {outlets: {pages: ['manage-attendance-run-details', requestObj?.attendance_run_id]}}]">
+                          <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+                        </button> -->
+                      </td>
+                    </tr>
+  
+                  </tbody>
+                </table>
+              </div>
+  
+              <div class="alert alert-light px-3 py-1 mb-0" role="alert" *ngIf="!requestObj?.sap_upload_records.length">
+                <span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                <span class="alert-text"><strong>No Record Found!</strong> No Sap Upload Record Found ...!</span>
+              </div>
+            </th>
+            <td class="px-3 py-1 text-right">
+            </td>
+          </tr>
+
+          <tr *ngIf="requestObj?.allowance_records">
+            <th class="px-3 py-2">
+              <span class="h4 font-weight-bold mb-0">Allowance</span>
+            </th>
+            <th class="px-3 py-1" colspan="4">
+              <div class="table-responsive" *ngIf="requestObj?.allowance_records.length">
+                <table class="table align-items-center table-flush">
+                  <thead class="thead-light">
+                    <tr>
+                      <th scope="col" class="px-3 py-2">Employee Id</th>
+                      <th scope="col" class="px-3 py-2">Allowance Record Id</th>
+                      <th scope="col" class="px-3 py-2">Created By</th>
+                      <th scope="col" class="px-3 py-2">Created On</th>
+                      <th scope="col" class="px-3 py-2">Deleted On</th>
+                      <th scope="col" class="px-3 py-2">Amount</th>
+                      <th scope="col" class="px-3 py-2">Percentage</th>
+                      <th scope="col" class="px-3 py-2">Salary Key</th>
+                      <th scope="col" class="px-3 py-2">Notes</th>
+                      <th scope="col" class="px-3 py-2 text-right">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody class="list" *ngFor="let sapObj of requestObj.allowance_records">
+                    <tr>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_deleted === true ? 'text-success' : 'text-danger'">{{sapObj?.allowance_record_employee_id}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_deleted === true ? 'text-success' : 'text-danger'">{{sapObj?.allowance_record_id}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_deleted === true ? 'text-success' : 'text-danger'">{{sapObj?.allowance_record_created_by}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_deleted === true ? 'text-success' : 'text-danger'">{{sapObj?.allowance_record_created_on_friendly}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_deleted === true ? 'text-success' : 'text-danger'">{{sapObj?.allowance_record_deleted_on_friendly}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_deleted === true ? 'text-success' : 'text-danger'">{{sapObj?.allowance_record_amount_friendly}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_deleted === true ? 'text-success' : 'text-danger'">{{sapObj?.allowance_record_rate_percentage_friendly}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_deleted === true ? 'text-success' : 'text-danger'">{{sapObj?.allowance_record_salary_key_id}}</span>
+                        </div>
+                      </th>
+                      <th class="px-3 py-2">
+                        <div class="col-12 px-0">
+                          <span class="h5 font-weight-bold mb-1"
+                            [ngClass]="sapObj?.is_deleted === true ? 'text-success' : 'text-danger'">{{sapObj?.allowance_record_notes}}</span>
+                        </div>
+                      </th>
+                      <td class="px-3 py-1 text-right">
+                        <!-- <button class="btn btn-icon btn-warning btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                          title="Update Allowance Type" [disabled]="(!requestObj?.attendance_custom_timing_can_delete)"
+                          *ngIf="requestObj?.attendance_custom_timing_can_delete"
+                          (click)="showViewAllowanceTypeUpdateModal(requestObj)">
+                          <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
+                        </button>
+            
+                        <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                          title="Remove Allowance Type" [disabled]="(!requestObj?.attendance_custom_timing_can_delete)"
+                          *ngIf="requestObj?.attendance_custom_timing_can_delete"
+                          (click)="showViewAllowanceTypeDeleteModal(requestObj)">
+                          <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+                        </button>
+            
+                        <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                          title="Re-run Attendance" (click)="showViewReRunModal(requestObj)">
+                          <span class="btn-inner--icon"><i class="fas fa-sync-alt"></i></span>
+                        </button>
+            
+                        <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+                          title="Re-run Attendance"
+                          [routerLink]="['/hr-desk', {outlets: {pages: ['manage-attendance-run-details', requestObj?.attendance_run_id]}}]">
+                          <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+                        </button> -->
+                      </td>
+                    </tr>
+  
+                  </tbody>
+                </table>
+              </div>
+  
+              <div class="alert alert-light px-3 py-1 mb-0" role="alert" *ngIf="!requestObj?.sap_upload_records.length">
+                <span class="alert-icon"><i class="fas fa-exclamation-triangle"></i></span>
+                <span class="alert-text"><strong>No Record Found!</strong> No Allowance Record Found ...!</span>
+              </div>
+            </th>
+            <td class="px-3 py-1 text-right">
+            </td>
+          </tr>
+  
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+

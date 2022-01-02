@@ -1,0 +1,102 @@
+<div class="card card-stats border mb-4" *ngIf="requestList && requestList.length > 0 && viewType==='leave-requets'">
+  <div class="card-body px-3 py-3">
+    <div class="row">
+      <div class="col-sm-6 col-md">
+      </div>
+      <div class="col-sm-auto col-md-auto">
+        <!-- <form>
+                  <div class="form-check mt-2">
+                      <input type="checkbox" class="form-check-input" (change)="changeCheckAll($event)">
+                      <label class="form-check-label" for="exampleCheck1">Select All</label>
+                  </div>
+              </form> -->
+      </div>
+      <div class="col-sm-6 col-md-auto text-right align-self-end">
+        <!-- <button type="button" class="btn btn-info mb-0" (click)="showViewExtendBulkModal()"><i
+                      class="fas fa-expand-arrows-alt"></i> Extend</button> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card shadow-none border-0" *ngIf="requestList && requestList.length > 0">
+  <div class="table-responsive">
+    <table class="table table-hover align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col" class="px-3 py-2">Attendance Type</th>
+          <th scope="col" class="px-3 py-2"></th>
+          <th scope="col" class="px-3 py-2">Employee Id</th>
+          <th scope="col" class="px-3 py-2">Percentage</th>
+          <th scope="col" class="px-3 py-2">Amount</th>
+          <th scope="col" class="px-3 py-2">Salary Key</th>
+          <th scope="col" class="px-3 py-2">Note</th>
+          <th scope="col" class="px-3 py-2">Created By</th>
+          <th scope="col" class="px-3 py-2">Created On</th>
+          <th scope="col" class="px-3 py-2 text-right">Action</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let requestObj of requestList">
+        <tr>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1">{{requestObj?.allowance_record_attendance_type_rate}}</span>
+            </div>
+          </th>
+          <th class="px-3 py-1 text-center justify-content-center">
+            <div class="col-12 px-0 mx-0">
+              <span class="avatar avatar-sm rounded-circle"
+                *ngIf="requestObj?.allowance_record_employee_profile_picture_path">
+                <img [src]="requestObj?.allowance_record_employee_profile_picture_path" alt="..."
+                  style="width: 36px; height: 36px; object-fit: cover;" />
+              </span>
+              <span class="avatar avatar-sm rounded-circle"
+                *ngIf="!requestObj?.allowance_record_employee_profile_picture_path">
+                <img src="../../assets/img/theme/team-00.jpg" alt="..."
+                  style="width: 36px; height: 36px; object-fit: cover;">
+              </span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1">{{requestObj?.allowance_record_employee_id}}</span>
+            </div>
+          </th>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1">{{requestObj?.allowance_record_rate_percentage_friendly}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1">{{requestObj?.allowance_record_amount_friendly}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1">{{requestObj?.allowance_record_salary_key}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1">{{requestObj?.allowance_record_notes}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1">{{requestObj?.allowance_record_created_by}}</span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1">{{requestObj?.allowance_record_created_on_friendly}}</span>
+            </div>
+          </th>
+          <td class="px-3 py-2">
+
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

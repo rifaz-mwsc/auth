@@ -1,0 +1,84 @@
+<div *ngIf="requestDetails">
+  <app-hr-ot-requests-detail-view-model [requestDetails]="requestDetails" [showModelLoader]="showModelLoader"
+    [modelStateError]="modelStateError" [generalApiError]="generalApiError">
+  </app-hr-ot-requests-detail-view-model>
+
+  <div class="row mt-3">
+    <div class="col-lg-12">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-lg px-4">
+              <div class="row">
+                <div class="col-lg-12">
+                  <div class="form-group mb-2">
+                    <label for="toDate" class="h5 text-muted ml-2 mb-1">Reason for Reject</label>
+                    <input type="text" class="form-control col-12" placeholder="Reason for Reject"
+                      name="rejectionReason" id="rejectionReason" [(ngModel)]="rejectionReason">
+                  </div>
+                </div>
+                <div class="col-lg-12" *ngIf="modelStateError && modelStateError.overtime_request_id">
+                  <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.overtime_request_id">
+                    <li class="mt-0" *ngFor="let error of modelStateError.overtime_request_id">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12" *ngIf="modelStateError && modelStateError.overtime_request_rejection_reason">
+                  <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.overtime_request_rejection_reason">
+                    <li class="mt-0" *ngFor="let error of modelStateError.overtime_request_rejection_reason">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12" *ngIf="modelStateError && modelStateError.rejection_reason">
+                  <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.rejection_reason">
+                    <li class="mt-0" *ngFor="let error of modelStateError.rejection_reason">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+                <div class="col-lg-12" *ngIf="modelStateError && modelStateError.overtime_request_new_expiry_date">
+                  <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.overtime_request_new_expiry_date">
+                    <li class="mt-0" *ngFor="let error of modelStateError.overtime_request_new_expiry_date">
+                      <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+
+            <!-- <div class="col-lg-auto px-2 py-2 my-0">
+              <div class="col-12 my-0">
+                <div class="form-group float-right my-0">
+                  <button class="btn btn-icon btn-info mt-3" type="button" (click)="extend()">
+                    <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                    <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-expand-arrows-alt"></i></span>
+                    <span class="btn-inner--text" *ngIf="showModelLoader">Extending overtime...</span>
+                    <span class="btn-inner--text" *ngIf="!showModelLoader">Extend overtime</span>
+                  </button>
+                </div>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+  <div class="row mt-3 mb-1">
+    <div class="col-lg my-0">
+    </div>
+    <div class="col-lg-auto my-0">
+      <div class="form-group float-right my-0">
+        <button class="btn btn-icon btn-danger" type="button" (click)="reject(requestDetails)">
+          <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+          <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-times-circle"></i></span>
+          <span class="btn-inner--text" *ngIf="showModelLoader">Rejecting Request ...</span>
+          <span class="btn-inner--text" *ngIf="!showModelLoader">Reject Request</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>

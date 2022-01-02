@@ -1,0 +1,118 @@
+<div class="card shadow-none border-0" *ngIf="requestList && requestList.length > 0">
+  <div class="table-responsive">
+    <table class="table table-hover align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Employee Details / Status</th>
+          <th scope="col">Date from / to</th>
+          <th scope="col">Location</th>
+          <th scope="col">Work Details</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let leaveRequest of requestList">
+        <tr>
+          <th class="px-3 py-2">
+            <div class="col-12">
+              <span class="h4 font-weight-bold mb-0">{{leaveRequest?.leave_request_employee_details}}</span>
+            </div>
+            <div class="col-12">
+              <h6 class="card-title text-uppercase text-muted mt-1 mb-1">
+                {{leaveRequest?.leave_request_status_description}}</h6>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12">
+              <h5 class="mb-1">
+                <i class="fas fa-calendar"></i>
+                <span class="text-primary">
+                  {{leaveRequest.leave_request_taken_from | date: 'dd MMM yyyy HH:mm a'}}
+                </span>
+                <i class="fas fa-arrow-right"></i>
+                <span class="text-primary">
+                  {{leaveRequest.leave_request_taken_to | date: 'dd MMM yyyy HH:mm a'}}</span>
+              </h5>
+            </div>
+            <div class="col-12">
+              <span class="h5 font-weight-bold mb-0">
+                <i class="fas fa-clock"></i> <span
+                  class="h5 text-muted">{{leaveRequest.leave_request_requested_duration_date}}</span>
+              </span>
+            </div>
+          </th>
+          <td class="px-3 py-2">
+            <div class="col-12">
+              <span class="text-danger"><i class="fas fa-certificate"></i></span>
+              <span class="h5 font-weight-bold mb-0">
+                {{leaveRequest?.leave_request_absence_type_description}}
+              </span>
+            </div>
+          </td>
+          <td class="px-3 py-2">
+            <div class="col-12">
+              <span class="h5 font-weight-bold text-primary">Created On: </span>
+              <span
+                class="h5 font-weight-bold mb-0">{{leaveRequest?.leave_request_created_on | date: 'dd MMM yyyy HH:mm a'}}</span>
+            </div>
+          </td>
+          <td class="px-3 py-2 text-right">
+            <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="View Details" (click)="showExtendRecordDetailsModal(leaveRequest)">
+              <span class="btn-inner--icon"><i class="fas fa-expand-arrows-alt"></i></span>
+              <span class="btn-inner--text">Extend</span>
+            </button>
+
+            <button class="btn btn-icon btn-warning btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="View Details" (click)="showViewRecordDetailsModal(leaveRequest)">
+              <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+
+
+
+
+
+
+<div #TableViewRecordDetailsModal id="TableViewRecordDetailsModal" class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Leave History</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewRecordDetailsModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="requestDetails">
+        <!-- <app-hr-leave-requests-detail-view-model [selecteditem]="selecteditem" [requestDetails]="requestDetails"
+          [showModelLoader]="showModelLoader"></app-hr-leave-requests-detail-view-model> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div #TableExtendRecordDetailsModal id="TableExtendRecordDetailsModal" class="modal fade" data-backdrop="static"
+  data-keyboard="false">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Extend Leave</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideExtendRecordDetailsModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="requestDetails || selecteditem">
+        <app-hr-extend-leave [selecteditem]="selecteditem" [requestDetails]="requestDetails"
+          [showModelLoader]="showModelLoader"></app-hr-extend-leave>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,115 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Duty Roster</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+              <li class="breadcrumb-item active">Offshift SAP Upload</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
+          <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col">
+              <div class="alert alert-warning py-2 px-3 mb-0" role="alert"
+                *ngIf="requestList && requestList.length < 1">
+                <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                <span class="alert-text"><strong>Oh Snap!</strong> No Shift Count Found ... !</span>
+              </div>
+
+              <div class="alert alert-info py-2 px-3 mb-0 fade show" role="alert"
+                *ngIf="requestList && requestList.length >= 1">
+                <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                <span class="alert-text"><strong>Info!</strong> {{requestList.length}} Records Found. Please find the
+                  Shift Count for SAP Upload listed below ...!</span>
+              </div>
+
+            </div>
+            <div class="col-auto">
+              <div class="nav btn-group" role="tablist">
+                <button class="btn btn-primary px-3 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+                  aria-controls="tabPaneOne" aria-selected="true">
+                  <i class="fas fa-table"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+                  aria-controls="tabPaneTwo" aria-selected="false">
+                  <i class="fas fa-list"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-3">
+          <app-comp-lib-loading *ngIf="showLoader"></app-comp-lib-loading>
+
+          <app-offshift-sapupload-view-table [requestList]="requestList" [showLoader]="showLoader"
+            (selectSapUploadx)="selectSapUploads($event)" (unselectSapUploadx)="unselectSapUploads($event)" (bulkUploaded)="bulkSapUploads($event)">
+          </app-offshift-sapupload-view-table>
+
+          <!-- Component-Library - Pagination -->
+          <div class="row" *ngIf="localStorePagination && apiDataService">
+            <div class="col my-auto">
+              <span class="h5 text-light">Showing {{localStorePagination.currentPageItemNoStart}} to
+                {{localStorePagination.currentPageItemNoEnd}} of {{localStorePagination.totalItemCount}}
+                entries</span>
+            </div>
+            <div class="col">
+              <nav aria-label="Page navigation example">
+                <ul class="pagination justify-content-end mb-1">
+                  <li class="page-item"
+                    [ngClass]="{'disabled': localStorePagination.currentPage === localStorePagination.pageNoStart}">
+                    <a class="page-link"
+                      [ngClass]="{'bg-light': localStorePagination.currentPage === localStorePagination.pageNoStart}"
+                      (click)="getOffshitUploadPendingFromPaginationPrv(localStorePagination.currentPage)"
+                      tabindex="-1">
+                      <i class="fa fa-angle-left"></i>
+                      <span class="sr-only">Previous</span>
+                    </a>
+                  </li>
+                  <ng-container *ngFor="let data of apiDataService">
+                    <li class="page-item"
+                      [ngClass]="{'active': data.pagination.pageNo === localStorePagination.currentPage}"><a
+                        class="page-link"
+                        (click)="getOffshitUploadPendingFromPagination(data.pagination.pageNo)">{{data.pagination.pageNo}}</a>
+                    </li>
+                  </ng-container>
+                  <li class="page-item"
+                    [ngClass]="{'disabled': localStorePagination.currentPage === localStorePagination.pageNoEnd}">
+                    <a class="page-link"
+                      [ngClass]="{'bg-light': localStorePagination.currentPage === localStorePagination.pageNoEnd}"
+                      (click)="getOffshitUploadPendingFromPaginationNext(localStorePagination.currentPage)">
+                      <i class="fa fa-angle-right"></i>
+                      <span class="sr-only">Next</span>
+                    </a>
+                  </li>
+                </ul>
+              </nav>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>

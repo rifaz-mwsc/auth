@@ -1,0 +1,775 @@
+<div class="header bg-primary pb-6 d-flex align-items-center">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">HR Desk</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+              <li class="breadcrumb-item active"><a
+                  [routerLink]="['/hr-desk', {outlets: {pages: ['manage-employee-profile']}}]"> HR Profile </a></li>
+              <li class="breadcrumb-item active"> {{requestList?.employee_name_with_id}} </li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col-xl-3 col-lg-4 col-md-12 col-sm-12">
+      <div class="card card-profile">
+        <img class="bg-gradient-success" src="../../assets/img/theme/img-2-1000x300.jpg" alt="Image placeholder"
+          class="card-img-top">
+        <div class="row justify-content-center">
+          <div class="col-lg-4">
+            <div class="card-profile-image ml-4">
+              <img src="{{requestList?.employee_picture_path}}" class="rounded-circle" style="object-fit: cover;"
+                width="140" height="140">
+            </div>
+          </div>
+          <div class="col-lg-auto mt-4 ml--4">
+            <a class="avatar avatar-sm rounded-circle nav-link btn"
+              (click)="showViewUpdateProfilePictureModal(requestList)">
+              <i class="fas fa-camera"></i>
+            </a>
+          </div>
+        </div>
+
+        <!-- <div class="card-header text-center border-0 pt-8 pt-md-4 pb-0 pb-md-4">
+          <div class="d-flex justify-content-between">
+            <a href="#" class="btn btn-sm btn-info  mr-4 ">Connect</a>
+            <a href="#" class="btn btn-sm btn-default float-right">Message</a>
+          </div>
+        </div> -->
+        <div class="card-body pt-0">
+
+          <div class="row justify-content-center">
+            <div class="col-lg-auto mt-4 pl-2">
+              <a class="p-2 btn" (click)="showViewQrModal(requestList)">
+                <!-- <img src="{{requestList?.employee_qr_code_path}}" style="object-fit: cover;" width="120" height="120"> -->
+                <qr-code value={{requestList?.employee_public_profile_path}} size="130" errorCorrectionLevel="M"></qr-code>
+              </a>
+            </div>
+          </div>
+
+          <!-- <div class="row justify-content-center">
+            <div class="col-lg-auto mt-4 pl-2">
+              <a class="p-2 btn" (click)="showViewQrModal(requestList)">
+                <img src="{{requestList?.employee_qr_code_path}}" style="object-fit: cover;" width="120" height="120">
+              </a>
+            </div>
+          </div> -->
+
+          <hr class="my-2">
+
+          <!-- <div class="row">
+            <div class="col">
+              <div class="card-profile-stats d-flex justify-content-center">
+                <div>
+                  <span class="heading">22</span>
+                  <span class="description">Friends</span>
+                </div>
+                <div>
+                  <span class="heading">10</span>
+                  <span class="description">Photos</span>
+                </div>
+                <div>
+                  <span class="heading">89</span>
+                  <span class="description">Comments</span>
+                </div>
+              </div>
+            </div>
+          </div> -->
+          <div class="text-center pt-2 pt-md-2">
+            <h5 class="h3">{{requestList?.employee_name_with_id}}</h5>
+            <div class="h5 font-weight-300">
+              <i class="ni location_pin mr-2"></i>{{requestList?.employee_designation}}
+            </div>
+            <div class="h5 text-primary mt-4">
+              <i class="ni business_briefcase-24 mr-2"></i>{{requestList?.employee_division}} -
+              {{requestList?.employee_department}}
+            </div>
+            <div class="h4 text-primary">
+              <i class="ni education_hat mr-2"></i>{{requestList?.employee_section}}
+            </div>
+
+            <hr class="my-3">
+
+            <div class="h4 text-primary mt-4">
+              <span class="text-muted mr-2"><i class="fas fa-phone-square"></i></span>
+              <span class="mr-3">{{requestList?.employee_mobile_number}}</span>
+
+              <button class="btn btn-icon btn-link py-0 px-2" type="button"
+                (click)="showViewUpdateMobileNoModal(requestList)">
+                <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
+              </button>
+            </div>
+            <div class="h4 text-primary">
+              <span class="text-muted mr-2"><i class="fas fa-envelope"></i></span>
+              <span class="">{{requestList?.employee_email}}</span>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="row">
+              <div class="col">
+                <div class="row">
+                  <div class="col-lg-12 pr-2">
+                    <div class="row">
+                      <div class="col-12">
+                        <span class="h4 text-dark font-weight-bold mb-0">
+                          {{requestList?.employee_manager?.employee_name_with_id}}
+                        </span>
+                      </div>
+                      <div class="col-12">
+                        <span class="h5 font-weight-300 text-darkbold mb-0">
+                          {{requestList?.employee_manager?.employee_designation}}
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto my-auto pl-2">
+                <button class="btn btn-icon btn-link py-0 px-2" type="button"
+                  (click)="showViewUpdateSupervisorModal(requestList)">
+                  <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
+                </button>
+              </div>
+            </div>
+
+            <hr class="my-3">
+
+            <div class="row">
+              <div class="col">
+                <div class="row">
+                  <div class="col-lg-12 pr-2">
+                    <div class="row">
+                      <div class="col-12">
+                        <span class="h4 text-dark font-weight-bold mb-0">
+                          Access Card
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div class="col-auto my-auto pl-2">
+                <button class="btn btn-icon btn-link py-0 px-2" type="button"
+                  (click)="showViewUpdateAccessModal(requestList)">
+                  <span class="btn-inner--icon"><i class="fas fa-edit"></i></span>
+                </button>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl col-lg col-md-12 col-sm-12">
+      <div class="card">
+        <div class="card-header bg-light py-3">
+          <div class="row align-items-center">
+            <div class="col-auto">
+              <h3 class="mb-0">Profile </h3>
+            </div>
+            <div class="col">
+              <ul class="nav justify-content-end">
+                <li class="nav-item">
+                  <a class="nav-link h4 text-primary mb-0 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+                    aria-controls="tabPaneOne" aria-selected="true"> Overview</a>
+                </li>
+                <!-- <li class="nav-item">
+                  <a class="nav-link h4 text-primary mb-0" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+                    aria-controls="tabPaneTwo" aria-selected="false"> Access Control</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a class="nav-link h4 text-primary mb-0" data-toggle="tab" data-target="#tabPaneThree" role="tab"
+                    aria-controls="tabPaneThree" aria-selected="false"> Address</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a class="nav-link h4 text-primary mb-0" data-toggle="tab" data-target="#tabPaneThree" role="tab"
+                    aria-controls="tabPaneThree" aria-selected="false"> MWSC</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a class="nav-link h4 text-primary mb-0" data-toggle="tab" data-target="#tabPaneFour" role="tab"
+                    aria-controls="tabPaneFour" aria-selected="false"> Education</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a class="nav-link h4 text-primary mb-0" data-toggle="tab" data-target="#tabPaneFive" role="tab"
+                    aria-controls="tabPaneFive" aria-selected="false"> Experience</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a class="nav-link h4 text-primary mb-0" data-toggle="tab" data-target="#tabPaneSix" role="tab"
+                    aria-controls="tabPaneSix" aria-selected="false"> Skills</a>
+                </li> -->
+                <!-- <li class="nav-item">
+                  <a class="nav-link h4 text-primary mb-0" data-toggle="tab" data-target="#tabPaneSeven" role="tab"
+                    aria-controls="tabPaneSeven" aria-selected="false"> Family</a>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <div class="card-body">
+          <form>
+
+            <!-- Tab content -->
+            <div class="tab-content">
+              <div class="tab-pane fade active show" id="tabPaneOne" role="tabpanel">
+                <app-hr-employee-profile-basic-info [profileBaiscInfo]="requestList" [showLoader]="showLoader">
+                </app-hr-employee-profile-basic-info>
+              </div>
+
+              <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
+                <app-hr-employee-profile-access-control></app-hr-employee-profile-access-control>
+              </div>
+
+              <div class="tab-pane fade" id="tabPaneThree" role="tabpanel">
+                <!-- <app-hr-employee-profile-address-info></app-hr-employee-profile-address-info> -->
+              </div>
+
+              <div class="tab-pane fade" id="tabPaneFour" role="tabpanel">
+                <app-hr-employee-profile-education></app-hr-employee-profile-education>
+              </div>
+
+              <div class="tab-pane fade" id="tabPaneFive" role="tabpanel">
+                <app-hr-employee-profile-experience></app-hr-employee-profile-experience>
+              </div>
+
+              <div class="tab-pane fade" id="tabPaneSix" role="tabpanel">
+                <app-hr-employee-profile-skills></app-hr-employee-profile-skills>
+              </div>
+
+              <div class="tab-pane fade" id="tabPaneSeven" role="tabpanel">
+                <app-hr-employee-profile-family></app-hr-employee-profile-family>
+              </div>
+            </div>
+
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>
+
+
+
+
+<div #CardViewUpdateRequestModal id="CardViewUpdateRequestModal" class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Update Profile</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewUpdateRequestModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedRequest">
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div #CardViewUpdateProfilePictureModal id="CardViewUpdateProfilePictureModal" class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Update Profile Picture</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewUpdateProfilePictureModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedRequest">
+
+        <div>
+          <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='generalApiError'>
+            <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+            <span class="alert-text"><strong>Error !</strong> {{generalApiError}} ... !</span>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card card-stats border mb-0">
+                <div class="card-body p-3">
+                  <div class="row">
+                    <div class="col-lg-12 px-2">
+                      <div class="input-daterange datepicker row align-items-center m-0 p-0">
+                        <div class="col-lg-12">
+                          <div class="row">
+                            <div class="col-lg-12">
+                              <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.letter_title">
+                                <li class="mt-0" *ngFor="let error of modelStateError.letter_title">
+                                  <span class="h5 text-danger mb-1 mt-0 d-block">
+                                    {{error}}.</span>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="col-lg-12">
+                              <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.employee_id">
+                                <li class="mt-0" *ngFor="let error of modelStateError.employee_id">
+                                  <span class="h5 text-danger mb-1 mt-0 d-block">
+                                    {{error}}.</span>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="col-lg-12">
+                              <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.letter_uploaded_document">
+                                <li class="mt-0" *ngFor="let error of modelStateError.letter_uploaded_document">
+                                  <span class="h5 text-danger mb-1 mt-0 d-block">
+                                    {{error}}.</span>
+                                </li>
+                              </ul>
+                            </div>
+                            <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+                              <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError['']">
+                                <li class="mt-0" *ngFor="let error of modelStateError['']">
+                                  <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
+                        <div class="col-lg-12">
+                          <div class="form-group">
+                            <label class="h5 text-muted ml-2 mt-2 mb-1">Profile Picture</label>
+                            <small class="form-text text-muted ml-2 mb-3">
+                              Please use a png no larger than 400kb.
+                            </small>
+                            <div class="card">
+                              <div class="card-body p-3">
+                                <ngx-dropzone [multiple]="false" (change)="updateProfilePicture($event , requestList)">
+                                  <ngx-dropzone-label>Drop it, baby!
+                                  </ngx-dropzone-label>
+                                  <ngx-dropzone-preview class="avatar avatar-xxl" *ngFor="let file of fileList"
+                                    [removable]="true" (removed)="removeProfilePicture(file)">
+                                    <ngx-dropzone-label class="h6">{{ file.name }}
+                                      ({{ file.type }})
+                                    </ngx-dropzone-label>
+                                  </ngx-dropzone-preview>
+                                </ngx-dropzone>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div #CardViewQrModal id="CardViewQrModal" class="modal fade">
+  <div class="modal-dialog modal-md" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">View QR</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewUpdateProfilePictureModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedRequest">
+
+        <div>
+          <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='generalApiError'>
+            <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+            <span class="alert-text"><strong>Error !</strong> {{generalApiError}} ... !</span>
+          </div>
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card card-stats border mb-0">
+                <div class="card-body p-3">
+                  <div class="row justify-content-center">
+                    <div class="col-lg-auto pl-2">
+                      <span class="p-2">
+                        <!-- <img src="{{selectedRequest?.employee_qr_code_path}}" style="object-fit: cover;" width="300" height="300"> -->
+                        <qr-code value={{requestList?.employee_public_profile_path}} size="320" errorCorrectionLevel="M" id="image_qrcode"></qr-code>
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4 mb-1">
+            <div class="col-lg my-0">
+            </div>
+            <div class="col-lg-auto my-0">
+              <div class="form-group float-right my-0">
+                <button class="btn btn-icon btn-primary mr-3" type="button" (click)="getQrCode(requestList)">
+                  <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                  <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-save"></i></span>
+                  <span class="btn-inner--text" *ngIf="showModelLoader">Loading ...</span>
+                  <span class="btn-inner--text" *ngIf="!showModelLoader">View Public Profile</span>
+                </button>
+
+                <!-- <a class="btn btn-icon btn-primary mr-3" routerLink="requestList.employee_public_profile_path" target="_blank">Test</a> -->
+
+                <button class="btn btn-icon btn-primary" type="button" (click)="downloadQR(requestList)">
+                  <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                  <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-save"></i></span>
+                  <span class="btn-inner--text" *ngIf="showModelLoader">Loading ...</span>
+                  <span class="btn-inner--text" *ngIf="!showModelLoader">Download QR </span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div #CardViewUpdateMobileNoModal id="CardViewUpdateMobileNoModal" class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Update Mobile No</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewUpdateMobileNoModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedRequest">
+
+        <div *ngIf="selectedRequest">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card card-stats border mb-0">
+                <div class="card-body p-3">
+                  <div class="row">
+                    <div class="col-lg-12 px-4 mb-4">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group mb-2">
+                            <label for="toDate" class="h5 text-muted ml-2 mb-1">Mobile No</label>
+                            <input type="text" class="form-control col-12" placeholder="Enter new Mobile No"
+                              name="newUpdateData" id="newUpdateData" [(ngModel)]="newUpdateData">
+                          </div>
+                        </div>
+
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.field_value">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.field_value">
+                            <li class="mt-0" *ngFor="let error of modelStateError.field_value">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.field_name">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.field_name">
+                            <li class="mt-0" *ngFor="let error of modelStateError.field_name">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.employee_id">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.employee_id">
+                            <li class="mt-0" *ngFor="let error of modelStateError.employee_id">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.leave_request_taken_to">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.leave_request_taken_to">
+                            <li class="mt-0" *ngFor="let error of modelStateError.leave_request_taken_to">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+                          <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['']">
+                            <li class="mt-0" *ngFor="let error of modelStateError['']">
+                              <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4 mb-1">
+            <div class="col-lg my-0">
+            </div>
+            <div class="col-lg-auto my-0">
+              <div class="form-group float-right my-0">
+                <button class="btn btn-icon btn-primary" type="button" (click)="updateMobile(requestList)">
+                  <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                  <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-save"></i></span>
+                  <span class="btn-inner--text" *ngIf="showModelLoader">Saving ...</span>
+                  <span class="btn-inner--text" *ngIf="!showModelLoader">Update Mobile No</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div #CardViewUpdateSupervisorModal id="CardViewUpdateSupervisorModal" class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Update Supervisor</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewUpdateSupervisorModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedRequest">
+
+        <div *ngIf="selectedRequest">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card card-stats border mb-0">
+                <div class="card-body p-3">
+                  <div class="row">
+                    <div class="col-lg-12 px-4 mb-4">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group mb-2">
+                            <label for="toDate" class="h5 text-muted ml-2 mb-1">Supervisor</label>
+                            <input type="text" class="form-control col-12" placeholder="Enter new Supervisor Id"
+                              name="newSupervisor" id="newSupervisor" [(ngModel)]="newSupervisor">
+                          </div>
+                        </div>
+
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.employee_id">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.employee_id">
+                            <li class="mt-0" *ngFor="let error of modelStateError.employee_id">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.employee_name">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.employee_name">
+                            <li class="mt-0" *ngFor="let error of modelStateError.employee_name">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+                          <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['']">
+                            <li class="mt-0" *ngFor="let error of modelStateError['']">
+                              <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4 mb-1">
+            <div class="col-lg my-0">
+            </div>
+            <div class="col-lg-auto my-0">
+              <div class="form-group float-right my-0">
+                <button class="btn btn-icon btn-primary" type="button" (click)="updateSupervisor(requestList)">
+                  <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                  <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-save"></i></span>
+                  <span class="btn-inner--text" *ngIf="showModelLoader">Saving ...</span>
+                  <span class="btn-inner--text" *ngIf="!showModelLoader">Update Supervisor</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div #CardViewUpdateAccessModal id="CardViewUpdateAccessModal" class="modal fade">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Update Access Card Details</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewUpdateAccessModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="selectedRequest">
+
+        <div *ngIf="selectedRequest">
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="card card-stats border mb-0">
+                <div class="card-body p-3">
+                  <div class="row">
+                    <div class="col-lg-12 px-4 mb-3">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group mb-2">
+                            <label for="toDate" class="h5 text-muted ml-2 mb-1">Access Card No</label>
+                            <input type="text" class="form-control col-12" placeholder="Enter new Access Card No"
+                              name="newAccessCardNo" id="newAccessCardNo" [(ngModel)]="newAccessCardNo">
+                          </div>
+                        </div>
+                        <!-- <div class="col-lg-12">
+                          <div class="form-group mb-2">
+                            <div class="input-group input-group-merge">
+                              <input class="form-control" type="password" placeholder="Enter new Access Card No"
+                                name="newAccessCardNo" id="newAccessCardNo" [(ngModel)]="newAccessCardNo">
+                              <div class="input-group-append">
+                                <span class="input-group-text" (click)="showCheckAccessCardNo('false')">
+                                  <i class="fas fa-eye"></i>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.door_access_card_pin">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.door_access_card_pin">
+                            <li class="mt-0" *ngFor="let error of modelStateError.door_access_card_pin">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.employee_id">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.employee_id">
+                            <li class="mt-0" *ngFor="let error of modelStateError.employee_id">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.employee_name">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.employee_name">
+                            <li class="mt-0" *ngFor="let error of modelStateError.employee_name">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+                          <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['']">
+                            <li class="mt-0" *ngFor="let error of modelStateError['']">
+                              <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+
+                    <div class="col-lg-12 px-4 mb-3">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <div class="form-group mb-2">
+                            <label for="toDate" class="h5 text-muted ml-2 mb-1">Access Card PIN</label>
+                            <input type="text" class="form-control col-12" placeholder="Enter new Access Card PIN"
+                              name="newAccessCardPin" id="newAccessCardPin" [(ngModel)]="newAccessCardPin">
+                          </div>
+                        </div>
+
+                        <!-- <div class="col-lg-12">
+                          <div class="form-group mb-2">
+                            <div class="input-group input-group-merge">
+                              <input class="form-control" type="password" placeholder="Enter new Access Card PIN"
+                                name="newAccessCardPin" id="newAccessCardPin" [(ngModel)]="newAccessCardPin">
+                              <div class="input-group-append">
+                                <span class="input-group-text" (click)="showCheckAccessCardNo('false')">
+                                  <i class="fas fa-eye"></i>
+                                </span>
+                              </div>
+                            </div>
+                          </div>
+                        </div> -->
+
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.door_access_card_no">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.door_access_card_no">
+                            <li class="mt-0" *ngFor="let error of modelStateError.door_access_card_no">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.employee_id">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.employee_id">
+                            <li class="mt-0" *ngFor="let error of modelStateError.employee_id">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError.employee_name">
+                          <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.employee_name">
+                            <li class="mt-0" *ngFor="let error of modelStateError.employee_name">
+                              <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+                          <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['']">
+                            <li class="mt-0" *ngFor="let error of modelStateError['']">
+                              <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+                            </li>
+                          </ul>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="row mt-4 mb-1">
+            <div class="col-lg my-0">
+            </div>
+            <div class="col-lg-auto my-0">
+              <div class="form-group float-right my-0">
+                <button class="btn btn-icon btn-primary" type="button" (click)="updateAccessCard(requestList)">
+                  <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                  <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-save"></i></span>
+                  <span class="btn-inner--text" *ngIf="showModelLoader">Saving ...</span>
+                  <span class="btn-inner--text" *ngIf="!showModelLoader">Update Access Card</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>

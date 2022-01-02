@@ -1,0 +1,224 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">HR Desk</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+              <li class="breadcrumb-item active">{{ pageInfo.page_title | titlecase }}</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col">
+            </div>
+
+            <div class="col-auto">
+              <div class="row mt-2">
+                <div class="col">
+                  <label class="form-control-label mb-0" for="example3cols1Input">Turn Filters </label>
+                </div>
+                <div class="col-auto">
+                  <div class="form-group mb-0">
+                    <label class="custom-toggle custom-toggle-default">
+                      <input type="checkbox" checked="" [(ngModel)]="filter.show_filters"
+                        (change)="showHideFilters(filter.show_filters ? true : false)">
+                      <span class="custom-toggle-slider rounded-circle" data-label-off="Off" data-label-on="On"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div class="nav btn-group" role="tablist">
+                <!-- <button class="btn btn-muted px-3 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+                  aria-controls="tabPaneOne" aria-selected="true">
+                  <i class="fas fa-th-large"></i>
+                </button> -->
+                <button class="btn btn-primary px-3 active" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+                  aria-controls="tabPaneTwo" aria-selected="false">
+                  <i class="fas fa-list"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneThree" role="tab"
+                  aria-controls="tabPaneThree" aria-selected="false">
+                  <i class="fas fa-table"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-3">
+
+          <div class="card card-stats mb-3 shadow-lg border" style="background-color: #e9ecef;"
+            *ngIf="filter.show_filters">
+            <div class="card-body px-3 py-3">
+              <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-3 pl-xl-3 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example3cols1Input">Search Text</label>
+                    <input type="text" class="form-control" placeholder="Search Text" name="filter.search_text"
+                      [(ngModel)]="filter.search_text">
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md-6 col-lg-3 pr-xl-3">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label form-control-sm-label" for="example3cols3Input">SAP Upload
+                      Status</label>
+                    <select class="form-control" [(ngModel)]="filter.sap_pending_status">
+                      <option value="{{sapStatus.Id}}" *ngFor="let sapStatus of filter.sap_status_list">
+                        {{sapStatus.Label}}
+                      </option>
+                    </select>
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md text-right align-self-end">
+                  <div class="form-group mb-0">
+                    <button class="btn btn-primary" (click)="getRequestForPageOne(1)">Search
+                      <i class="fas fa-search" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+
+
+
+          <app-clib-page-alert [pageInfo]="pageInfo" [request]="request" [showLoader]="showLoader"
+            [generalApiError]="generalApiError" [modelStateError]="modelStateError"></app-clib-page-alert>
+
+          <app-clib-loading-xl *ngIf="showLoader"></app-clib-loading-xl>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade" id="tabPaneOne" role="tabpanel">
+              <!-- Card-View -->
+              <app-hr-attendance-absence-view (requestToRefreshApiData)="refreshApiData()" [request]="request?.items"
+                [showLoader]="showLoader" [viewType]="viewType"></app-hr-attendance-absence-view>
+            </div>
+
+            <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
+              <!-- List-View -->
+              <app-hr-attendance-absence-view (requestToRefreshApiData)="refreshApiData()" [request]="request?.items"
+                [showLoader]="showLoader" [viewType]="viewType"></app-hr-attendance-absence-view>
+            </div>
+
+            <div class="tab-pane fade active show" id="tabPaneThree" role="tabpanel">
+              <!-- Table-View -->
+              <app-hr-attendance-absence-view (requestToRefreshApiData)="refreshApiData()" [request]="request?.items"
+                [showLoader]="showLoader" [viewType]="viewType"></app-hr-attendance-absence-view>
+            </div>
+
+            <!-- Component-Library - Pagination -->
+            <div class="row" *ngIf="request?.pagination">
+              <div class="col my-auto">
+                <span class="h5 text-muted">Showing {{request?.pagination?.item_start}} to
+                  {{request?.pagination?.item_end}} of {{request?.pagination?.total_count}}
+                  entries</span>
+              </div>
+              <div class="col">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end mb-1">
+                    <li class="page-item" [ngClass]="{'disabled': request?.pagination?.page_number === 1}">
+                      <a class="page-link" [ngClass]="{'bg-light': request?.pagination?.page_number === 1}"
+                        (click)="getRequestFromPaginationFirst(1)" tabindex="-1">
+                        <i class="fa fa-fast-backward"></i> <span class="sr-only">First</span>
+                      </a>
+                    </li>
+                    <li class="page-item" [ngClass]="{'disabled': request?.pagination?.page_number === 1}">
+                      <a class="page-link" [ngClass]="{'bg-light': request?.pagination?.page_number === 1}"
+                        (click)="getRequestFromPaginationPrv(request?.pagination?.page_number)" tabindex="-1">
+                        <i class="fa fa-angle-left"></i> <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+
+                    <ng-container
+                      *ngFor="let data of request?.pagination?.page_list; index as i; first as isFirst; last as isLast">
+                      <!-- <li class="page-item disabled" *ngIf="isFirst && request?.pagination?.page_list[0].show_page === false">
+                                              <a class="page-link bg-light" tabindex="-1">
+                                                  <i class="fa fa-ellipsis-h"></i> <span class="sr-only">...</span>
+                                              </a>
+                                          </li> -->
+                      <li class="page-item"
+                        [ngClass]="{'active': data.page_number === request?.pagination?.page_number}">
+                        <a class="page-link" (click)="getRequestFromPagination(data.page_number)"
+                          *ngIf="data.show_page">{{data.page_number}}</a>
+                      </li>
+                      <!-- <li class="page-item disabled" *ngIf="isLast && (data.show_page === false && data.page_number === request.total_pages)">
+                                              <a class="page-link bg-light" tabindex="-1">
+                                                  <i class="fa fa-ellipsis-h"></i> <span class="sr-only">...</span>
+                                              </a>
+                                          </li> -->
+                    </ng-container>
+
+                    <li class="page-item"
+                      [ngClass]="{'disabled': request?.pagination?.page_number === request?.pagination?.total_pages}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': request?.pagination?.page_number === request?.pagination?.total_pages}"
+                        (click)="getRequestFromPaginationNext(request?.pagination?.page_number)">
+                        <i class="fa fa-angle-right"></i><span class="sr-only">Next</span>
+                      </a>
+                    </li>
+
+                    <li class="page-item"
+                      [ngClass]="{'disabled': request?.pagination?.page_number === request?.pagination?.total_pages}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': request?.pagination?.page_number === request?.pagination?.total_pages}"
+                        (click)="getRequestFromPaginationLast(request?.pagination?.total_pages)">
+                        <i class="fa fa-fast-forward"></i><span class="sr-only">Last</span>
+                      </a>
+                    </li>
+
+                  </ul>
+                </nav>
+              </div>
+            </div>
+
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>
+
+
+
+<div #ViewCreateModal id="ViewCreateModal" class="modal fade" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Apply for Leave</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewCreateModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="request">
+        <!-- <app-leave-create-model></app-leave-create-model> -->
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,203 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">HR Desk</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+              <li class="breadcrumb-item active">Manage Allowance</li>
+              <li class="breadcrumb-item active">Assign Allowance Type</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
+          <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col">
+              <button type="button" class="btn btn-primary" (click)="showViewAssignModal()">Assign Allowance Type</button>
+            </div>
+
+            <div class="col-auto">
+              <div class="row mt-2">
+                <div class="col">
+                  <label class="form-control-label mb-0" for="example3cols1Input">Turn Filters </label>
+                </div>
+                <div class="col-auto">
+                  <div class="form-group mb-0">
+                    <label class="custom-toggle custom-toggle-default">
+                      <input type="checkbox" checked="" [(ngModel)]="isChecked"
+                        (change)="checkValue(isChecked?'showFilters':'hideFilters')">
+                      <span class="custom-toggle-slider rounded-circle" data-label-off="Off" data-label-on="On"></span>
+                    </label>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div class="nav btn-group" role="tablist">
+                <!-- <button class="btn btn-muted px-3 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+                  aria-controls="tabPaneOne" aria-selected="true">
+                  <i class="fas fa-th-large"></i>
+                </button> -->
+                <button class="btn btn-primary px-3 active" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+                  aria-controls="tabPaneTwo" aria-selected="false">
+                  <i class="fas fa-list"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneThree" role="tab"
+                  aria-controls="tabPaneThree" aria-selected="false">
+                  <i class="fas fa-table"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-3">
+
+          <div class="card card-stats mb-3 shadow-lg border" style="background-color: #e9ecef;" *ngIf="showFilters">
+            <div class="card-body px-3 py-3">
+              <div class="row">
+                <div class="col-sm-6 col-md-6 col-lg-6 pr-xl-2">
+                  <div class="form-group mb-0">
+                    <label class="form-control-label" for="example3cols1Input">Employee Id</label>
+                    <input type="text" class="form-control" placeholder="Employee ID" name="employeeId" id="employeeId"
+                      [(ngModel)]="employeeId">
+                  </div>
+                </div>
+
+                <div class="col-sm-6 col-md text-right align-self-end">
+                  <div class="form-group mb-0">
+                    <button class="btn btn-primary" (click)="getRequestForPageOneOnlyWithFilter(1)">Search
+                      <i class="fas fa-search" aria-hidden="true"></i></button>
+                  </div>
+
+                  <!-- <button type="button" class="btn btn-primary mb-2"
+                    (click)="getRequestForPageOneOnlyWithFilter(1)">Search</button> -->
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="!generalApiError && !showLoader &&requestList && requestList.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No leave requests to view yet ...!</span>
+          </div>
+
+          <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+            *ngIf="!generalApiError && showLoader && requestList && requestList.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ... !</span>
+          </div>
+
+          <div class="alert alert-danger py-2 px-3" role="alert" *ngIf="generalApiError">
+            <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+            <span class="alert-text"><strong>Error !</strong> {{generalApiError}}</span>
+          </div>
+
+          <app-clib-loading-xl *ngIf="showLoader"></app-clib-loading-xl>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade" id="tabPaneOne" role="tabpanel">
+              <!-- Card-View -->
+              <app-hr-allowance-type-assign-view (requestToRefreshApiData)="refreshApiData()" [requestList]="requestList"
+                [showLoader]="showLoader" [viewType]="viewType"></app-hr-allowance-type-assign-view>
+            </div>
+
+            <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
+              <!-- List-View -->
+              <app-hr-allowance-type-assign-view (requestToRefreshApiData)="refreshApiData()" [requestList]="requestList"
+                [showLoader]="showLoader" [viewType]="viewType"></app-hr-allowance-type-assign-view>
+            </div>
+
+            <div class="tab-pane fade active show" id="tabPaneThree" role="tabpanel">
+              <!-- Table-View -->
+              <app-hr-allowance-type-assign-view (requestToRefreshApiData)="refreshApiData()" [requestList]="requestList"
+                [showLoader]="showLoader" [viewType]="viewType"></app-hr-allowance-type-assign-view>
+            </div>
+
+            <!-- Component-Library - Pagination -->
+            <!-- <div class="row" *ngIf="localStorePagination && requestListWithPagination && requestList.length">
+              <div class="col my-auto">
+                <span class="h5 text-primary">Showing {{localStorePagination.currentPageItemNoStart}} to
+                  {{localStorePagination.currentPageItemNoEnd}} of
+                  {{localStorePagination.totalItemCount}}
+                  entries</span>
+              </div>
+              <div class="col">
+                <nav aria-label="Page navigation example">
+                  <ul class="pagination justify-content-end mb-1">
+                    <li class="page-item"
+                      [ngClass]="{'disabled': localStorePagination.currentPage === localStorePagination.pageNoStart}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': localStorePagination.currentPage === localStorePagination.pageNoStart}"
+                        (click)="getRequestFromPaginationPrv(localStorePagination.currentPage)" tabindex="-1">
+                        <i class="fa fa-angle-left"></i>
+                        <span class="sr-only">Previous</span>
+                      </a>
+                    </li>
+                    <ng-container *ngFor="let data of requestListWithPagination">
+                      <li class="page-item"
+                        [ngClass]="{'active': data.pagination.pageNo === localStorePagination.currentPage}">
+                        <a class="page-link"
+                          (click)="getRequestFromPagination(data.pagination.pageNo)">{{data.pagination.pageNo}}</a>
+                      </li>
+                    </ng-container>
+                    <li class="page-item"
+                      [ngClass]="{'disabled': localStorePagination.currentPage === localStorePagination.pageNoEnd}">
+                      <a class="page-link"
+                        [ngClass]="{'bg-light': localStorePagination.currentPage === localStorePagination.pageNoEnd}"
+                        (click)="getRequestFromPaginationNext(localStorePagination.currentPage)">
+                        <i class="fa fa-angle-right"></i><span class="sr-only">Next</span>
+                      </a>
+                    </li>
+                  </ul>
+                </nav>
+              </div>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>
+
+
+
+<div #ViewAssignModal id="ViewAssignModal" class="modal fade" data-keyboard="false" data-backdrop="static">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header bg-light">
+        <h5 class="modal-title">Assign Allowance Type</h5>
+        <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+          (click)="hideViewAssignModal()">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" *ngIf="requestList">
+        <!-- <app-hr-allowance-type-create (closeThisModel)="hideViewAssignModal()"></app-hr-allowance-type-create> -->
+        <app-hr-allowance-type-assign-to-employee (closeThisModel)="hideViewAssignModal()"></app-hr-allowance-type-assign-to-employee>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,425 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">Attendance Automation</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+              <li class="breadcrumb-item active">View Custom Timing</li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
+          <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header p-3">
+
+          <div class="row">
+            <div class="col">
+              <div class="row">
+                <div class="col-lg-3">
+                  <div class="form-group mb-0">
+                    <label>Date From</label>
+                    <input class="form-control" type="datetime-local" value="2018-11-23T10:30:00"
+                      id="example-datetime-local-input">
+                  </div>
+                </div>
+                <div class="col-lg-3">
+                  <div class="form-group mb-0">
+                    <label>Date To</label>
+                    <input class="form-control" type="datetime-local" value="2018-11-23T10:30:00"
+                      id="example-datetime-local-input">
+                  </div>
+                </div>
+                <div class="col-lg-2 mt-auto">
+                  <div class="form-group mb-0">
+                    <div class="custom-control custom-checkbox">
+                      <input type="checkbox" class="custom-control-input" id="customCheck1"
+                        [(ngModel)]="selectAllStaffs">
+                      <label class="custom-control-label" for="customCheck1">Select All</label>
+                    </div>
+                  </div>
+                </div>
+                <div class="col-auto  mt-auto">
+                  <div class="form-group mb-0">
+                    <button class="btn btn-primary"
+                      (click)="getGenerateAttendanceReport(selectedDate, selectAllStaffs)">View Attendance
+                      <i class="fas fa-search" aria-hidden="true"></i></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-auto">
+              <div class="nav btn-group" role="tablist">
+                <button class="btn btn-primary px-3 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+                  aria-controls="tabPaneOne" aria-selected="true">
+                  <i class="fas fa-th-large"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+                  aria-controls="tabPaneTwo" aria-selected="false">
+                  <i class="fas fa-list"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneThree" role="tab"
+                  aria-controls="tabPaneThree" aria-selected="false">
+                  <i class="fas fa-table"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body p-3">
+          <div class="table-responsive">
+            <div>
+              <table class="table align-items-center">
+                <thead class="thead-light">
+                  <tr>
+                    <th scope="col">Name</th>
+                    <th scope="col">Department</th>
+                    <th scope="col" class="text-center">Sunday</th>
+                    <th scope="col" class="text-center">Monday</th>
+                    <th scope="col" class="text-center">Tuesday</th>
+                    <th scope="col" class="text-center">Wednesday</th>
+                    <th scope="col" class="text-center">Thursday</th>
+                    <th scope="col" class="text-center">Friday</th>
+                    <th scope="col" class="text-center">Saturday</th>
+                  </tr>
+                </thead>
+                <tbody class="list">
+                  <tr>
+                    <th scope="row">
+                      <span class="name mb-0 text-sm">Ibrahim Adam</span>
+                    </th>
+                    <td class="budget">
+                      IS
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span class="name mb-0 text-sm">Ibrahim Adam</span>
+                    </th>
+                    <td class="budget">
+                      IS
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span class="name mb-0 text-sm">Ibrahim Adam</span>
+                    </th>
+                    <td class="budget">
+                      IS
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <th scope="row">
+                      <span class="name mb-0 text-sm">Ibrahim Adam</span>
+                    </th>
+                    <td class="budget">
+                      IS
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                    <td class="text-center">
+                      <div class="row">
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">9:00 In</span>
+                        </div>
+                        <div class="col-lg-12">
+                          <span class="badge badge-success mb-1 d-flex w-auto">15:00 Out</span>
+                        </div>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>

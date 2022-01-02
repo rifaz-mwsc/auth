@@ -1,0 +1,16 @@
+<div class="alert alert-info px-3 py-2 mb-3" role="alert"
+  *ngIf="!generalApiError && !showLoader && pageInfo && request && request?.items?.length < 1">
+  <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+  <span class="alert-text"><strong>Oh Snap!</strong> No {{pageInfo.page_title}} to view yet ...!</span>
+</div>
+
+<div class="alert alert-info px-3 py-2 mb-3" role="alert"
+  *ngIf="!generalApiError && showLoader && request && request?.items?.length < 1">
+  <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+  <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ... !</span>
+</div>
+
+<div class="alert alert-danger py-2 px-3" role="alert" *ngIf="generalApiError">
+  <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+  <span class="alert-text"><strong>Error !</strong> {{generalApiError}}</span>
+</div>

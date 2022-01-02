@@ -1,0 +1,151 @@
+<div>
+  <div class="alert alert-info py-1 px-3" role="alert" id="createModel-info-alert">
+    <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+    <span class="alert-text"><strong>Information !</strong> Select Leave Type to Continue... !</span>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+
+          <div class="row">
+            <div class="col-lg-12">
+              <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='generalApiError'>
+                <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                <span class="alert-text"><strong>Error !</strong> {{generalApiError}} ... !</span>
+              </div>
+            </div>
+
+
+            <div class="col-lg-12 px-4">
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="allowanceTypeId" class="h5 text-muted ml-2 mb-1">Allowance Name</label>
+                        <!-- <input type="text" class="form-control col-12" placeholder="Allowance Name" name="allowanceTypeId"
+                          id="allowanceTypeId" [(ngModel)]="allowanceTypeId" (ngModelChange)="onChangeEvent($event)"> -->
+                        <select class="form-control" [(ngModel)]="allowanceTypeId" [disabled]="disableAllowanceTypeList"
+                          (change)="allowanceTypeDropDownOnChange($event.target.value)">
+                          <option [value]="allowanceType.allowance_type_id"
+                            *ngFor="let allowanceType of allowanceTypeList">
+                            {{allowanceType.allowance_type_name}}
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.allowance_rate_allowance_type_Id">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.allowance_rate_allowance_type_Id">
+                        <li class="mt-0" *ngFor="let error of modelStateError.allowance_rate_allowance_type_Id">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.allowance_type_Id">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.allowance_type_Id">
+                        <li class="mt-0" *ngFor="let error of modelStateError.allowance_type_Id">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError['']">
+                        <li class="mt-0" *ngFor="let error of modelStateError['']">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+
+
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="allowanceRateAmount" class="h5 text-muted ml-2 mb-1">Allowance Rate</label>
+                        <input type="text" class="form-control col-12" placeholder="Allowance Rate"
+                          name="allowanceRateAmount" id="allowanceRateAmount" [(ngModel)]="allowanceRateAmount"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.allowance_rate_amount">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.allowance_rate_amount">
+                        <li class="mt-0" *ngFor="let error of modelStateError.allowance_rate_amount">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+              </div>
+
+              <div class="row">
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="allowanceValidFrom" class="h5 text-muted ml-2 mb-1">Allowance Valid From</label>
+                        <input type="date" class="form-control col-12" placeholder="Allowance Valid From"
+                          name="allowanceValidFrom" id="allowanceValidFrom" [(ngModel)]="allowanceValidFrom"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.allowance_rate_valid_from">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.allowance_rate_valid_from">
+                        <li class="mt-0" *ngFor="let error of modelStateError.allowance_rate_valid_from">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+
+                <div class="col-lg-6">
+                  <div class="row">
+                    <div class="col-lg-12">
+                      <div class="form-group mb-2">
+                        <label for="allowanceValidTo" class="h5 text-muted ml-2 mb-1">Allowance Valid To</label>
+                        <input type="date" class="form-control col-12" placeholder="Allowance Valid To"
+                          name="allowanceValidTo" id="allowanceValidTo" [(ngModel)]="allowanceValidTo"
+                          (ngModelChange)="onChangeEvent($event)">
+                      </div>
+                    </div>
+                    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.allowance_rate_valid_to">
+                      <ul class="pl-5 mb-2" *ngIf="modelStateError && modelStateError.allowance_rate_valid_to">
+                        <li class="mt-0" *ngFor="let error of modelStateError.allowance_rate_valid_to">
+                          <span class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-lg-12 px-2 py-2 my-0">
+              <div class="col-12 my-0">
+                <div class="form-group float-right my-0">
+                  <button class="btn btn-icon btn-primary mb-2" type="button" (click)="create()"
+                    [disabled]="disableSaveButton || showModelLoader">
+                    <span class="btn-inner--icon" *ngIf="showModelLoader"><i class="fas fa-spinner fa-spin"></i></span>
+                    <span class="btn-inner--icon" *ngIf="!showModelLoader"><i class="fas fa-save"></i></span>
+                    <span class="btn-inner--text" *ngIf="showModelLoader">Saving ...</span>
+                    <span class="btn-inner--text" *ngIf="!showModelLoader">Save</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

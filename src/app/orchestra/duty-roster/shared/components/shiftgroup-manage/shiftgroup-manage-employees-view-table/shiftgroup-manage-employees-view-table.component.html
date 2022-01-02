@@ -1,0 +1,33 @@
+<div class="card shadow-none border-0" *ngIf="shiftGroupEmployees && shiftGroupEmployees.length > 0">
+  <div class="table-responsive">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col">Name</th>
+          <th scope="col">Action</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let listItem of shiftGroupEmployees">
+        <tr [ngClass]="{'bg-light': listItem.IsRemoved}">
+          <th class="px-3 py-2 my-auto">
+            <span class="badge badge-primary"
+              [ngClass]="listItem.IsRemoved ? 'badge-danger' : 'badge-primary'">{{listItem.EmployeeId}}</span>
+            <span class="h4 font-weight-bold mb-0" [ngClass]="listItem.IsRemoved ? 'text-danger' : 'text-primary'">
+              {{listItem.Name}}</span>
+          </th>
+
+          <td class="px-3 py-2 text-right">
+            <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top"
+              title="Remove"  *ngIf="!listItem.IsRemoved" (click)="remove(listItem)">
+              <span class="btn-inner--icon"><i class="fas fa-trash-alt"></i></span>
+            </button>
+            <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+              title="Restore"  *ngIf="listItem.IsRemoved" (click)="restore(listItem)">
+              <span class="btn-inner--icon"><i class="fas fa-redo-alt"></i></span>
+            </button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

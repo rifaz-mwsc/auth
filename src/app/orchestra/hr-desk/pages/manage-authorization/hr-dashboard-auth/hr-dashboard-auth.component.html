@@ -1,0 +1,562 @@
+<div class="header bg-primary pb-6">
+    <div class="container-fluid">
+        <div class="header-body">
+            <div class="row align-items-center py-2">
+                <div class="col-lg-6 col-7">
+                    <h6 class="h2 text-white d-inline-block mb-0">HR Desk</h6>
+                    <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+                        <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+                            <li class="breadcrumb-item active"><i class="fas fa-home"></i></li>
+                            <li class="breadcrumb-item active">{{ pageInfo.page_title | titlecase }}</li>
+                        </ol>
+                    </nav>
+                </div>
+                <div class="col-lg-6 col-5 text-right">
+                    <!-- <a class="btn btn-sm btn-neutral" (click)="showViewCreateUploadLetterModal()">Upload Letter</a> -->
+                    <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid mt--6">
+    <div class="row">
+        <div class="col">
+            <div class="card">
+                <div class="card-header p-3">
+                    <div class="row">
+                        <div class="col-auto">
+                            <button type="button" class="btn btn-icon btn-primary" (click)="showViewAddModal()">Add
+                                Authorization <i class="fas fa-plus-circle"></i></button>
+                        </div>
+                        <div class="col">
+                        </div>
+                        <div class="col-auto">
+                            <div class="row mt-2">
+                                <div class="col">
+                                    <label class="form-control-label mb-0" for="example3cols1Input">Turn Filters
+                                    </label>
+                                </div>
+                                <div class="col-auto">
+                                    <div class="form-group mb-0">
+                                        <label class="custom-toggle custom-toggle-default">
+                                            <input type="checkbox" checked="" [(ngModel)]="isChecked"
+                                                (change)="checkValue(isChecked?'showFilters':'hideFilters')">
+                                            <span class="custom-toggle-slider rounded-circle" data-label-off="Off"
+                                                data-label-on="On"></span>
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- <div class="col-xl-auto col-lg-auto col-sm-12">
+                            <div class="text-right float-right">
+                                <div class="nav btn-group" role="tablist">
+                                    <button class="btn btn-primary px-3 active" data-toggle="tab"
+                                        data-target="#tabPaneOne" role="tab" aria-controls="tabPaneOne"
+                                        aria-selected="true">
+                                        <i class="fas fa-th-large"></i>
+                                    </button>
+                                    <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneTwo"
+                                        role="tab" aria-controls="tabPaneTwo" aria-selected="false">
+                                        <i class="fas fa-list"></i>
+                                    </button>
+                                    <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneThree"
+                                        role="tab" aria-controls="tabPaneThree" aria-selected="false">
+                                        <i class="fas fa-table"></i>
+                                    </button>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+
+                <div class="card-body p-3">
+                    <div class="card card-stats mb-3 shadow-lg border" style="background-color: #e9ecef;"
+                        *ngIf="showFilters">
+                        <div class="card-body py-3">
+                            <div class="row">
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group mb-2">
+                                        <label class="form-control-label" for="example3cols1Input">Assigned Employee
+                                            Id</label>
+                                        <input type="text" class="form-control" placeholder="Employee Id"
+                                            name="filter.assignedEmployeeId" [(ngModel)]="filter.assignedEmployeeId">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group mb-2">
+                                        <!-- <label class="form-control-label" for="example3cols2Input">Dashboard
+                                            Type</label>
+                                        <input type="date" class="form-control" placeholder="One of three cols"
+                                            name="filter.dashboardType" [(ngModel)]="filter.dashboardType"> -->
+
+                                        <label class="form-control-label" for="example3cols3Input">Dashboard
+                                            Type</label>
+                                        <select class="form-control" [(ngModel)]="filter.dashboardType">
+                                            <option value="{{authDashboardType.Id}}"
+                                                *ngFor="let authDashboardType of authDashboardTypeList">
+                                                {{authDashboardType.Label}}
+                                            </option>
+                                        </select>
+
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md-3">
+                                    <div class="form-group mb-2">
+                                        <label class="form-control-label" for="example3cols2Input">Valid Date</label>
+                                        <input type="date" class="form-control" placeholder="One of three cols"
+                                            name="validDate" [(ngModel)]="validDate">
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-md text-right align-self-end">
+                                    <button type="button" class="btn btn-primary mb-2"
+                                        (click)="getRequestForPageOneOnlyWithFilter(1)">Search</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+                        *ngIf="!generalApiError && !showLoader && request.items && request.items.length < 1">
+                        <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                        <span class="alert-text"><strong>Oh Snap!</strong> No Authorization to view yet ...!</span>
+                    </div>
+
+                    <div class="alert alert-info px-3 py-2 mb-3" role="alert"
+                        *ngIf="!generalApiError && showLoader && request.items && request.items.length < 1">
+                        <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                        <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ... !</span>
+                    </div>
+
+                    <div class="alert alert-danger py-2 px-3" role="alert" *ngIf="generalApiError">
+                        <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                        <span class="alert-text"><strong>Error !</strong> {{generalApiError}}</span>
+                    </div>
+
+                    <div class="alert alert-danger py-2 px-3" role="alert" *ngIf="modelStateError">
+                        <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                        <span class="alert-text"><strong>Error !</strong> {{modelStateError}}</span>
+                    </div>
+
+                    <app-clib-loading-xl *ngIf="showLoader"></app-clib-loading-xl>
+
+                    <!-- Tab content -->
+                    <div class="tab-content">
+                        <div class="tab-pane fade active show" id="tabPaneOne" role="tabpanel">
+                            <app-hr-auth-dashboard-view (requestToRefreshApiData)="refreshApiData()"
+                                [requestList]="request.items" [showLoader]="showLoader" [viewType]="viewType">
+                            </app-hr-auth-dashboard-view>
+                        </div>
+
+                        <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
+                            <app-hr-auth-dashboard-view (requestToRefreshApiData)="refreshApiData()"
+                                [requestList]="request.items" [showLoader]="showLoader" [viewType]="viewType">
+                            </app-hr-auth-dashboard-view>
+                        </div>
+
+                        <div class="tab-pane fade" id="tabPaneThree" role="tabpanel">
+                            <app-hr-auth-dashboard-view (requestToRefreshApiData)="refreshApiData()"
+                                [requestList]="request.items" [showLoader]="showLoader" [viewType]="viewType">
+                            </app-hr-auth-dashboard-view>
+                        </div>
+
+                        <!-- Component-Library - Pagination -->
+                        <div class="row" *ngIf="request.pagination">
+                            <div class="col my-auto">
+                                <span class="h5 text-muted">Showing {{request.pagination.item_start}} to
+                                    {{request.pagination.item_end}} of {{request.pagination.total_count}}
+                                    entries</span>
+                            </div>
+                            <div class="col">
+                                <nav aria-label="Page navigation example">
+                                    <ul class="pagination justify-content-end mb-1">
+                                        <li class="page-item"
+                                            [ngClass]="{'disabled': request.pagination.page_number === 1}">
+                                            <a class="page-link"
+                                                [ngClass]="{'bg-light': request.pagination.page_number === 1}"
+                                                (click)="getRequestFromPaginationFirst(1)" tabindex="-1">
+                                                <i class="fa fa-fast-backward"></i> <span class="sr-only">First</span>
+                                            </a>
+                                        </li>
+                                        <li class="page-item"
+                                            [ngClass]="{'disabled': request.pagination.page_number === 1}">
+                                            <a class="page-link"
+                                                [ngClass]="{'bg-light': request.pagination.page_number === 1}"
+                                                (click)="getRequestFromPaginationPrv(request.pagination.page_number)"
+                                                tabindex="-1">
+                                                <i class="fa fa-angle-left"></i> <span class="sr-only">Previous</span>
+                                            </a>
+                                        </li>
+
+                                        <ng-container
+                                            *ngFor="let data of request.pagination.page_list; index as i; first as isFirst; last as isLast">
+                                            <!-- <li class="page-item disabled" *ngIf="isFirst && request.pagination.page_list[0].show_page === false">
+                                                <a class="page-link bg-light" tabindex="-1">
+                                                    <i class="fa fa-ellipsis-h"></i> <span class="sr-only">...</span>
+                                                </a>
+                                            </li> -->
+                                            <li class="page-item"
+                                                [ngClass]="{'active': data.page_number === request.pagination.page_number}">
+                                                <a class="page-link"
+                                                    (click)="getRequestFromPagination(data.page_number)"
+                                                    *ngIf="data.show_page">{{data.page_number}}</a>
+                                            </li>
+                                            <!-- <li class="page-item disabled" *ngIf="isLast && (data.show_page === false && data.page_number === request.total_pages)">
+                                                <a class="page-link bg-light" tabindex="-1">
+                                                    <i class="fa fa-ellipsis-h"></i> <span class="sr-only">...</span>
+                                                </a>
+                                            </li> -->
+                                        </ng-container>
+
+                                        <li class="page-item"
+                                            [ngClass]="{'disabled': request.pagination.page_number === request.pagination.total_pages}">
+                                            <a class="page-link"
+                                                [ngClass]="{'bg-light': request.pagination.page_number === request.pagination.total_pages}"
+                                                (click)="getRequestFromPaginationNext(request.pagination.page_number)">
+                                                <i class="fa fa-angle-right"></i><span class="sr-only">Next</span>
+                                            </a>
+                                        </li>
+
+                                        <li class="page-item"
+                                            [ngClass]="{'disabled': request.pagination.page_number === request.pagination.total_pages}">
+                                            <a class="page-link"
+                                                [ngClass]="{'bg-light': request.pagination.page_number === request.pagination.total_pages}"
+                                                (click)="getRequestFromPaginationLast(request.pagination.total_pages)">
+                                                <i class="fa fa-fast-forward"></i><span class="sr-only">Last</span>
+                                            </a>
+                                        </li>
+
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer pt-0">
+        <app-layout-footer></app-layout-footer>
+    </footer>
+</div>
+
+
+
+
+<div #ViewAddModal id="ViewAddModal" class="modal fade" data-keyboard="false" data-backdrop="static">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Add Authorization</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewAddModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="request">
+                <div>
+                    <div class="alert alert-info py-1 px-3" role="alert" id="createModel-info-alert">
+                        <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+                        <span class="alert-text"><strong>Information!</strong> Select Employee Id and Dasboard to
+                            Continue... !</span>
+                    </div>
+                    <div class="alert alert-danger py-1 px-3" role="alert" *ngIf='generalApiError'>
+                        <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+                        <span class="alert-text"><strong>Error !</strong> {{generalApiError}} ... !</span>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="card card-stats border mb-0">
+                                <div class="card-body p-3">
+                                    <div class="row">
+                                        <div class="col-lg-12 px-4">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group mb-2">
+                                                                <label class="h5 text-muted ml-2 mb-1"
+                                                                    for="example3cols3Input">Division</label>
+                                                                <select class="form-control"
+                                                                    [(ngModel)]="selectedDivision" name="division"
+                                                                    id="division" [disabled]="disableDivision"
+                                                                    (change)="divisionOnChange($event.target.value)">
+                                                                    <option
+                                                                        value="{{divisionItem.organization_division_id}}"
+                                                                        *ngFor="let divisionItem of divisionList">
+                                                                        {{divisionItem.organization_division_name}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group mb-2">
+                                                                <label class="h5 text-muted ml-2 mb-1"
+                                                                    for="example3cols3Input">Department</label>
+                                                                <select class="form-control"
+                                                                    [(ngModel)]="selectedDepartment" name="department"
+                                                                    id="department" [disabled]="disableDepartment"
+                                                                    (change)="departmentOnChange($event.target.value)">
+                                                                    <option
+                                                                        value="{{departmentItem.organization_department_id}}"
+                                                                        *ngFor="let departmentItem of departmentList">
+                                                                        {{departmentItem.organization_department_name}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group mb-2">
+                                                                <label class="h5 text-muted ml-2 mb-1"
+                                                                    for="example3cols3Input">Section</label>
+                                                                <select class="form-control"
+                                                                    [(ngModel)]="selectedSection" name="section"
+                                                                    id="section" [disabled]="disableSection"
+                                                                    (change)="sectionOnChange($event.target.value)">
+                                                                    <option
+                                                                        value="{{sectionItem.organization_section_id}}"
+                                                                        *ngFor="let sectionItem of sectionList">
+                                                                        {{sectionItem.organization_section_name}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-lg-6 mb-2 mt-auto">
+                                                    <div class="row">
+                                                        <div class="col-lg">
+
+                                                        </div>
+                                                        <div class="col-lg-auto">
+                                                            <button class="btn btn-icon btn-3 btn-warning" type="button"
+                                                                (click)="clearOrganisation()">
+                                                                <span class="btn-inner--icon"><i
+                                                                        class="fas fa-brush"></i></span>
+                                                                <span class="btn-inner--text">Clear</span>
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <hr>
+
+                                    <div class="row">
+                                        <div class="col-lg-12 px-4">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group mb-2">
+                                                                <label class="h5 text-muted ml-2 mb-1"
+                                                                    for="example3cols3Input">Organization Struture
+                                                                    Level</label>
+                                                                <input type="text" class="form-control col-12"
+                                                                    placeholder="Organization Struture Level"
+                                                                    name="authOrganizationStrutureLevel"
+                                                                    id="authOrganizationStrutureLevel"
+                                                                    [(ngModel)]="authOrganizationStrutureLevel"
+                                                                    disabled>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12"
+                                                            *ngIf="createModelStateError && createModelStateError.organization_structure_id">
+                                                            <ul class="pl-5 mb-2"
+                                                                *ngIf="createModelStateError && createModelStateError.organization_structure_id">
+                                                                <li class="mt-0"
+                                                                    *ngFor="let error of createModelStateError.organization_structure_id">
+                                                                    <span
+                                                                        class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="col-lg-12"
+                                                    *ngIf="createModelStateError && createModelStateError['']">
+                                                    <ul class="pl-5 mb-2"
+                                                        *ngIf="createModelStateError && createModelStateError['']">
+                                                        <li class="mt-0"
+                                                            *ngFor="let error of createModelStateError['']">
+                                                            <span
+                                                                class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-12"
+                                                    *ngIf="createModelStateError && createModelStateError.leave_request_employee_id">
+                                                    <ul class="pl-5 mb-2"
+                                                        *ngIf="createModelStateError && createModelStateError.leave_request_employee_id">
+                                                        <li class="mt-0"
+                                                            *ngFor="let error of createModelStateError.leave_request_employee_id">
+                                                            <span
+                                                                class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                                <div class="col-lg-12"
+                                                    *ngIf="createModelStateError && createModelStateError.employee_id">
+                                                    <ul class="pl-5 mb-2"
+                                                        *ngIf="createModelStateError && createModelStateError.employee_id">
+                                                        <li class="mt-0"
+                                                            *ngFor="let error of createModelStateError.employee_id">
+                                                            <span
+                                                                class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group mb-2">
+                                                                <label for="fromDate"
+                                                                    class="h5 text-muted ml-2 mb-1">Assigned Employee
+                                                                    Id</label>
+                                                                <input type="text" class="form-control col-12"
+                                                                    placeholder="Enter Assigned Employee Id"
+                                                                    name="authAssignedEmployeeId"
+                                                                    id="authAssignedEmployeeId"
+                                                                    [(ngModel)]="authAssignedEmployeeId"
+                                                                    (ngModelChange)="onChangeEvent($event)">
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12"
+                                                            *ngIf="createModelStateError && createModelStateError.assigned_to">
+                                                            <ul class="pl-5 mb-2"
+                                                                *ngIf="createModelStateError && createModelStateError.assigned_to">
+                                                                <li class="mt-0"
+                                                                    *ngFor="let error of createModelStateError.assigned_to">
+                                                                    <span
+                                                                        class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 px-4 mb-3">
+                                            <div class="row">
+                                                <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <!-- <div class="form-group mb-2">
+                                                                <label for="toDate"
+                                                                    class="h5 text-muted ml-2 mb-1">Dashboard
+                                                                    Type</label>
+                                                                <input type="text" class="form-control col-12"
+                                                                    placeholder="Select Dashboard Type"
+                                                                    name="authDashboardTypeId" id="authDashboardTypeId"
+                                                                    [(ngModel)]="authDashboardTypeId"
+                                                                    (ngModelChange)="onChangeEvent($event)">
+                                                            </div> -->
+                                                            <div class="form-group mb-2">
+                                                                <label class="h5 text-muted ml-2 mb-1"
+                                                                    for="example3cols3Input">Dashboard Type</label>
+                                                                <select class="form-control"
+                                                                    [(ngModel)]="authDashboardTypeId">
+                                                                    <option value="{{authDashboardType.Id}}"
+                                                                        *ngFor="let authDashboardType of authDashboardTypeList">
+                                                                        {{authDashboardType.Label}}
+                                                                    </option>
+                                                                </select>
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-lg-12"
+                                                            *ngIf="createModelStateError && createModelStateError.dashboard_type">
+                                                            <ul class="pl-5 mb-2"
+                                                                *ngIf="createModelStateError && createModelStateError.dashboard_type">
+                                                                <li class="mt-0"
+                                                                    *ngFor="let error of createModelStateError.dashboard_type">
+                                                                    <span
+                                                                        class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <!-- <div class="col-lg-6">
+                                                    <div class="row">
+                                                        <div class="col-lg-12">
+                                                            <div class="form-group mb-2">
+                                                                <div class="form-group mb-2">
+                                                                    <label class="h5 text-muted ml-2 mb-1"
+                                                                        for="example3cols3Input">Make this Dashboard
+                                                                        Default</label>
+                                                                    <select class="form-control"
+                                                                        [(ngModel)]="authAssignedDashboardStatusId">
+                                                                        <option
+                                                                            value="{{authAssignedDashboardStatus.Name}}"
+                                                                            *ngFor="let authAssignedDashboardStatus of authAssignedDashboardStatusList">
+                                                                            {{authAssignedDashboardStatus.Label}}
+                                                                        </option>
+                                                                    </select>
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-lg-12"
+                                                                *ngIf="createModelStateError && createModelStateError.leave_request_taken_to">
+                                                                <ul class="pl-5 mb-2"
+                                                                    *ngIf="createModelStateError && createModelStateError.leave_request_taken_to">
+                                                                    <li class="mt-0"
+                                                                        *ngFor="let error of createModelStateError.leave_request_taken_to">
+                                                                        <span
+                                                                            class="h5 text-danger mb-1 mt-0 d-block">{{error}}.</span>
+                                                                    </li>
+                                                                </ul>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div> -->
+                                            </div>
+                                        </div>
+
+                                        <div class="col-lg-12 px-2 py-2 my-0">
+                                            <div class="col-12 my-0">
+                                                <div class="form-group float-right my-0">
+                                                    <button class="btn btn-icon btn-primary mb-2" type="submit"
+                                                        (click)="postHRDeskCreateDashboardAuth()"
+                                                        [disabled]="disableSaveButton || showModelLoader">
+                                                        <span class="btn-inner--icon" *ngIf="showModelLoader"><i
+                                                                class="fas fa-spinner fa-spin"></i></span>
+                                                        <span class="btn-inner--icon" *ngIf="!showModelLoader"><i
+                                                                class="fas fa-save"></i></span>
+                                                        <span class="btn-inner--text" *ngIf="showModelLoader">Saving
+                                                            ...</span>
+                                                        <span class="btn-inner--text"
+                                                            *ngIf="!showModelLoader">Save</span>
+                                                    </button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

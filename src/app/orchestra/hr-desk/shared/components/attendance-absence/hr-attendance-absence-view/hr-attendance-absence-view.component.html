@@ -1,0 +1,129 @@
+<div class="card card-stats border mb-4"
+  *ngIf="request && request.length > 0 && viewType ==='tableView-absence-requests'">
+
+  <!-- <div class="card-body px-3 py-3">
+    <div class="row">
+      <div class="col-sm-6 col-md">
+      </div>
+      <div class="col-sm-auto col-md-auto">
+        <form>
+          <div class="form-check mt-2">
+            <input type="checkbox" class="form-check-input" (change)="changeCheckAll($event)">
+            <label class="form-check-label" for="exampleCheck1">Select All</label>
+          </div>
+        </form>
+      </div>
+      <div class="col-sm-6 col-md-auto text-right align-self-end">
+        <button type="button" class="btn btn-info mb-0" (click)="showViewExtendBulkModal()"><i
+            class="fas fa-expand-arrows-alt"></i> Extend</button>
+      </div>
+    </div>
+  </div> -->
+
+</div>
+
+<div class="card shadow-none border-0" *ngIf="request && request.length > 0">
+  <div class="table-responsive">
+    <table class="table table-hover align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col" class="px-3 py-2">Absence Record</th>
+          <th scope="col" class="px-3 py-2">Record Type</th>
+          <th scope="col" class="px-3 py-2">Reference</th>
+          <th scope="col" class="px-3 py-2">Upload Error / Attempt Count</th>
+          <th scope="col" class="px-3 py-2">Leave Type</th>
+          <th scope="col" class="px-3 py-2">Date Created</th>
+          <th scope="col" class="px-3 py-2 text-right">Action</th>
+          <th scope="col" class="px-3 py-2 text-right" *ngIf="viewType==='leave-requets'">Selection</th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let requestObj of request">
+        <tr>
+          <th class="px-3 py-2">
+            <div class="col px-0">
+              <span
+                class="h5 font-weight-bold mb-1">{{requestObj?.sap_upload_attendance_absence_record_employee_id}}</span>
+            </div>
+          </th>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-1">{{requestObj?.sap_upload_attendance_absence_record_type_id}}</span>
+            </div>
+          </th>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span
+                class="h5 font-weight-bold mb-1">{{requestObj?.sap_upload_attendance_absence_record_reference_object_type}}</span>
+            </div>
+          </th>
+          <th class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span
+                class="h5 font-weight-bold mb-1">{{requestObj?.sap_upload_attendance_absence_record_upload_error_details}}</span>
+            </div>
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-0">
+                <i class="fas fa-clock mr-1"></i> <span
+                  class="h5 text-muted">{{requestObj?.sap_upload_attendance_absence_record_upload_attempts}}</span>
+              </span>
+            </div>
+          </th>
+          <th scope="row" class="px-3 py-2">
+            <div class="col-12 px-0">
+              <h5 class="mb-0">
+                <i class="fas fa-calendar mr-1"></i>
+                <span class="text-primary">
+                  {{requestObj?.sap_upload_attendance_absence_record_start_time | date: 'dd MMM yyyy'}}
+                </span>
+                <i class="fas fa-arrow-right mr-1"></i>
+                <span class="text-primary">
+                  {{requestObj?.sap_upload_attendance_absence_record_end_time | date: 'dd MMM yyyy'}}</span>
+              </h5>
+            </div>
+          </th>
+          <td class="px-3 py-2">
+            <div class="col-12 px-0">
+              <span class="h5 font-weight-bold mb-0">{{requestObj?.sap_upload_attendance_absence_record_created_on |
+                date: 'dd
+                MMM yyyy HH:mm'}}</span>
+            </div>
+          </td>
+          <td class="px-3 py-1 text-right">
+            <!-- <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="Reject Leave Request" *ngIf="viewType != 'leave-shorten'"
+              (click)="showViewRejectModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-ban"></i></span>
+            </button> -->
+
+            <!-- <button class="btn btn-icon btn-success btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="Accept Shorten Leave" *ngIf="viewType === 'leave-shorten'"
+              (click)="showViewAcceptShortenModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-hand-scissors"></i></span>
+            </button> -->
+
+            <!-- <button class="btn btn-icon btn-danger btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="Reject Shorten Leave" *ngIf="viewType === 'leave-shorten'"
+              (click)="showViewRejectShortenModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-ban"></i></span>
+            </button> -->
+
+            <!-- <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="left"
+              title="View Details" (click)="showViewRecordDetailsModal(requestObj)">
+              <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+            </button> -->
+          </td>
+          <td class="px-3 py-2 text-right" *ngIf="viewType==='leave-requets'">
+            <!-- <form>
+              <div class="form-check">
+                <input type="checkbox" class="form-check-input my-auto" [ngModelOptions]="{standalone: true}"
+                  (change)="changeCheckBox($event, requestObj)"
+                  [attr.id]="requestObj?.leave_request_can_upload_to_sap_ui"
+                  [ngModel]="requestObj?.leave_request_checkbox_ui">
+              </div>
+            </form> -->
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

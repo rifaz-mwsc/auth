@@ -1,0 +1,104 @@
+<!-- <h6 class="h2 text-primary ml-2 mb-3">Experience</h6> -->
+
+<a class="nav-link mb-0 px-0" href="#">
+  <h5 class="h5 font-weight-bold text-success mb-2"> 
+    <span><i class="fas fa-plus-circle mr-2"></i></span> Add a Experience
+  </h5>
+</a>
+
+<h6 class="h4 text-primary font-weight-bold d-inline-block ml-1 mb-3">Professional Experience</h6>
+<ul class="list-group list-group-flush list mt--2 mb-4" *ngIf="profileExperience">
+  <ng-container *ngFor="let experienceObj of profileExperience.experience">
+    <li class="list-group-item px-0 py-2">
+      <div class="row align-items-center">
+        <div class="col-auto my-auto">
+          <i class="fas fa-briefcase fa-2x"></i>
+        </div>
+        <div class="col ml--2">
+          <div class="row align-items-center">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-auto">
+                  <span class="h5 font-weight-bold mb-0">{{experienceObj.position}} at {{experienceObj.company}}</span>
+                </div>
+                <div class="col my-auto">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-link btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(experienceObj)">
+            <span class="btn-inner--icon"><i class="fas fa-file-alt"></i></span> {{experienceObj.document}}
+          </button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-link btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(experienceObj)">
+            <span class="btn-inner--icon"><i class="fas fa-globe-americas"></i></span> {{experienceObj.privacy}}
+          </button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(experienceObj)">
+            <span class="btn-inner--icon"><i class="fas fa-ellipsis-h"></i></span>
+          </button>
+        </div>
+      </div>
+    </li>
+  </ng-container>
+</ul>
+
+
+
+<a class="nav-link mb-0 px-0" href="#">
+  <h5 class="h5 font-weight-bold text-success mb-2"> 
+    <span><i class="fas fa-plus-circle mr-2"></i></span> Add a Training
+  </h5>
+</a>
+
+<h6 class="h4 text-primary font-weight-bold d-inline-block ml-1 mb-3">Trainings</h6>
+<ul class="list-group list-group-flush list mt--2 mb-3" *ngIf="profileExperience">
+  <ng-container *ngFor="let trainingObj of profileExperience.training">
+    <li class="list-group-item px-0 py-2">
+      <div class="row align-items-center">
+        <div class="col-auto my-auto">
+          <i class="fas fa-briefcase fa-2x"></i>
+        </div>
+        <div class="col ml--2">
+          <div class="row align-items-center">
+            <div class="col-lg-12">
+              <div class="row">
+                <div class="col-lg-auto">
+                  <span class="h5 font-weight-bold mb-0">{{trainingObj.position}} at {{trainingObj.company}}</span>
+                </div>
+                <div class="col my-auto">
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-link btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(trainingObj)">
+            <span class="btn-inner--icon"><i class="fas fa-file-alt"></i></span> {{trainingObj.document}}
+          </button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-link btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(trainingObj)">
+            <span class="btn-inner--icon"><i class="fas fa-globe-americas"></i></span> {{trainingObj.privacy}}
+          </button>
+        </div>
+        <div class="col-auto">
+          <button class="btn btn-icon btn-primary btn-sm" type="button" data-toggle="tooltip" data-placement="top"
+            title="View Details" (click)="showViewRecordDetailsModal(trainingObj)">
+            <span class="btn-inner--icon"><i class="fas fa-ellipsis-h"></i></span>
+          </button>
+        </div>
+      </div>
+    </li>
+  </ng-container>
+</ul>
+

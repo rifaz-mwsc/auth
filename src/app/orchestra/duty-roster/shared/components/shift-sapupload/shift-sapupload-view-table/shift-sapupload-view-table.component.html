@@ -1,0 +1,85 @@
+<div class="card shadow-none border-0" *ngIf="requestList && requestList.length > 0">
+  <div class="card-header pt-0 pd-2 px-0">
+    <div class="row align-items-center">
+      <div class="col-auto">
+      </div>
+      <div class="col text-right">
+        <button class="btn btn-icon btn-sm btn-primary mr-2" type="button" (click)="uploadToSap()">
+          <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+          <span class="btn-inner--text">Upload to SAP</span>
+        </button>
+
+        <button class="btn btn-icon btn-sm btn-success" type="button" (click)="downloadCSV()">
+          <span class="btn-inner--icon"><i class="fas fa-save"></i></span>
+          <span class="btn-inner--text">Export</span>
+        </button>
+      </div>
+    </div>
+  </div>
+  <div class="table-responsive">
+    <table class="table align-items-center table-flush">
+      <thead class="thead-light">
+        <tr>
+          <th scope="col" class="px-3 py-2">#</th>
+          <th scope="col" class="px-3 py-2">Employee Id</th>
+          <th scope="col" class="px-3 py-2">Period</th>
+          <th scope="col" class="px-3 py-2">Start Date</th>
+          <th scope="col" class="px-3 py-2">End Date</th>
+          <th scope="col" class="px-3 py-2">Infotype</th>
+          <th scope="col" class="px-3 py-2">Total Shift Count</th>
+          <th scope="col" class="px-3 py-2">Normal Shift Rate at</th>
+          <th scope="col" class="px-3 py-2 text-right">
+            <form>
+              <div class="form-group mb-0">
+                <label for="example-text-input" class="form-control-label h6 mb-0 mr-2">Select All</label>
+                <input type="checkbox" name="selectSAPuploadsAll" [(ngModel)]="selectSAPuploadsAll"
+                  (change)="updateSelectedAll($event)" />
+              </div>
+            </form>
+          </th>
+        </tr>
+      </thead>
+      <tbody class="list" *ngFor="let listItem of requestList; let i = index">
+        <tr>
+          <th class="px-3 py-2">
+            <span class="h5 text-dark">{{i+1}}</span>
+          </th>
+          <th class="px-3 py-2">
+            <span class="h5 text-dark">{{listItem.EmployeeId}}</span>
+          </th>
+          <td class="px-3 py-2">
+            <span class="h5 text-dark">{{listItem.Period}}</span>
+          </td>
+          <th class="px-3 py-2">
+            <span class="h5 text-dark">{{listItem.StartDate}}</span>
+          </th>
+          <td class="px-3 py-2">
+            <span class="h5 text-dark">{{listItem.EndDate}}</span>
+          </td>
+          <th class="px-3 py-2">
+            <span class="h5 text-dark">{{listItem.Infotype}}</span>
+          </th>
+          <td class="px-3 py-2">
+            <span class="h5 text-dark">{{listItem.ShiftCount}}</span>
+          </td>
+          <td class="px-3 py-2">
+            <span class="h5 text-dark">{{listItem.NormalShiftRateAt}}</span>
+          </td>
+          <td class="px-3 py-2 text-right">
+            <form>
+              <div class="form-group mb-0">
+                <label for="example-text-input" class="form-control-label mb-0">{{listItem.Selected}}  </label>
+                <label for="example-text-input" class="form-control-label mb-0" *ngIf="selectSAPuploadsAll"
+                  data-toggle="tooltip" data-placement="left" title="deselect all, to select Individual Record">
+                  <i class="fas fa-check-square"></i>
+                </label>
+                <input type="checkbox" name="sapuploadSelected" value="{{listItem.Selected}}"
+                  *ngIf="!selectSAPuploadsAll" (change)="updateSelected(listItem, $event)" />
+              </div>
+            </form>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>

@@ -1,0 +1,161 @@
+
+<div class="card card-stats border mb-4" *ngIf="requestList && requestList.length > 0">
+    <div class="card-body px-3 py-3">
+        <div class="row">
+            <div class="col-sm-6 col-md">
+            </div>
+
+            <div class="col-sm-auto col-md-auto">
+                <form>
+                    <div class="form-check mt-2">
+                        <input type="checkbox" class="form-check-input" (change)="changeCheckAll($event)">
+                        <label class="form-check-label" for="exampleCheck1">Select All</label>
+                    </div>
+                </form>
+            </div>
+            <div class="col-sm-6 col-md-auto text-right align-self-end">
+                <button type="button" class="btn btn-info mb-0"
+                    (click)="showViewExtendBulkModal()"><i class="fas fa-expand-arrows-alt"></i> Extend</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<ul class="list-group list-group-flush list mt--2 mb-3" *ngIf="requestList && requestList.length > 0">
+    <ng-container *ngFor="let requestObj of requestList">
+        <li class="list-group-item px-0 py-2">
+            <div class="row align-items-center">
+                <div class="col ml-4">
+                    <div class="row align-items-center">
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <span class="h4 font-weight-bold mb-0">{{requestObj?.overtime_request_employee_details}}</span>
+                                </div>
+                                <div class="col">
+                                    <!-- <h6 class="card-title text-uppercase text-muted mt-1 mb-1"> {{requestObj?.overtime_request_status_description}}</h6> -->
+                                    <app-clib-overtime-status-description [requestObj]="requestObj">
+                                    </app-clib-overtime-status-description>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-12">
+                            <div class="row">
+                                <div class="col-auto">
+                                    <h5 class="mb-1">
+                                        <i class="fas fa-calendar"></i>
+                                        <span class="text-primary">
+                                            {{requestObj.overtime_request_planned_from | date: 'dd MMM yyyy HH:mm'}}
+                                        </span>
+                                        <i class="fas fa-arrow-right"></i>
+                                        <span class="text-primary">
+                                            {{requestObj.overtime_request_planned_to | date: 'HH:mm'}}</span>
+                                    </h5>
+                                </div>
+                                <div class="col">
+                                    <span class="h5 font-weight-bold mb-0">
+                                        <i class="fas fa-clock"></i> <span class="h5 text-muted"> {{requestObj?.overtime_request_estimated_duration_description}}</span>
+                                    </span>
+                                </div>
+                                <div class="col-auto">
+                                    <span class="text-danger"><i class="fas fa-map-marker-alt"></i></span>
+                                    <span class="h5 font-weight-bold mb-0"> {{requestObj?.overtime_request_location | slice:0:10}}
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-lg-12">
+                            <div class="row">
+                                <div class="col-lg-auto">
+                                    <span class="h5 font-weight-bold mb-0">
+                                        <i class="fas fa-briefcase"></i> <span class="h5 text-primary">
+                                            {{requestObj?.overtime_request_work_details | slice:0:20}}</span>
+                                    </span>
+                                </div>
+                                <div class="col-lg">
+                                    <span class="h5 font-weight-bold mb-0">
+                                        <i class="fas fa-comment-dots"></i> <span class="h5 text-primary">
+                                            {{requestObj?.overtime_request_remarks | slice:0:20}}</span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-auto">
+                    <button class="btn btn-icon btn-warning btn-sm" type="button" data-toggle="tooltip"
+                        data-placement="left" title="View Details" (click)="showViewRecordDetailsModal(requestObj)">
+                        <span class="btn-inner--icon"><i class="fas fa-eye"></i></span>
+                    </button>
+                </div>
+                <div class="col-auto my-auto">
+                    <form>
+                        <div class="form-check">
+                            <!-- <input type="checkbox" class="form-check-input"
+                                (change)="changeCheckBox($event, requestObj)"
+                                [attr.id]="requestObj?.leave_request_can_upload_to_sap_ui"> -->
+
+
+                                <input type="checkbox" class="form-check-input my-auto"
+                                [ngModelOptions]="{standalone: true}"
+                                (change)="changeCheckBox($event, requestObj)"
+                                [attr.id]="requestObj?.overtime_request_can_upload_to_sap_ui"
+                                [ngModel]="requestObj?.overtime_request_checkbox_ui">
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </li>
+    </ng-container>
+</ul>
+
+
+
+
+
+
+
+<div #ListViewRecordDetailsModal id="ListViewRecordDetailsModal" class="modal fade">
+    <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">View Details</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewRecordDetailsModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="requestDetails">
+                <!-- <app-hr-ot-requests-detail-view-model (closeThisModel)="hideViewRecordDetailsModal()"
+                    [selectedData]="selectedData" [showLoader]="showLoader">
+                </app-hr-ot-requests-detail-view-model> -->
+                <app-hr-ot-requests-detail-view-model (closeThisModel)="hideViewRecordDetailsModal()"
+                    [requestDetails]="requestDetails" [showModelLoader]="showModelLoader"
+                    [modelStateError]="modelStateError" [generalApiError]="generalApiError">
+                </app-hr-ot-requests-detail-view-model>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<div #ListViewExtendBulkModal id="ListViewExtendBulkModal" class="modal fade">
+    <div class="modal-dialog modal-xl" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-light">
+                <h5 class="modal-title">Bulk extend</h5>
+                <button type="button" class="close py-3" data-dismiss="modal" aria-label="Close"
+                    (click)="hideViewExtendBulkModal()">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body" *ngIf="requestDetails">
+                <app-hr-ot-requests-extend-bulk-model  (closeThisModel)="hideViewExtendBulkModal()" [selectedOtList]="selectedOtList"
+                [showModelLoader]="showModelLoader"></app-hr-ot-requests-extend-bulk-model>
+            </div>
+        </div>
+    </div>
+</div>

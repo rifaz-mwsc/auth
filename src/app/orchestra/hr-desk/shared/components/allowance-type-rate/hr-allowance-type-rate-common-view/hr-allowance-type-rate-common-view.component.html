@@ -1,0 +1,104 @@
+<div *ngIf="selectedData">
+  <div class="alert alert-danger py-1 px-3" role="alert" *ngIf="generalApiError">
+    <span class="alert-icon"><i class="fas fa-exclamation-circle"></i></span>
+    <span class="alert-text"><strong>Error !</strong> {{generalApiError}}</span>
+  </div>
+
+
+
+  <div class="row">
+    <div class="col-lg-6 pr-1">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-lg-12">
+              <h6 class="card-title text-uppercase text-muted mb-0">Allowance Type / Rate</h6>
+            </div>
+            <div class="col-lg-12">
+              <span class="h5 font-weight-bold mb-0">{{selectedData?.allowance_rate_allowance_type_name}}</span>
+            </div>
+            <div class="col-lg-12">
+              <span class="h5 font-weight-bold mb-0">{{selectedData?.allowance_rate_amount_friendly}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6">
+      <div class="card card-stats border mb-0">
+        <div class="card-body p-3">
+          <div class="row">
+            <div class="col-lg-12">
+              <h6 class="card-title text-uppercase text-muted mb-0">Valid From / Valid To</h6>
+            </div>
+            <div class="col-lg-12">
+              <span class="h5 font-weight-bold mb-0">{{selectedData?.allowance_rate_valid_from_friendly}}</span>
+            </div>
+            <div class="col-lg-12">
+              <span class="h5 font-weight-bold mb-0">{{selectedData?.allowance_rate_valid_to_friendly}}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+  <div class="alert alert-warning px-3 py-2 mt-3" role="alert" *ngIf='generalApiError'>
+    <span class="h4 text-white"><i class="fas fa-exclamation-circle"></i> <strong> Error !</strong> {{generalApiError}}
+      ... !</span>
+    <hr class="my-2">
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.allowance_rate_id">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.allowance_rate_id">
+        <li class="mt-0" *ngFor="let error of modelStateError.allowance_rate_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.allowance_type_id">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.allowance_type_id">
+        <li class="mt-0" *ngFor="let error of modelStateError.allowance_type_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError['allowance_rate_valid_from_friendly']">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['allowance_rate_valid_from_friendly']">
+        <li class="mt-0" *ngFor="let error of modelStateError['allowance_rate_valid_from_friendly']">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError['']">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError['']">
+        <li class="mt-0" *ngFor="let error of modelStateError['']">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.allowance_rate_valid_to_friendly">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.allowance_rate_valid_to_friendly">
+        <li class="mt-0" *ngFor="let error of modelStateError.allowance_rate_valid_to_friendly">
+          <span class="h5 text-white mb-1 mt-0 d-block"> {{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.work_handover_employee_id">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.work_handover_employee_id">
+        <li class="mt-0" *ngFor="let error of modelStateError.work_handover_employee_id">
+          <span class="h5 text-white mb-1 mt-0 d-block">Work handover Employee : {{error}}.</span>
+        </li>
+      </ul>
+    </div>
+    <div class="col-lg-12" *ngIf="modelStateError && modelStateError.expires_on">
+      <ul class="pl-2 mb-2" *ngIf="modelStateError && modelStateError.expires_on">
+        <li class="mt-0" *ngFor="let error of modelStateError.expires_on">
+          <span class="h5 text-white mb-1 mt-0 d-block">{{error}}.</span>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+</div>

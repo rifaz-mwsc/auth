@@ -1,0 +1,104 @@
+<div class="header bg-primary pb-6">
+  <div class="container-fluid">
+    <div class="header-body">
+      <div class="row align-items-center py-2">
+        <div class="col-lg-6 col-7">
+          <h6 class="h2 text-white d-inline-block mb-0">{{moduleName}}</h6>
+          <nav aria-label="breadcrumb" class="d-none d-md-inline-block ml-md-4">
+            <ol class="breadcrumb breadcrumb-links breadcrumb-dark">
+              <li class="breadcrumb-item"><a><i class="fas fa-home"></i></a></li>
+              <li class="breadcrumb-item active" aria-current="page"><a>{{pageName}}</a></li>
+            </ol>
+          </nav>
+        </div>
+        <div class="col-lg-6 col-5 text-right">
+          <!-- <a href="#" class="btn btn-sm btn-neutral">New</a> -->
+          <!-- <a href="#" class="btn btn-sm btn-neutral">Filters</a> -->
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="container-fluid mt--6">
+  <div class="row">
+    <div class="col">
+      <div class="card">
+        <div class="card-header p-3">
+          <div class="row">
+            <div class="col">
+              <form class="form-inline">
+                <div class="form-group col-2 mb-2 pl-0">
+                  <label for="inputPassword2" class="sr-only">Select Date</label>
+                  <input type="password" class="form-control col-12" id="inputPassword2" placeholder="DD-MM-YYYY">
+                </div>
+                <div class="form-group col-2 my-auto ml-2">
+                  <div class="custom-control custom-checkbox">
+                    <input type="checkbox" class="custom-control-input col-12" id="customCheckDisabled">
+                    <label class="custom-control-label my-auto" for="customCheckDisabled">All Staffs</label>
+                  </div>
+                </div>
+                <div class="form-group mb-2 ml-2">
+                  <button type="submit" class="btn btn-primary">Generate Attendance</button>
+                </div>
+              </form>
+            </div>
+
+            <div class="col-auto">
+              <div class="nav btn-group" role="tablist">
+                <button class="btn btn-primary px-3 active" data-toggle="tab" data-target="#tabPaneOne" role="tab"
+                  aria-controls="tabPaneOne" aria-selected="true">
+                  <i class="fas fa-th-large"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneTwo" role="tab"
+                  aria-controls="tabPaneTwo" aria-selected="false">
+                  <i class="fas fa-list"></i>
+                </button>
+                <button class="btn btn-primary px-3" data-toggle="tab" data-target="#tabPaneThree" role="tab"
+                  aria-controls="tabPaneThree" aria-selected="false">
+                  <i class="fas fa-table"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card-body p-3">
+          <div class="alert alert-warning mb-4 py-2 px-3" role="alert"
+            *ngIf="apiDataService && apiDataService.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Oh Snap!</strong> No Shift Group Found!</span>
+          </div>
+
+          <div class="alert alert-info mb-4 py-2 px-3" role="alert" *ngIf="requestList && requestList.length < 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Loading Data. Please wait ...</span>
+          </div>
+
+          <div class="alert alert-success fade show mb-4 py-2 px-3" role="alert"
+            *ngIf="requestList && requestList.length >= 1">
+            <span class="alert-icon"><i class="fas fa-info-circle"></i></span>
+            <span class="alert-text"><strong>Info!</strong> Please select Shift Group to Continue ...!</span>
+          </div>
+
+          <app-comp-lib-loading *ngIf="showLoader"></app-comp-lib-loading>
+
+          <!-- Tab content -->
+          <div class="tab-content">
+            <div class="tab-pane fade active show" id="tabPaneOne" role="tabpanel">
+              <app-attendance-detail></app-attendance-detail>
+            </div>
+            <div class="tab-pane fade" id="tabPaneTwo" role="tabpanel">
+            </div>
+            <div class="tab-pane fade" id="tabPaneThree" role="tabpanel">
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="footer pt-0">
+    <app-layout-footer></app-layout-footer>
+  </footer>
+</div>
