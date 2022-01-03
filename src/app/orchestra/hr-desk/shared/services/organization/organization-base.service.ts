@@ -3,11 +3,11 @@ import { HttpHeaders, HttpClient, HttpParams, HttpErrorResponse } from '@angular
 import { Observable, BehaviorSubject, throwError, Subscriber } from 'rxjs';
 import { retry, catchError, tap, map, filter } from 'rxjs/operators';
 import * as moment from 'moment';
-import { CoreApiAuthService } from './../../../../../core/services/auth/core-api-auth.service';
 // import { ApiBaseService } from './../../../../core/services/api-related/api-base.service';
 // import { JsonServerService } from './../../../../core/services/json-server/json-server.service';
 // import { environment } from './../../../../../environments/environment';
 import { environment } from './../../../../../../environments/environment';
+import { NewAuthService } from 'src/app/core/services/newauth.service';
 
 
 @Injectable({
@@ -15,33 +15,17 @@ import { environment } from './../../../../../../environments/environment';
 })
 export class OrganizationBaseService {
 
-  constructor(private http: HttpClient, private coreApiAuthService: CoreApiAuthService) { }
+  constructor(private http: HttpClient, private newAuthServive : NewAuthService) { }
 
-  private prepareOptions(): any {
-    let headers = new HttpHeaders();
-    let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
-    headers = headers
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token.access_token}`);
-    // console.log('headers', headers);
-    return { headers };
-  }
-
-
-
-  private headerWithRefreshToken(): any {
-    let tempToken  = this.coreApiAuthService.getYodaCoreApiToken();
-    console.log('headerWithRefreshToken -> tempToken : ', tempToken);
-    
-    let headers = new HttpHeaders();
-    let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
-
-    headers = headers
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token.access_token}`);
-    // console.log('headers', headers);
-    return { headers };
-  }
+  // private prepareOptions(): any {
+  //   let headers = new HttpHeaders();
+  //   let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
+  //   headers = headers
+  //     .set('Content-Type', 'application/json')
+  //     .set('Authorization', `Bearer ${token.access_token}`);
+  //   // console.log('headers', headers);
+  //   return { headers };
+  // }
 
 
   
@@ -56,7 +40,9 @@ export class OrganizationBaseService {
 
   // v1/organization/divisions
   getHRDeskOrganizationDivisions() {
-    const httpOptions = this.prepareOptions();
+    // const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
+
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/divisions`, httpOptions)
       .pipe(map(res => {
         // this.accountList = res;
@@ -88,7 +74,8 @@ export class OrganizationBaseService {
 
 
   postHRDeskAddDivision(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
+
     const body = JSON.stringify(data);
 
     return this.http.post<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/division`, body, httpOptions)
@@ -108,7 +95,7 @@ export class OrganizationBaseService {
   }
 
   getHRDeskOrganizationDivisionList() {
-    const httpOptions = this.headerWithRefreshToken();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
 
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/division-list`, httpOptions)
       .pipe(map(res => {
@@ -127,7 +114,7 @@ export class OrganizationBaseService {
   }
 
   getHRDeskOrganizationDivisionsWithFilters(pageNo, pageSize, searchText) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params =
       '?page=' + pageNo +
       '&page_size=' + pageSize +
@@ -151,7 +138,7 @@ export class OrganizationBaseService {
 
 
   getHRDeskOrganizationListDepartmentsByDivisionId(requestId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?organization_division_id=' + requestId;
 
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/departments-by-division-id` + params, httpOptions)
@@ -171,7 +158,7 @@ export class OrganizationBaseService {
   }
 
   getHRDeskDivisionByDivisionId(requestId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?organization_division_id=' + requestId;
 
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/division` + params, httpOptions)
@@ -192,7 +179,7 @@ export class OrganizationBaseService {
 
 
   postHRDeskRemoveDivision(requestId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?organization_division_id=' + requestId;
 
     return this.http.delete<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/division` + params, httpOptions)
@@ -223,7 +210,7 @@ export class OrganizationBaseService {
 
 
   postHRDeskAddDepartment(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const body = JSON.stringify(data);
 
     return this.http.post<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/department`, body, httpOptions)
@@ -245,7 +232,7 @@ export class OrganizationBaseService {
 
   getHRDeskOrganizationDepartmentsWithFilters(pageNo, pageSize, searchText) {
     console.log('hr-organisation-base', 'Test');
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params =
       '?page=' + pageNo +
       '&page_size=' + pageSize +
@@ -269,7 +256,7 @@ export class OrganizationBaseService {
 
 
   getHRDeskOrganizationListSectionsByDepartmentId(requestId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?organization_deparment_id=' + requestId;
 
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/sections-by-department-id` + params, httpOptions)
@@ -289,7 +276,7 @@ export class OrganizationBaseService {
   }
 
   getHRDeskDepartmentByDepartmentId(requestId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?organization_deparment_id=' + requestId;
 
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/department` + params, httpOptions)
@@ -311,7 +298,7 @@ export class OrganizationBaseService {
 
 
   postHRDeskRemoveDepartment(requestId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?organization_department_id=' + requestId;
 
     return this.http.delete<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/department` + params, httpOptions)
@@ -342,7 +329,7 @@ export class OrganizationBaseService {
 
 
   postHRDeskAddSection(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const body = JSON.stringify(data);
 
     return this.http.post<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/section`, body, httpOptions)
@@ -364,7 +351,7 @@ export class OrganizationBaseService {
 
   getHRDeskOrganizationSectionsWithFilters(pageNo, pageSize, searchText) {
     console.log('hr-organisation-base', 'Test');
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params =
       '?page=' + pageNo +
       '&page_size=' + pageSize +
@@ -388,7 +375,7 @@ export class OrganizationBaseService {
 
 
   getHRDeskSectionBySectionId(requestId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?organization_section_id=' + requestId;
 
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/section` + params, httpOptions)
@@ -409,7 +396,7 @@ export class OrganizationBaseService {
 
   
   postHRDeskRemoveSection(requestId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?organization_section_id=' + requestId;
 
     return this.http.delete<any>(`${environment.hrDeskApiConfig.api_url}v1/organization/section` + params, httpOptions)
@@ -441,7 +428,7 @@ export class OrganizationBaseService {
 
   getHRDeskDocumentById(documentId) {
     console.log('hr-organisation-base', 'Test');
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?document_id=' + documentId;
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/uploaded-documents` + params, httpOptions)
       .pipe(map(res => {

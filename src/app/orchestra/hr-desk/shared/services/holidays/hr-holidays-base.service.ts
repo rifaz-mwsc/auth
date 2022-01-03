@@ -7,6 +7,7 @@ import * as moment from 'moment';
 // import { JsonServerService } from './../../../../core/services/json-server/json-server.service';
 // import { environment } from './../../../../../environments/environment';
 import { environment } from './../../../../../../environments/environment';
+import { NewAuthService } from 'src/app/core/services/newauth.service';
 
 
 @Injectable({
@@ -14,22 +15,23 @@ import { environment } from './../../../../../../environments/environment';
 })
 export class HrHolidaysBaseService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private newAuthServive : NewAuthService) { }
 
-  private prepareOptions(): any {
-    let headers = new HttpHeaders();
-    let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
-    headers = headers
-      .set('Content-Type', 'application/json')
-      .set('Accept', '*/*')
-      .set('Authorization', `Bearer ${token.access_token}`);
-    console.log('headers', headers);
-    return { headers };
-  }
+  // private prepareOptions(): any {
+  //   let headers = new HttpHeaders();
+  //   let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
+  //   headers = headers
+  //     .set('Content-Type', 'application/json')
+  //     .set('Accept', '*/*')
+  //     .set('Authorization', `Bearer ${token.access_token}`);
+  //   console.log('headers', headers);
+  //   return { headers };
+  // }
 
   getHRDeskHoliday() {
     // MWSC - Dev & Live API Server
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
+
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/holidays`, httpOptions)
       .pipe(map(res => {
         // this.accountList = res;
@@ -48,7 +50,7 @@ export class HrHolidaysBaseService {
 
 
   getHRDeskHolidayWithFilters(pageNo, pageSize, searchText) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params =
       '?page=' + pageNo +
       '&page_size=' + pageSize +
@@ -73,7 +75,7 @@ export class HrHolidaysBaseService {
 
 
   postHRDeskCreateHoliday(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const body = JSON.stringify(data);
 
     return this.http.post<any>(`${environment.hrDeskApiConfig.api_url}v1/holiday/add`, body, httpOptions)
@@ -94,7 +96,7 @@ export class HrHolidaysBaseService {
 
 
   postHRDeskRemoveHoliday(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
         // const body = JSON.stringify(data);
     const params = '?holiday_id=' + data;
 

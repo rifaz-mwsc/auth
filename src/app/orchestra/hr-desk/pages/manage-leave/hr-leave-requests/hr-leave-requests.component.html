@@ -87,7 +87,7 @@
                 <div class="col-sm-6 col-md-2 col-lg-2 pl-xl-2 pr-xl-2">
                   <div class="form-group mb-0">
                     <label class="form-control-label" for="example4cols2Input">Division</label>
-                    <select class="form-control" [(ngModel)]="filter.division" [disabled]="filter.disable_division"
+                    <select class="form-control" [(ngModel)]="division" [disabled]="filter.disable_division"
                       (change)="divisionOnChange($event.target.value)">
                       <option [value]="divisionItem.organization_division_id"
                         *ngFor="let divisionItem of filter.division_list">
@@ -99,7 +99,7 @@
                 <div class="col-sm-6 col-md-2 col-lg-1 pl-xl-2 pr-xl-2">
                   <div class="form-group mb-0">
                     <label class="form-control-label" for="example4cols3Input">Department</label>
-                    <select class="form-control" [(ngModel)]="filter.department" [disabled]="filter.disable_department"
+                    <select class="form-control" [(ngModel)]="department" [disabled]="filter.disable_department"
                       (change)="departmentOnChange($event.target.value)">
                       <option [value]="departmentItem.organization_department_id"
                         *ngFor="let departmentItem of filter.department_list">
@@ -112,7 +112,7 @@
                 <div class="col-sm-6 col-md-2 col-lg-1 pl-xl-2 pr-xl-2">
                   <div class="form-group mb-0">
                     <label class="form-control-label" for="example4cols3Input">Section</label>
-                    <select class="form-control" [(ngModel)]="filter.section" [disabled]="filter.disable_section"
+                    <select class="form-control" [(ngModel)]="section" [disabled]="filter.disable_section"
                       (change)="sectionOnChange($event.target.value)">
                       <option [value]="sectionItem.organization_section_id"
                         *ngFor="let sectionItem of filter.section_list">
@@ -179,7 +179,7 @@
           <app-clib-page-alert [pageInfo]="pageInfo" [request]="request" [showLoader]="requestUi.show_loader"
             [generalApiError]="generalApiError" [modelStateError]="modelStateError"></app-clib-page-alert>
 
-          <app-comp-lib-loading [viewType]="requestUi.loaderSize" *ngIf="requestUi.show_loader"></app-comp-lib-loading>
+          <app-comp-lib-loading [viewType]="loaderSize" *ngIf="requestUi.show_loader"></app-comp-lib-loading>
 
           <!-- Tab content -->
           <div class="tab-content">

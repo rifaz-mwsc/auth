@@ -22,7 +22,7 @@ export class ApiBaseService {
   private prepareOptions(): any {
     this.adal8ServiceObj = this.authService.getAdal8Service();
     let headers = new HttpHeaders();
-    // console.log('ADAL Shit-Hole', this.adal8ServiceObj.userInfo.token);
+    console.log('ADAL Shit-Hole', this.adal8ServiceObj.userInfo.token);
     headers = headers
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json')

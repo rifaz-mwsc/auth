@@ -13,11 +13,20 @@ import { DutyRosterHomeComponent } from './orchestra/duty-roster/duty-roster-hom
 
 
 // export const mainRoutes: Routes = [
+// const mainRoutes: Routes = [
+//   { path: '', component: HrDeskHomeComponent, canActivate: [AuthGuard] },
+//   { path: 'home', component: HrDeskHomeComponent, canActivate: [AuthGuard] },
+//   { path: 'hr', component: HrDeskHomeComponent, canActivate: [AuthGuard] },
+//   { path: 'hr-dutyroster', component: DutyRosterHomeComponent, canActivate: [AuthGuard] },
+//   { path: 'error-login-time-out', component: ErrorLoginTimeOutComponent },
+//   { path: 'error-unauthorized', component: ErrorUnauthorizedComponent },
+//   { path: 'auth-callback', component: AuthCallbackComponent },
+// ];
 const mainRoutes: Routes = [
-  { path: '', component: HrDeskHomeComponent, canActivate: [AuthGuard] },
-  { path: 'home', component: HrDeskHomeComponent, canActivate: [AuthGuard] },
-  { path: 'hr', component: HrDeskHomeComponent, canActivate: [AuthGuard] },
-  { path: 'hr-dutyroster', component: DutyRosterHomeComponent, canActivate: [AuthGuard] },
+  { path: '', component: HrDeskHomeComponent },
+  { path: 'home', component: HrDeskHomeComponent},
+  { path: 'hr', component: HrDeskHomeComponent},
+  { path: 'hr-dutyroster', component: DutyRosterHomeComponent },
   // { path: 'lms', component: LabManagementSystemHomeComponent, canActivate: [AuthGuard] },
   // { path: 'nfc-guard-patrol', component: NfcGuardPatrolHomeComponent, canActivate: [AuthGuard] },
   // { path: 'staff-portal', component: StaffPortalHomeComponent },

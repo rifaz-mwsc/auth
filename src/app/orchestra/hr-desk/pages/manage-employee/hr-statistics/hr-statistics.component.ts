@@ -98,7 +98,6 @@ export class HrStatisticsComponent implements OnInit {
 
   getEmployeeStatistics() {
     this.modelStateError = null;
-    this.employeeStatistics = [];
     console.log('employeeStatistics this.selectedEmployeeId        -> ', this.selectedEmployeeId);
     console.log('employeeStatistics this.selectedYearObj.YearStart -> ', this.selectedYearObj.YearStart);
     console.log('employeeStatistics this.selectedYearObj.YearEnd   -> ', this.selectedYearObj.YearEnd);
@@ -206,22 +205,22 @@ export class HrStatisticsComponent implements OnInit {
 
 
   yearChange(newValue) {
-    if (newValue > 2018 && newValue < 2050) {
+    if(newValue > 2018 && newValue < 2050){
       this.getYearStartAndEnd(newValue);
     }
   }
 
 
   getYearStartAndEnd(year) {
-    if (year > 2018 && year < 2050) {
+    if(year > 2018 && year < 2050){
       let yearObj;
-      yearObj = Number(year);
+      yearObj = Number(year); 
       let yearStartDate = moment(yearObj, 'YYYY').startOf('year').format('DD MMM YYYY');
       let yearEndDate = moment(yearObj, 'YYYY').endOf('year').format('DD MMM YYYY');
-
+  
       console.log('getYears ->  this.yearStartDate ', yearStartDate);
       console.log('getYears ->  this.yearEndDate ', yearEndDate);
-
+  
       this.selectedYearObj.YearStart = yearStartDate;
       this.selectedYearObj.YearEnd = yearEndDate;
     }

@@ -17,6 +17,7 @@ import { OrchestraModule } from './orchestra/orchestra.module';
 import { SharedModule } from './shared/shared.module';
 
 
+import { authInterceptorProviders } from './core/services/_helpers/auth.interceptor';
 
 @NgModule({
   declarations: [
@@ -43,6 +44,7 @@ import { SharedModule } from './shared/shared.module';
     AuthGuard,
     AuthService,
     Adal8Service,
+    authInterceptorProviders,
     // {
     //   provide: Adal8HTTPService,
     //   useFactory: Adal8HTTPService.factory,

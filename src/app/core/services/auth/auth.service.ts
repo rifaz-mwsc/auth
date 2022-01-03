@@ -12,6 +12,8 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { UiBaseService } from './../ui-setup/ui-base.service';
 
 import { CoreApiAuthService } from './core-api-auth.service';
+import { TokenStorageService } from '../token-storage.service';
+import {NewAuthService } from "../newauth.service" ;
 
 const config = {
   tenant: environment.adalConfig.tenant,
@@ -36,12 +38,21 @@ export class AuthService {
   public myProfile: any;                // Store User Profile Info
   public myProfilePictureBase64: any;   // Store User Image
 
+
+
+  isLoggedIn = false;
+  isLoginFailed = false;
+  errorMessage = '';
+  roles: string[] = [];
+
   constructor(
-    public adalService: Adal8Service, private http: Adal8HTTPService, private coreApiAuthService: CoreApiAuthService
-    // private uiBaseService: UiBaseService,
-    // private global: GlobalService,private sanitizer: DomSanitizer
+    public adalService: Adal8Service, 
+    private http: Adal8HTTPService, 
+    private coreApiAuthService: CoreApiAuthService, 
+    private tokenStorage: TokenStorageService,
+    private _newAuthService : NewAuthService
+
   ) {
-    // console.log('Env Prod:', environment.production); // Logs false for default environment
     this.adalInit();
   }
 
@@ -50,20 +61,77 @@ export class AuthService {
     this.loginUser();
   }
 
+  // public loginUser() {
+  //   this.adalService.handleWindowCallback();
+  //   if (!this.adalService.userInfo.authenticated) {
+  //     this.adalService.login();
+  //     this.setAdal8Service(this.adalService);
+  //     this.coreApiAuthService.postGetCoreApiToken(this.adalService.userInfo.token, 'hr_desk_angular');
+  //   } else {
+  //     this.setAdal8Service(this.adalService);
+  //     this.coreApiAuthService.postGetCoreApiToken(this.adalService.userInfo.token, 'hr_desk_angular');
+  //     this.getMyProfile();
+  //   }
+  // }
   public loginUser() {
-    // Handle callback if this is a redirect from Azure
     this.adalService.handleWindowCallback();
-    // Check if the user is authenticated. If not, call the login() method
     if (!this.adalService.userInfo.authenticated) {
       this.adalService.login();
-      this.setAdal8Service(this.adalService);
-      this.coreApiAuthService.postGetCoreApiToken(this.adalService.userInfo.token, 'hr_desk_angular');
+      // this.setAdal8Service(this.adalService);
+      // this._newAuthService.login(this.adalService.userInfo.token).subscribe( data=> {
+      //   console.log("New Service reponse", data);
+      //   this.tokenStorage.saveToken(data.access_token);
+      //   this.tokenStorage.saveUser(data);
+      //   this.tokenStorage.saveRefreshToken(data.refreshToken);
+        
+      //   this.isLoginFailed = false;
+      //   this.isLoggedIn = true;
+      //   this.roles = this.tokenStorage.getUser().roles;
+      //   this.reloadPage();
+
+      // }, err => {
+      //   this.errorMessage = err;
+      //   console.log("_newAuthService err", err);
+        
+      // })
     } else {
+
       this.setAdal8Service(this.adalService);
-      this.coreApiAuthService.postGetCoreApiToken(this.adalService.userInfo.token, 'hr_desk_angular');
-      this.getMyProfile();
+      this._newAuthService.login(this.adalService.userInfo.token).subscribe( data=> {
+        console.log("New Service reponse", data);
+        console.log("New Service reponse tokeExp",new Date(data.access_token_expires_on));
+        this.tokenStorage.saveToken(data.access_token);
+        this.tokenStorage.saveUser(data);
+        this.tokenStorage.saveRefreshToken(data.refreshToken);
+        this.isLoginFailed = false;
+        this.isLoggedIn = true;
+        this.roles = this.tokenStorage.getUser().roles;
+      }, err => {
+        this.errorMessage = err;
+        console.log("New Service reponse err", err);
+        
+      })
     }
+    
   }
+
+  reloadPage(): void {
+    window.location.reload();
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   public getDummyData() {
@@ -88,6 +156,7 @@ export class AuthService {
     this.adalService.init(environment.adalConfig);
     // console.log('Logging Out');
     this.adalService.logOut();
+    this.tokenStorage.signOut();
   }
 
 

@@ -2,7 +2,7 @@ export const environment = {
   production: false,
 
   appVersion: {
-    no: '22.01.01',
+    no: '22.44.02',
     label: 'dev',
   },
 
@@ -35,7 +35,7 @@ export const environment = {
     popUp: false,
     // redirectUri: window.location.href.substring(0, window.location.href.lastIndexOf("/")+1), //window.location.origin + '/',
     redirectUri: 'https://hr-desk-dev-01.mwsc.com.mv/',
-    postLogoutRedirectUri: 'https://login.microsoftonline.com/e325cce5-05cc-40c0-a528-46c4dbccff6b/oauth2/logout?post_logout_redirect_uri=https://hr-desk-dev-01.mwsc.com.mv/',
+    postLogoutRedirectUri: 'https://login.microsoftonline.com/e325cce5-05cc-40c0-a528-46c4dbccff6b/oauth2/logout?post_logout_redirect_uri=https://localhost:4200/login',
     navigateToLoginRequestUrl: true,
   },
 

@@ -7,6 +7,7 @@ import * as moment from 'moment';
 // import { JsonServerService } from './../../../../core/services/json-server/json-server.service';
 // import { environment } from './../../../../../environments/environment';
 import { environment } from './../../../../../environments/environment';
+import { NewAuthService } from 'src/app/core/services/newauth.service';
 
 
 @Injectable({
@@ -14,20 +15,22 @@ import { environment } from './../../../../../environments/environment';
 })
 export class LeaveRequestsBaseService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private newAuthServive : NewAuthService) { }
 
-  private prepareOptions(): any {
-    let headers = new HttpHeaders();
-    let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
-    headers = headers
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token.access_token}`);
-    // console.log('headers', headers);
-    return { headers };
-  }
+  // private prepareOptions(): any {
+  //   let headers = new HttpHeaders();
+  //   let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
+  //   headers = headers
+  //     .set('Content-Type', 'application/json')
+  //     .set('Authorization', `Bearer ${token.access_token}`);
+  //   // console.log('headers', headers);
+  //   return { headers };
+  // }
 
   getHRDeskLeaveRequests() {
-    const httpOptions = this.prepareOptions();
+    // const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
+    
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/leave-requests`, httpOptions)
       .pipe(map(res => {
         // this.accountList = res;
@@ -51,7 +54,7 @@ export class LeaveRequestsBaseService {
 
 
   getHRDeskLeaveRequestsWithFilters(pageNo, pageSize, empoyeeId, absenceType, division, department, section) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params =
       '?page=' + pageNo +
       '&page_size=' + pageSize +
@@ -86,7 +89,7 @@ export class LeaveRequestsBaseService {
   }
 
   getHRDeskLeaveRequestDetailsByLeaveId(leaveId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?leave_request_id=' + leaveId;
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/leave-request` + params, httpOptions)
       .pipe(map(res => {
@@ -110,7 +113,7 @@ export class LeaveRequestsBaseService {
 
   // /v1/shorten-leave-request
   getHRDeskShortenLeaveRequestDetailsByLeaveId(leaveId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = '?leave_request_id=' + leaveId;
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/shorten-leave-request` + params, httpOptions)
       .pipe(map(res => {
@@ -143,7 +146,7 @@ export class LeaveRequestsBaseService {
   // &page_size=10
 
   getHRDeskLeaveShortenRequestsWithFilters(pageNo, pageSize, empoyeeId, absenceType, division, department, section, year, month) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params =
       '?page=' + pageNo +
       '&page_size=' + pageSize +
@@ -176,7 +179,7 @@ export class LeaveRequestsBaseService {
 
 
   getHRDeskPendingLeaveRequests() {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/leave-request/pending-leave-request-sap-upload`, httpOptions)
       .pipe(map(res => {
         // this.accountList = res;
@@ -196,7 +199,7 @@ export class LeaveRequestsBaseService {
   // https://hr-desk-api-dev-01.mwsc.com.mv/v1/leave-request/pending-leave-request-sap-upload
   // ?filter_by_absence_type_sap_id=9001&page=1&page_size=10&search=test
   getHRDeskPendingLeaveRequestsWithFilters(pageNo, pageSize, searchText, leaveTypeId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = `?page=${pageNo}&page_size=${pageSize}&search=${searchText}&filter_by_absence_type_sap_id=${leaveTypeId}`;
     // const params = `?page=${pageNo}&page_size=${pageSize}`;
 
@@ -220,7 +223,7 @@ export class LeaveRequestsBaseService {
   // https://hr-desk-api-dev-01.mwsc.com.mv/v1/leave-request/pending-leave-request-sap-upload
   // ?filter_by_absence_type_sap_id=9001&page=1&page_size=10&search=test
   getHRDeskPendingLeaveRequestsWithFiltersV2(pageNo, pageSize, searchText, leaveTypeId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const params = `?page=${pageNo}&page_size=${pageSize}&search=${searchText}&filter_by_absence_type_sap_id=${leaveTypeId}`;
     // const params = `?page=${pageNo}&page_size=${pageSize}`;
 
@@ -250,7 +253,7 @@ export class LeaveRequestsBaseService {
 
 
   postHRDeskExtendLeaveRequests(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const body = JSON.stringify(data);
     return this.http.post<any>(`${environment.hrDeskApiConfig.api_url}v1/leave-request/extend-expiry`, body, httpOptions)
       .pipe(map(res => {
@@ -275,7 +278,7 @@ export class LeaveRequestsBaseService {
 
   // POST   /v1/leave-request/approve-shorten
   postHRDeskApproveShortenLeaveRequests(leaveId) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     // const body = JSON.stringify(data);
     const params = `?leave_request_id=${leaveId}`;
 
@@ -297,7 +300,7 @@ export class LeaveRequestsBaseService {
 
   // POST   /v1/leave-request/reject-shorten
   postHRDeskRejectShortenLeaveRequests(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const body = JSON.stringify(data);
     return this.http.post<any>(`${environment.hrDeskApiConfig.api_url}v1/leave-request/reject-shorten`, body, httpOptions)
       .pipe(map(res => {
@@ -316,7 +319,7 @@ export class LeaveRequestsBaseService {
 
 
   postHRDeskSAPUploadLeaveRequests(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const body = JSON.stringify(data);
     return this.http.post<any>(`${environment.hrDeskApiConfig.api_url}v1/leave-request/sap-upload`, body, httpOptions)
       .pipe(map(res => {
@@ -340,7 +343,7 @@ export class LeaveRequestsBaseService {
   //   "leave_request_rejection_reason": "string"
   // }
   postHRDeskLeaveRequestReject(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthServive.prepareOptionsForEndpoints();
     const body = JSON.stringify(data);
     return this.http.post<any>(`${environment.hrDeskApiConfig.api_url}v1/leave-request/reject`, body, httpOptions)
       .pipe(map(res => {

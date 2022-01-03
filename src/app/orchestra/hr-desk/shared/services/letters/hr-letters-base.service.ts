@@ -7,23 +7,24 @@ import * as moment from 'moment';
 // import { JsonServerService } from './../../../../core/services/json-server/json-server.service';
 // import { environment } from './../../../../../environments/environment';
 import { environment } from './../../../../../../environments/environment';
+import { NewAuthService } from 'src/app/core/services/newauth.service';
 
 @Injectable({
   providedIn: 'root'
 })
 export class HrLettersBaseService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private newAuthService : NewAuthService) { }
 
-  private prepareOptions(): any {
-    let headers = new HttpHeaders();
-    let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
-    headers = headers
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token.access_token}`);
-    // console.log('headers', headers);
-    return { headers };
-  }
+  // private prepareOptions(): any {
+  //   let headers = new HttpHeaders();
+  //   let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
+  //   headers = headers
+  //     .set('Content-Type', 'application/json')
+  //     .set('Authorization', `Bearer ${token.access_token}`);
+  //   // console.log('headers', headers);
+  //   return { headers };
+  // }
 
   private prepareOptionsFileUpload(): any {
     let headers = new HttpHeaders();
@@ -36,7 +37,9 @@ export class HrLettersBaseService {
 
   getHRDeskDocuments() {
     console.log('getHRDeskDocuments', 'Test');
-    const httpOptions = this.prepareOptions();
+    // const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
+
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/uploaded-documents`, httpOptions)
       .pipe(map(res => {
         // this.accountList = res;
@@ -56,7 +59,9 @@ export class HrLettersBaseService {
 
   getHRDeskDocumentsWithFilters(pageNo, pageSize, empoyeeId, duration) {
     console.log('getHRDeskDocuments', 'Test');
-    const httpOptions = this.prepareOptions();
+    // const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
+
     const params =
       '?page=' + pageNo +
       '&page_size=' + pageSize +
@@ -81,7 +86,9 @@ export class HrLettersBaseService {
 
   getHRDeskDocumentById(documentId) {
     console.log('getHRDeskDocuments', 'Test');
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
+
+    // const httpOptions = this.prepareOptions();
     const params = '?document_id=' + documentId;
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/uploaded-documents` + params, httpOptions)
       .pipe(map(res => {
@@ -124,7 +131,9 @@ export class HrLettersBaseService {
 
   postHRDeskRemoveLetter(data) {
     // MWSC - Dev & Live API Server
-    const httpOptions = this.prepareOptions();
+
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
+    // const httpOptions = this.prepareOptions();
     // const body = JSON.stringify(data);
     const params = '?document_id=' + data;
 

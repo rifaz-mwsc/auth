@@ -65,7 +65,7 @@ export class UiBaseService {
 
 
   public getAppConfigData() {
-    this.getMyProfile();
+    // this.getMyProfile();
 
 
     this.getMyProfile().then(data => {
@@ -82,7 +82,7 @@ export class UiBaseService {
   public getMyProfile() {
     return new Promise(resolve => {
       this.globalBase.getMyProfileDetails().subscribe(data => {
-        // console.log('Profile', data);
+        console.log('Profile', data);
         this.tempProfile = [];
         this.tempProfilePicture = [];
         this.tempProfile = data;

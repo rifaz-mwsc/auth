@@ -74,7 +74,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
     ng build --prod --configuration=development --outputPath=dist/development
     ng build --prod --configuration=demo --outputPath=dist/demo
     ng build --prod --configuration=production --outputPath=dist/production
-    ng build --prod --configuration=development --aot --build-optimizer --outputPath=dist/HR-Desk-2022-01-02-development_aot
-    ng build --prod --configuration=production --aot --build-optimizer --outputPath=dist/HR-Desk-2022-01-02-production_aot
+    ng build --prod --configuration=development --aot --build-optimizer --outputPath=dist/HR-Desk-2021-12-22-development_aot
+    ng build --prod --configuration=production --aot --build-optimizer --outputPath=dist/HR-Desk-2021-12-22-production_aot
     ng build --prod --configuration=development --outputPath=/c/inetpub/wwwroot/staff-portal
 ```

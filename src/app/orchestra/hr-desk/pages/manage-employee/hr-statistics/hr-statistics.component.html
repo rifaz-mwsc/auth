@@ -32,7 +32,7 @@
                 <div class="col-sm-6 col-md-5 col-lg-5 col-xl-5">
                   <div class="form-group mb-2">
                     <label class="form-control-label" for="example3cols1Input">Employee Id</label>
-                    <input type="text" class="form-control" placeholder="Employee Id" name="selectedEmployeeId" [(ngModel)]="selectedEmployeeId" (keyup.enter)="getEmployeeStatistics()">
+                    <input type="text" class="form-control" placeholder="Employee Id" name="selectedEmployeeId" [(ngModel)]="selectedEmployeeId">
                   </div>
 
                   <div class="col-lg-12" *ngIf="otCalcModelStateError && otCalcModelStateError.employee_id">

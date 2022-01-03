@@ -7,6 +7,7 @@ import * as moment from 'moment';
 // import { JsonServerService } from './../../../../core/services/json-server/json-server.service';
 // import { environment } from './../../../../../environments/environment';
 import { environment } from './../../../../../../environments/environment';
+import { NewAuthService } from "../../../../../core/services/newauth.service";
 
 
 @Injectable({
@@ -14,17 +15,17 @@ import { environment } from './../../../../../../environments/environment';
 })
 export class HrAuthorizationService {
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient, private newAuthService:NewAuthService) { }
 
-  private prepareOptions(): any {
-    let headers = new HttpHeaders();
-    let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
-    headers = headers
-      .set('Content-Type', 'application/json')
-      .set('Authorization', `Bearer ${token.access_token}`);
-    // console.log('headers', headers);
-    return { headers };
-  }
+  // private prepareOptions(): any {
+  //   let headers = new HttpHeaders();
+  //   let token = JSON.parse(localStorage.getItem('yodaCoreApiToken'));
+  //   headers = headers
+  //     .set('Content-Type', 'application/json')
+  //     .set('Authorization', `Bearer ${token.access_token}`);
+  //   // console.log('headers', headers);
+  //   return { headers };
+  // }
 
   private prepareOptionsFileUpload(): any {
     let headers = new HttpHeaders();
@@ -38,7 +39,7 @@ export class HrAuthorizationService {
 
   getHRDeskAuthorizationsWithFilters(pageNo, pageSize, assignedEmployee, validDate, dashbaordType) {
     console.log('getHRDeskAuthorizationsWithFilters', 'Test');
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
     // const params = '?page=' + pageNo + '&page_size=' + pageSize;
     const params = '?page=' + pageNo + '&page_size=' + pageSize + '&filter_by_assign_user=' + assignedEmployee + '&filter_by_valid_date=' + validDate + '&filter_by_organization_dashboard_type=' + dashbaordType;
 
@@ -60,7 +61,7 @@ export class HrAuthorizationService {
 
   getHRDeskAuthorizationById(documentId) {
     console.log('getHRDeskAuthorizationById', 'Test');
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
     const params = '?dashboard_id=' + documentId;
     return this.http.get<any>(`${environment.hrDeskApiConfig.api_url}v1/dashboard-authorization` + params, httpOptions)
       .pipe(map(res => {
@@ -80,7 +81,7 @@ export class HrAuthorizationService {
 
 
   postHRDeskCreateAuthorization(data) {
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
     const body = JSON.stringify(data);
 
     return this.http.post<any>(`${environment.hrDeskApiConfig.api_url}v1/dashboard-authorization`, body, httpOptions)
@@ -102,7 +103,7 @@ export class HrAuthorizationService {
 
   putHRDeskRemoveAuthorization(dashboardId) {
     console.log('authorization-service -> params ', dashboardId);
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
     const params = '?dashboard_id=' + dashboardId;
 
     return this.http.put<any>(`${environment.hrDeskApiConfig.api_url}v1/dashboard-authorization/remove` + params, {}, httpOptions)
@@ -125,7 +126,7 @@ export class HrAuthorizationService {
 
   xputHRDeskSetValidityAuthorization(dashboardId, validFrom, validTo) {
     console.log('authorization-service -> params ', dashboardId + " validFrom " + validFrom + " validTo " + validTo);
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
     const params = '?dashboard_id=' + dashboardId + '&valid_from=' + validFrom + '&valid_to=' + validTo;
 
     return this.http.put<any>(`${environment.hrDeskApiConfig.api_url}v1/dashboard-authorization/update-validity` + params, {}, httpOptions)
@@ -148,7 +149,7 @@ export class HrAuthorizationService {
 
   putHRDeskSetValidityAuthorization(data) {
     const body = JSON.stringify(data);
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
     console.log('putHRDeskSetValidityAuthorization -> body', body);
 
     return this.http.put<any>(`${environment.hrDeskApiConfig.api_url}v1/dashboard-authorization/update-validity`, body, httpOptions)
@@ -173,7 +174,7 @@ export class HrAuthorizationService {
 
   putHRDeskSetAsDefaultAuthorization(dashboardId) {
     console.log('authorization-service -> params ', dashboardId);
-    const httpOptions = this.prepareOptions();
+    const httpOptions = this.newAuthService.prepareOptionsForEndpoints();
     const params = '?dashboard_id=' + dashboardId;
 
     return this.http.put<any>(`${environment.hrDeskApiConfig.api_url}v1/dashboard-authorization/set-default` + params, {}, httpOptions)

@@ -61,7 +61,7 @@ export class HrAttendanceCustomTimingComponent implements OnInit {
     private corePaginationService: PaginationService,
     private coreErrorHandler: YodaCoreErrorHandlerService,
     private toastr: ToastrService) {
-    this.getRequestForPageOne(1);
+    this.getRequestForPageOneOnlyWithFilter(1);
   }
 
   ngOnInit() {
@@ -72,11 +72,11 @@ export class HrAttendanceCustomTimingComponent implements OnInit {
   }
 
 
-  getRequestForPageOne(pageNo) {
+  getRequestForPageOneOnlyWithFilter(pageNo) {
     this.showLoader = true;
     this.request = [];
-    console.log('getRequestForPageOne pageNo', pageNo);
-    console.log('getRequestForPageOne defaultPaginationSize', this.defaultPaginationSize);
+    console.log('getRequestForPageOneOnlyWithFilter pageNo', pageNo);
+    console.log('getRequestForPageOneOnlyWithFilter defaultPaginationSize', this.defaultPaginationSize);
     this._attendanceCustomTimingService.getAttendanceCustomTimingListWithFilters(pageNo, this.defaultPaginationSize, this.filter.search, this.filter.planned_date, this.filter.hide_deleted_items).subscribe((data: any) => {
       console.log('requestList data', data);
       // Closing the alert - apiRequest Info
@@ -174,7 +174,7 @@ export class HrAttendanceCustomTimingComponent implements OnInit {
 
   hideViewCreateModal() {
     $('#ViewCreateModal').modal('hide');
-    this.getRequestForPageOne(1);
+    this.getRequestForPageOneOnlyWithFilter(1);
   }
 
   showViewCreateModal() {
@@ -194,7 +194,7 @@ export class HrAttendanceCustomTimingComponent implements OnInit {
     this.showLoader = true;
     this.request = [];
     console.log('refreshApiData -> Parent ', 'allowance-type',);
-    this.getRequestForPageOne(1);
+    this.getRequestForPageOneOnlyWithFilter(1);
   }
 
 

@@ -72,21 +72,21 @@
           <div class="card card-stats mb-3 shadow-lg border" style="background-color: #e9ecef;" *ngIf="showFilters">
             <div class="card-body px-3 py-3">
               <div class="row">
-                <div class="col-sm-6 col-md-6 col-lg-3 pr-xl-2">
+                <div class="col-sm-6 col-md-6 col-lg-6 pr-xl-2">
                   <div class="form-group mb-0">
                     <label class="form-control-label" for="example3cols1Input">Search text</label>
                     <input type="text" class="form-control" placeholder="Search" name="filter.search" [(ngModel)]="filter.search">
                   </div>
                 </div>
 
-                <div class="col-sm-6 col-md-6 col-lg-3 pr-xl-2">
+                <div class="col-sm-6 col-md-6 col-lg-6 pr-xl-2">
                   <div class="form-group mb-0">
                     <label class="form-control-label" for="example3cols1Input">Planned Date</label>
                     <input type="date" class="form-control" placeholder="Search" name="filter.planned_date" [(ngModel)]="filter.planned_date">
                   </div>
                 </div>
 
-                <div class="col-sm-6 col-md-6 col-lg-3 pr-xl-2">
+                <div class="col-sm-6 col-md-6 col-lg-6 pr-xl-2">
                   <div class="form-group mb-0">
                     <label class="form-control-label" for="example3cols1Input">Hide Deleted </label>
                     <input type="text" class="form-control" placeholder="Search" name="filter.hide_deleted_items" [(ngModel)]="filter.hide_deleted_items">
@@ -95,7 +95,7 @@
 
                 <div class="col-sm-6 col-md text-right align-self-end">
                   <div class="form-group mb-0">
-                    <button class="btn btn-primary" (click)="getRequestForPageOne(1)">Search
+                    <button class="btn btn-primary" (click)="getRequestForPageOneOnlyWithFilter(1)">Search
                       <i class="fas fa-search" aria-hidden="true"></i></button>
                   </div>
                 </div>
